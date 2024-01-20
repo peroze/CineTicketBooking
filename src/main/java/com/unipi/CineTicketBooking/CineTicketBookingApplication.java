@@ -10,4 +10,7 @@ public class CineTicketBookingApplication {
 		SpringApplication.run(CineTicketBookingApplication.class, args);
 	}
 
+
+
+
 }
