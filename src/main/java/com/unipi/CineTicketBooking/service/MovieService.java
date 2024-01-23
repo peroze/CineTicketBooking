@@ -62,7 +62,7 @@ public class MovieService {
         if (newMovie.getDirector() != null && !newMovie.getDirector().isBlank()) {
             movie.setDirector(newMovie.getDirector());
         }
-        if (newMovie.getActors() != null && !newMovie.getGenre().isEmpty()) {
+        if (newMovie.getActors() != null && !newMovie.getActors().isEmpty()) {
             movie.setActors(newMovie.getActors());
         }
         if (newMovie.getRating() != null && !newMovie.getRating().isBlank()) {
