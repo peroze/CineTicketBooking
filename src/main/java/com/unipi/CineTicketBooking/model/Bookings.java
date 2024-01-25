@@ -31,6 +31,18 @@ public class Bookings {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDateTime bookingTime; // Εδώ περιέχεται η ώρα της κράτησης με ημερομηνία και ώρα
 
+
+    public Bookings(Long id, Users users, Movie movie, LocalDateTime bookingTime) {
+        this.id = id;
+        this.users = users;
+        this.movie = movie;
+        this.bookingTime = bookingTime;
+    }
+
+    public Bookings() {
+
+    }
+
     public Long getId() {
         return id;
     }
