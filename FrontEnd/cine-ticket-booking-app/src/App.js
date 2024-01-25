@@ -12,7 +12,7 @@ function App() {
            Hi,Welcome to the frontend
 
       <GoogleOAuthProvider 
-      clientId="813061530558-eumv2pprpivufvqth4352l5qoo9mtj7b.apps.googleusercontent.com">
+      clientId="72971430335-bpegei5og5285e6dhuiqcegp8661ffof.apps.googleusercontent.com">
         <GoogleLogin
           onSuccess={credentialResponse => {
             const decoded = jwtDecode(credentialResponse.credential);
