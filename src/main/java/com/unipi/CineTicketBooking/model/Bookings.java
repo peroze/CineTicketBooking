@@ -1,5 +1,7 @@
 package com.unipi.CineTicketBooking.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,15 +19,47 @@ public class Bookings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne //
-    @JoinColumn(name = "users_id", nullable = false)
+    @ManyToOne(targetEntity = Users.class) //
+    @JoinColumn(name = "users_id",referencedColumnName = "users_id",nullable = false)
     private Users users;
 
 
-    @ManyToOne
-    @JoinColumn(name = "movie_id", nullable = false)
+    @ManyToOne(targetEntity = Movie.class)
+    @JoinColumn(name = "movie_id",referencedColumnName = "movie_id", nullable = false)
     private Movie movie;
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDateTime bookingTime; // Εδώ περιέχεται η ώρα της κράτησης με ημερομηνία και ώρα
 
+    public Long getId() {
+        return id;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public LocalDateTime getBookingTime() {
+        return bookingTime;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public void setBookingTime(LocalDateTime bookingTime) {
+        this.bookingTime = bookingTime;
+    }
 }

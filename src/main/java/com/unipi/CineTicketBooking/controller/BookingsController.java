@@ -33,6 +33,7 @@ public class BookingsController {
 
     @PostMapping("/create")
     public Bookings createBooking(@RequestBody Bookings booking) {
+
         return bookingsService.createBooking(booking);
     }
 
