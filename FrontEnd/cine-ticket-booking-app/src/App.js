@@ -27,6 +27,8 @@ function App() {
           shape="pill"
         />
       </GoogleOAuthProvider>
+
+      
     </div>
   );
 }
