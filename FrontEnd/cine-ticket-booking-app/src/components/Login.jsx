@@ -127,8 +127,7 @@ const Login = () => {
                                     </Col>
                             </Row>
                             <div className="text-center" id="oauth2-btn">  
-                                <GoogleLoginButton />
-                                <Link to="/">Go to Home Page</Link>       
+                                <GoogleLoginButton />     
                             </div>                       
                         </Card.Body>
         

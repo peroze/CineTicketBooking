@@ -10,7 +10,7 @@
 
 .login-card {
     background-color: #77ACA2 !important;
-    border-radius: 20px; 
+    border-radius: 35px !important;  
     overflow-y: auto;
     backdrop-filter: saturate(200%) blur(25px);
     max-height: 100vh;
