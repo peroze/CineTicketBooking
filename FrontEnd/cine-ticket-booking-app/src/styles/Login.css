@@ -1,0 +1,55 @@
+.login-page {
+    background-color: #031926;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    min-height: auto;
+    overflow-y: auto;
+    
+}
+
+.login-card {
+    background-color: #77ACA2 !important;
+    border-radius: 20px; 
+    overflow-y: auto;
+    backdrop-filter: saturate(200%) blur(25px);
+    max-height: 100vh;
+    min-width: 100vw;
+    max-width: 100vw;
+}
+
+#login-form .form-control:focus{
+    border: 1px solid #031926;
+    box-shadow: none;
+    background-color: #9DBEBB;
+}
+
+#login-form .custom-fields {
+    background-color: transparent;
+    border: 1px solid #468189;
+}
+
+#login-form .custom-Btn {
+    background-color: #031926;
+    border: 1px solid #031926;
+}
+
+#oauth2-btn .custom-google-btn {
+    background-color: transparent;
+}
+#oauth2-btn {
+    background-color: transparent;
+}
+
+
+#login-form .custom-eye-Btn {
+    background-color: transparent;
+    color: #468189;
+    border: 1px solid #468189;
+}
+
+#login-form .custom-eye-Btn:hover {
+    background-color: #9DBEBB;
+    border: 1px solid #468189;
+}
+
