@@ -14,7 +14,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import GoogleLoginButton from './GoogleLogin';
 
-import '../styles/Login.css'; // Import the external CSS file
+import './Style/Login.css'; // Import the external CSS file
 
 
 const Login = () => {

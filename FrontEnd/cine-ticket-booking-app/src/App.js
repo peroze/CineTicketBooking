@@ -1,10 +1,10 @@
 
 import './App.css';
-import Login from './components/Login';
-import Home from './components/Home';
-import Movies from './components/Movies';
-import About from './components/About';
-import Signup from './components/Signup';
+import Home from './Components/Home.jsx';
+import Login from './Components/Login.jsx';
+import Movies from './Components/Movies.jsx';
+import About from './Components/About.jsx';
+import Signup from './Components/Signup.jsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import logo from './logo.svg';
