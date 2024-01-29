@@ -3,6 +3,19 @@
   background-color: #77ACA2;
 }
 
+@media  (max-width: 600px) {
+  .navbar {
+    border-radius: 3px;
+  }
+}
+
+@media(max-width:600px){
+  .Navbarlogo{
+    transform: scale(0.7);
+  }
+}
+
+
 .nav-link{
     font-family: 'Roboto', sans-serif;
     color: white !important;
@@ -22,10 +35,20 @@
   }
 
   .burger:hover{
-    color: #031926;
+    color:#F4E9CD;
     transition: all 0.5s;
-    
   }
+
+  .navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus,.navbar-toggler {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
+
+ 
 
   .fic{
     border: 2px solid white;
@@ -34,6 +57,7 @@
     transition: all 0.5s;
   }
 
+  
 
   .nav-link:hover > .fic{
     border-color:#031926 ;
