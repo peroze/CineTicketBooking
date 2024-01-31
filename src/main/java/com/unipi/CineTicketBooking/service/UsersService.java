@@ -1,24 +1,28 @@
 package com.unipi.CineTicketBooking.service;
 
+import com.unipi.CineTicketBooking.config.JwtService;
+import com.unipi.CineTicketBooking.controller.secondaryClasses.LoginRequest;
 import com.unipi.CineTicketBooking.model.Users;
 import com.unipi.CineTicketBooking.repository.UsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UsersService {
 
     private final UsersRepository usersRepository;
+    private final JwtService jwtService;
 
-    @Autowired
-    public UsersService(UsersRepository usersRepository) {
-        this.usersRepository = usersRepository;
-    }
+    private final AuthenticationManager authenticationManager;
 
-    public Users createUser(Users user) {
+
+    public String createUser(Users user) {
         Optional<Users> optional=usersRepository.findById(user.getId());
         Optional<Users> useropt=usersRepository.findUsersByUsername(user.getUsername());
         Optional<Users> mailopt=usersRepository.findUsersByEmail(user.getEmail());
@@ -31,7 +35,16 @@ public class UsersService {
         if(mailopt.isPresent()){
             throw new IllegalArgumentException("The email is already used");
         }
-        return usersRepository.save(user);
+        usersRepository.save(user);
+        var jwtToken=jwtService.generateToken(user);
+        return jwtToken;
+    }
+
+    public String login(LoginRequest request){
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
+        Users user=usersRepository.findUsersByUsername(request.getUsername()).orElseThrow(); //If it reaches this point then the user is correct
+        var jwtToken=jwtService.generateToken(user);
+        return  jwtToken;
     }
 
     public List<Users> getAllUsers() { return usersRepository.findAll();
