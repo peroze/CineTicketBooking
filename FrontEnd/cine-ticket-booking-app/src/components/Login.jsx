@@ -24,8 +24,7 @@ const Login = () => {
 
     const handleButtonClick =() => {
         
-        console.log(email);
-        console.log(password);
+        
         axios({
             method: 'post',
             url: 'http://localhost:8080/api/users/login',
