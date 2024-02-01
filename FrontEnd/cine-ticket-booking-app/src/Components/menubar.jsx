@@ -15,16 +15,16 @@ import Container from 'react-bootstrap/Container';
 
 function Menubar() {
     return (
-        <Navbar expand="lg" bg="#77ACA2" variant="light" className="rounded-pill m-3 p-0 navbar" >
+        <Navbar expand="lg" bg="#77ACA2" fixed="top" variant="light" className="rounded-pill m-3 p-0 navbar" >
           <Container>
             <Navbar.Brand href="#home"><img width="150"  className="Navbarlogo" src={logo}></img></Navbar.Brand>
             <Navbar.Toggle  aria-controls="basic-navbar-nav"><FontAwesomeIcon className="burger" icon={faFilm}/></Navbar.Toggle>
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto gap-5 ">
-              <Nav.Link   href="#home">Home</Nav.Link>
-              <Nav.Link   href="#link">Movies</Nav.Link>
-              <Nav.Link   href="#link">Contact</Nav.Link>
-              <Nav.Link   href="#link"><FontAwesomeIcon className="fic" icon={faUser}/></Nav.Link>
+              <Nav.Link   href="/">Home</Nav.Link>
+              <Nav.Link   href="/movies">Movies</Nav.Link>
+              <Nav.Link   href="/about">Contact</Nav.Link>
+              <Nav.Link   href="/login"><FontAwesomeIcon className="fic" icon={faUser}/></Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

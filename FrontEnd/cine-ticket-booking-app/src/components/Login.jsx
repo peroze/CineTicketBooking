@@ -42,21 +42,21 @@ const Login = () => {
     };
 
     return(
-        <Container fluid className="login-page d-flex align-items-center justify-content-center">
-            <Row className="text-center d-flex w-100 align-items-center justify-content-center">
+        <Container fluid className="login-page align-items-center justify-content-center">
+            <Row className="login-row text-center d-flex w-100 align-items-center justify-content-center">
                 <Col sm={12} lg={7} md={6}  className="text-center d-flex align-items-center justify-content-center d-none d-lg-block">
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" className="img-fluid" alt="Sample image" />    
                 </Col>
-                <Col sm={12} lg={5} md={12} className="position-relative d-flex align-items-center justify-content-center">
+                <Col sm={12} lg={5} md={12} className="login-card-col d-flex align-items-center justify-content-center">
                    
                     
-                    <Card fluid className= "login-card my-5 flex-wrap">
-                        <Card.Body className="p-sm-3 p-md-5">
+                    <Card className= "login-card my-sm-3 my-md-5 flex-wrap">
+                        <Card.Body className="p-sm-3 p-md-4">
 
                             <Row>
                                 <Col className="text-center mb-4">
                                     <h1>Login to your account</h1>
-                                    <p>Don't have an account? <tb></tb>
+                                    <p>Don't have an account? &nbsp;
                                         <Link to="/signup">Sign up</Link>
                                     </p>
                                 </Col>

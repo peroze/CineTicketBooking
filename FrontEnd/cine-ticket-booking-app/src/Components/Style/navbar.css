@@ -1,6 +1,10 @@
 
 .navbar{
   background-color: #77ACA2;
+  position: sticky;
+  z-index: 1010; /* Adjust as needed */
+  top: 20px;
+ 
 }
 
 @media  (max-width: 600px) {
