@@ -5,6 +5,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
+import java.util.Map;
+
 @Entity
 @Table (name = "users")
 
@@ -77,4 +79,9 @@ public class Users {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Object getShowtimeId() {
+        return null;
+    }
+
 }

@@ -19,6 +19,7 @@ import java.util.List;
 public class BookingsController {
     private final BookingsService bookingsService;
 
+
     @Autowired
     public BookingsController(BookingsService bookingsService) {
         this.bookingsService = bookingsService;
@@ -41,9 +42,18 @@ public class BookingsController {
 
     @PostMapping("/create")
     public ResponseEntity<Bookings> createBooking(@RequestBody Bookings booking) {
+        List<String> seatStatuses = bookingsService.getSeatStatusesForShowtime(booking.getShowtimeId());
+
+        if (seatStatuses.contains("BOOKED")) {
+            // Εάν υπάρχει ήδη κράτηση σε κάποια θέση
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Bookings createdBooking = bookingsService.createBooking(booking);
+
         return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
     }
+
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Bookings> updateBooking(@PathVariable Long id, @RequestBody Bookings updatedBooking) {

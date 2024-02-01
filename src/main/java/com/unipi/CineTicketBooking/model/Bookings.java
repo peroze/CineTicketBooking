@@ -1,9 +1,8 @@
 package com.unipi.CineTicketBooking.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Id;
@@ -38,8 +37,7 @@ public class Bookings {
         this.movie = movie;
         this.bookingTime = bookingTime;
     }
-
-    public Bookings() {
+    public Bookings(Users user, Showtime showtime, String seatNumber) {
 
     }
 
