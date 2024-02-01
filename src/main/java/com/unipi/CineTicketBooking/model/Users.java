@@ -15,11 +15,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Builder
-@AllArgsConstructor
-
 import java.util.Map;
 
+@Builder
+@AllArgsConstructor
 @Entity
 @Table (name = "users")
 public class Users implements UserDetails {
