@@ -13,6 +13,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import GoogleLoginButton from './GoogleLogin';
+import axios from 'axios';
 
 import './Style/Login.css'; // Import the external CSS file
 
@@ -21,8 +22,24 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit =(e) => {
-
+    const handleButtonClick =() => {
+        
+        console.log(email);
+        console.log(password);
+        axios({
+            method: 'post',
+            url: 'http://localhost:8080/api/users/login',
+            data: {
+            username: email,
+            password: password
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     };
 
     const handleInputChange = (e) => {
@@ -36,10 +53,6 @@ const Login = () => {
 
     const [showPassword, setShowPassword] = useState(false);
 
-
-    const handleButtonClick = () => {
-        //onClick logic here
-    };
 
     return(
         <Container fluid className="login-page align-items-center justify-content-center">
@@ -105,12 +118,17 @@ const Login = () => {
                                                 <div className='d-flex justify-content-left mb-4'>
                                                     <Form.Check type="checkbox" label="Remember me"/>   
                                                 </div>
-                    
-                                                <LoadingButton
+
+                                                <Button
+                                                    onClick={handleButtonClick}
+                                                >
+                                                    Log in
+                                                </Button>
+                                                {/* <LoadingButton
                                                     name="Log in"    
                                                     loadingText="Logging in..."
                                                     onClick={handleButtonClick}                                                  
-                                                />
+                                                /> */}
                     
                                             </Form>
                                
