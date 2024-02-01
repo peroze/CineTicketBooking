@@ -81,4 +81,12 @@ public class UsersService {
         }
         usersRepository.save(user);
     }
+    public List<String> getSeatStatusesForShowtime(Long showtimeId) {
+        return null;
+    }
+
+    public Long getShowtimeId(String username) {
+        Optional<Users> user = usersRepository.findUsersByUsername(username);
+        return user.map(Users::getShowtimeId).orElse(null);
+    }
 }

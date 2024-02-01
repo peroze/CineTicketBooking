@@ -18,6 +18,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 
+import java.util.Map;
+
 @Entity
 @Table (name = "users")
 public class Users implements UserDetails {
@@ -117,4 +119,9 @@ public class Users implements UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Object getShowtimeId() {
+        return null;
+    }
+
 }

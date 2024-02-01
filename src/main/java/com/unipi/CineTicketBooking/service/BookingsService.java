@@ -1,25 +1,58 @@
 package com.unipi.CineTicketBooking.service;
 
 import com.unipi.CineTicketBooking.model.Bookings;
+import com.unipi.CineTicketBooking.model.SeatStatus;
+import com.unipi.CineTicketBooking.model.Showtime;
+import com.unipi.CineTicketBooking.model.Users;
 import com.unipi.CineTicketBooking.repository.BookingsRepository;
+import com.unipi.CineTicketBooking.repository.ShowtimeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class BookingsService {
 
     private final BookingsRepository bookingsRepository;
+    private final ShowtimeService showtimeService;
+    private final ShowtimeRepository showtimeRepository;
 
-    public BookingsService(BookingsRepository bookingsRepository) {
+    @Autowired
+    public BookingsService(
+            BookingsRepository bookingsRepository,
+            ShowtimeService showtimeService,
+            ShowtimeRepository showtimeRepository
+    ) {
         this.bookingsRepository = bookingsRepository;
+        this.showtimeService = showtimeService;
+        this.showtimeRepository = showtimeRepository;
     }
 
-    public Bookings createBooking(Bookings booking) {
 
-        return bookingsRepository.save(booking);
+    public Bookings createBooking(Users user, Showtime showtime, String seatNumber) {
+        Map<String, SeatStatus> seatsStatus = showtime.getSeatStatus();
+
+        // Έλεγχος για το αν η θέση είναι διαθέσιμη ή όχι
+        if (seatsStatus.containsKey(seatNumber) && seatsStatus.get(seatNumber) == SeatStatus.AVAILABLE) {
+            // Εάν είναι διαθέσιμη, τότε δημιουργείται η κράτηση
+            seatsStatus.put(seatNumber, SeatStatus.BOOKED);
+
+            Bookings booking = new Bookings(user, showtime, seatNumber);
+            bookingsRepository.save(booking);
+
+            // Ενημέρωση της βάσης δεδομένων
+            showtimeRepository.save(showtime);
+
+            return booking;
+        } else {
+            // Εάν η θέση δεν είναι διαθέσιμη ή δεν υπάρχει, επιστρέφουμε null
+            return null;
+        }
     }
+
 
     public List<Bookings> getAllBookings() {
         List<Bookings> bookingsList = bookingsRepository.findAll();
@@ -50,6 +83,13 @@ public class BookingsService {
         }
     }
 
+    public List<String> getSeatStatusesForShowtime(Long showtimeId) {
+        return showtimeService.getSeatStatuses(showtimeId);
+    }
+
+    public void updateSeatStatusesForShowtime(Long showtimeId) {
+        showtimeService.updateSeatStatuses(showtimeId);
+    }
 
 
 }

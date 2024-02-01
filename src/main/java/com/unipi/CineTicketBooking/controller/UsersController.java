@@ -23,6 +23,10 @@ public class UsersController {
     private final UsersService usersService;
     private  PasswordEncoder passwordEncoder;
 
+    @Autowired
+    public UsersController(UsersService usersService){
+        this.usersService=usersService;
+    }
 
     @GetMapping(path = "/username/{userName}")
     public Optional<Users> getUserbyUsername(@PathVariable("userName") String username){
@@ -52,6 +56,24 @@ public class UsersController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
 
+    }
+    @PostMapping
+    public ResponseEntity addUserWithSeatStatus(@RequestBody Users user) {
+        // Ελέγχετε τις θέσεις για το συγκεκριμένο showtime
+        List<String> seatStatuses = usersService.getSeatStatusesForShowtime(user.getShowtimeId());
+
+        if (seatStatuses.contains("BOOKED")) {
+            // Εάν υπάρχει ήδη κράτηση σε κάποια θέση, επιστρέφουμε σφάλμα
+            return new ResponseEntity<>("Υπάρχει ήδη κράτηση για την επιλεγμένη θέση", HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            usersService.createUser(user);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("/login")
