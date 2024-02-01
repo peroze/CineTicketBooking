@@ -1,6 +1,8 @@
 package com.unipi.CineTicketBooking.controller;
 
 import com.unipi.CineTicketBooking.controller.secondaryClasses.LoginRequest;
+import com.unipi.CineTicketBooking.controller.secondaryClasses.RegisterRequest;
+import com.unipi.CineTicketBooking.model.Role;
 import com.unipi.CineTicketBooking.model.Users;
 import com.unipi.CineTicketBooking.service.UsersService;
 import lombok.AllArgsConstructor;
@@ -33,9 +35,16 @@ public class UsersController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity addNewUser(@RequestBody Users user){
+    public ResponseEntity addNewUser(@RequestBody RegisterRequest request){
         try {
-
+            Users user;
+            if(request.getRole().equals("ADMIN")) {
+                 user = new Users(request.getId(),request.getFirstName(), request.getLastName(), request.getUsername(), request.getPassword(), request.getEmail(), Role.ADMIN);
+            }
+            else{
+                 //if(request.getRole().equals("USER"))
+                 user = new Users(request.getId(),request.getFirstName(), request.getLastName(), request.getUsername(), request.getPassword(), request.getEmail(), Role.USER);
+            }
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             return ResponseEntity.ok(usersService.createUser(user));
         }
