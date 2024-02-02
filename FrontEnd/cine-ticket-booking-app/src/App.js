@@ -13,6 +13,7 @@ import { GoogleOAuthProvider} from '@react-oauth/google';
 import {GoogleLogin} from '@react-oauth/google';
 import {jwtDecode} from 'jwt-decode';
 import Menubar from './Components/menubar.jsx';
+import MovieCard from './Components/MovieCard.jsx' 
 import { Link } from 'react-router-dom';
 
 
@@ -23,8 +24,7 @@ function App() {
       <header className="sticky-header">
         <Menubar />
       </header>
-     
-   
+  
       <div className="content-container">
         <Router>
           <Routes>
