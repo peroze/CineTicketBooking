@@ -15,14 +15,18 @@ import {jwtDecode} from 'jwt-decode';
 import Menubar from './Components/menubar.jsx';
 import MovieCard from './Components/MovieCard.jsx' 
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 
 function App() {
+
+  const [usericon,setUsericon]=useState("https://ik.imagekit.io/cineticketbooking/Users/konper.jpeg")
+  const [username,setUsername]=useState("Konper98");
   return (
     <div className="App p-1" >
 
       <header className="sticky-header">
-        <Menubar />
+        <Menubar icon={usericon} user={username} />
       </header>
   
       <div className="content-container">
