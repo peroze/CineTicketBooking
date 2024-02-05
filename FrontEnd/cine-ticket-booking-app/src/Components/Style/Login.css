@@ -71,3 +71,12 @@
     border: 1px solid #468189;
 }
 
+.image-text {
+    color: #F4E9CD;
+}
+
+@media (max-width: 1400px) {
+    .image-text{
+        font-size: 1.75em;
+    }
+  }

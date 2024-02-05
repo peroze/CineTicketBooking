@@ -57,7 +57,9 @@ const Login = () => {
         <Container fluid className="login-page align-items-center justify-content-center">
             <Row className="login-row text-center d-flex w-100 align-items-center justify-content-center">
                 <Col sm={12} lg={7} md={6}  className="text-center d-flex align-items-center justify-content-center d-none d-lg-block">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" className="img-fluid" alt="Sample image" />    
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" className="img-fluid w-65" alt="Sample image" />  
+                    <h1 className="image-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet totam, sunt sed voluptates 
+                        perferendis, voluptas blanditiis pariatur .</h1>  
                 </Col>
                 <Col sm={12} lg={5} md={12} className="login-card-col d-flex align-items-center justify-content-center">
                    
