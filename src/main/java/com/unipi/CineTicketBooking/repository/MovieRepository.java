@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -22,6 +23,9 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     void deleteByName(@Param("name") String name);
 
     boolean existsByName(String name);
+
+    @Query(value = "SELECT id, name FROM Movie")
+    List<Movie> getMovieList();
 
 
 }

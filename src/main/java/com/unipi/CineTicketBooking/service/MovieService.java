@@ -73,4 +73,9 @@ public class MovieService {
 
 
     }
+
+    public List<Movie> getMovieList()
+    {
+        return movieRepository.getMovieList();
+    }
 }
