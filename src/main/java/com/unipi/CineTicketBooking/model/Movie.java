@@ -47,7 +47,11 @@ public class Movie {
 
     }
 
-
+public Movie(Long id, String name)
+{
+    this.id = id;
+    this.name = name;
+}
     public Long getId() {
         return id;
     }
@@ -127,4 +131,6 @@ public class Movie {
     public void setLanguage(String language) {
         this.language = language;
     }
+
+
 }

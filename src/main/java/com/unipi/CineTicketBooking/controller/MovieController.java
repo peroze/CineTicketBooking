@@ -1,11 +1,14 @@
 package com.unipi.CineTicketBooking.controller;
 
 import com.unipi.CineTicketBooking.model.Movie;
+import com.unipi.CineTicketBooking.model.secondary.MovieListObject;
 import com.unipi.CineTicketBooking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +50,18 @@ public class MovieController {
     public ResponseEntity<Void> updateMovie(@PathVariable("movieName") String name, @RequestBody Movie newMovie) {
         movieService.updateMovie(name, newMovie);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(path = "movieList")
+    public ResponseEntity<ArrayList<MovieListObject>> getMovieList(){
+    List<Movie> temp = movieService.getMovieList();
+    ArrayList<MovieListObject> movies=new ArrayList<>();
+    for (int i=0; i<temp.size(); i++)
+    {
+        MovieListObject obj = new MovieListObject(temp.get(i).getId(), temp.get(i).getName());
+        movies.add(obj);
+    }
+    return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 
 
