@@ -60,7 +60,7 @@ const Signup = () => {
           <Card className= "signup-card my-sm-3 my-md-4 flex-wrap">
             <Card.Body className="p-sm-3 p-md-4">
               <Row>
-                <Col className="text-center mb-3">
+                <Col className="text-center mb-1">
                   <h1>Sign up</h1>
                   <p>Already have an account? &nbsp;
                   <Link to="/login">Login</Link>
@@ -69,7 +69,7 @@ const Signup = () => {
               </Row>
               <Row>
 
-                <Form className="p-4 p-sm-3" id="signup-form">
+                <Form className="p-4 p-sm-0" id="signup-form">
 
                   <Form.Group className="mb-3" controlId="formFullName" >
                     <Form.Label>Full Name</Form.Label>
