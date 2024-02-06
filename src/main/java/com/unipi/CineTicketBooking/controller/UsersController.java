@@ -5,10 +5,13 @@ import com.unipi.CineTicketBooking.controller.secondaryClasses.RegisterRequest;
 import com.unipi.CineTicketBooking.model.Role;
 import com.unipi.CineTicketBooking.model.Users;
 import com.unipi.CineTicketBooking.service.UsersService;
+import jakarta.servlet.http.Cookie;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -55,8 +58,21 @@ public class UsersController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity  login(@RequestBody LoginRequest request){
-        return ResponseEntity.ok(usersService.login(request));
+    public ResponseEntity<String> login(@RequestBody LoginRequest request){
+
+        String jwt =usersService.login(request);
+
+        // Set Remember-Me Cookie
+        ResponseCookie rememberMeCookie = ResponseCookie.from("rememberMe", request.getRememberMe())
+                .maxAge(60 * 60 * 24 * 365) // 1 year
+                .httpOnly(true) // Set to true for HTTPS
+                .secure(true)
+                .path("/")
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, rememberMeCookie.toString());
+        return ResponseEntity.ok().headers(headers).body(jwt);
     }
 
 
@@ -82,7 +98,6 @@ public class UsersController {
         }
         return ResponseEntity.ok(user) ;
     }
-
 
 
 
