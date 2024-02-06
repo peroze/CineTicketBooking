@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
+import java.util.Optional;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(path = "api/movies")
@@ -23,6 +25,10 @@ public class MovieController {
     public ResponseEntity<List<Movie>> getMovies() {
         List<Movie> movies = movieService.getMovies();
         return new ResponseEntity<>(movies, HttpStatus.OK);
+    }
+    @GetMapping(path = "movie/{id}")
+    public ResponseEntity<Optional <Movie>> getMoviebyid(@PathVariable("id") Long id ){
+        return new ResponseEntity<> (movieService.getMoviebyid(id), HttpStatus.OK);
     }
 
     @PostMapping
