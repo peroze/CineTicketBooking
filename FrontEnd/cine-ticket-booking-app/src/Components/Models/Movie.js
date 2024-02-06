@@ -2,7 +2,7 @@ export class Movie {
     
 
     constructor(name,id,genre,duration,releaseDate,description,director,actors,rating) { 
-        this.name=name;
+        this.moviename=name;
         this.id=id;
         this.genre=genre
         this.duration=duration;

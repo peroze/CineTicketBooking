@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faAngleLeft} from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useEffect } from 'react';
 
 
 
@@ -13,45 +14,27 @@ const MoviePage = () => {
     const location=useLocation();
     const id=location.state;
     const naviagte=useNavigate();
-    var movie
-
-    axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/movies/',
-        params: {
-            id: String(id)
-        }
-    })
-    .then(function (response) {
-        console.log(response.data);
-        
-        
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
-
-
-    if(id==1){
-         movie=new Movie("The Avengers: Age of Ultron",1,"Superhero Movie",120,"04/02/2024","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.","Josh Wedon",["Robert Downey Junior","Scarlett Johansson","Chris Evans"],"PG-13");
-    }
-    else if(id==2){
-         movie=new Movie("The Avengers",2,"Superhero Movie",120,"04/02/2024","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.","Josh Wedon",["Robert Downey Junior","Scarlett Johansson","Chris Evans"],"PG-13");
-    }
-    else if(id==3){
-         movie=new Movie("Mission: Impossible Fallout",3,"Action Movie",120,"04/02/2024","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.","Josh Wedon",["Tom Cruise","Rebecca Ferguson","Simmon Pegg"],"PG-13");
-    }
-    else{
-         movie=new Movie("The Avengers: Age of Ultron",1,"Superhero Movie",120,"04/02/2024","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.","Josh Wedon",["Robert Downey Junior","Scarlett Johansson","Chris Evans"],"PG-13");
-    }
-    return (
+    const [isLoading, setLoading] = useState(true);
+    const [movie, setMovie] = useState();
+    useEffect(() => {
+        axios.get("http://localhost:8080/api/movies/movie/"+id).then(response => {
+          var movietemp=  new Movie(response.data.name,response.data.id,response.data.genre,response.data.duration,response.data.releaseDate,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",response.data.director,["Robert Downey Junior","Scarlett Johansson","Chris Evans"],response.data.rating); 
+          setMovie(movietemp);
+          setLoading(false);
+        });
+      }, []);
+    
+      if (isLoading) {
+        return <div className="App">Loading...</div>;
+      }
+        return (
         <div className='movie  d-flex flex-column gap-3'>
             <div className="movieheader">
                 <div className="backButton" onClick={()=>{
             naviagte('/movies')}}>
                     <FontAwesomeIcon icon={faAngleLeft} /> Return to Movies
                 </div>
-                <h1>{movie.name}</h1>
+                <h1>{movie.moviename}</h1>
                 </div>
             
             <div className='movietop d-flex flex-wrap flex-row gap-3'>
