@@ -1,0 +1,118 @@
+.Footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+    background-color: #77ACA2;
+    text-decoration: none;
+    padding: 20px;
+    border-radius: 50px 50px 0 0 ;
+}
+
+
+
+
+.Footer h2{
+    margin-top: 5%;
+    color: white;
+    font-size: 1.5em;
+    text-align: left;
+    width: 50%;
+}
+
+p {
+    color:white;
+    text-align: left;
+}
+
+.footerMenu{
+    margin-top: 5%;
+    color: white;
+    list-style: none;
+    text-align: center;
+    width: 100%;
+    padding: 0;
+    text-align: left;
+
+}
+
+@media(max-width:991px){
+    .col{
+        width:100%;
+    }
+}
+.footerMenu li{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    gap:5%;
+    align-items: center;
+    
+}
+
+.footerMenu li a{
+    color: white;
+    display: flex;
+    gap:15px;
+    align-items: center;
+    text-decoration: none;
+    position: relative;
+    font-weight:600;
+}
+
+.footerLink{
+    position: relative;
+}
+
+.footerMenu li a:hover > .fafooter{
+    background-color: white;
+    color: black;
+
+}
+
+
+ .footerLink::before{
+    content: "";
+    position: absolute;
+    height: 2px;
+    background-color: white;
+    bottom:0;
+    left:50%;
+    transform: translateX(-50%);
+    width:0;
+}
+
+.footerLink:hover::before{
+    width: 100%;
+    transition: all 0.5s ;
+}
+
+
+
+.brandFooter{
+    margin-top: 5%;
+}
+
+.footerLogo{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.footerMenuContainer{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.fafooter{
+    
+    padding:3px;
+    border-radius: 20px;
+    border: 2px solid white;
+}
+
+
+
+
+
