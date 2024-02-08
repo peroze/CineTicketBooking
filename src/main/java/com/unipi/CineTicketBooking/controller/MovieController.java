@@ -1,5 +1,6 @@
 package com.unipi.CineTicketBooking.controller;
 
+import com.google.gson.Gson;
 import com.unipi.CineTicketBooking.model.Movie;
 import com.unipi.CineTicketBooking.model.secondary.MovieListObject;
 import com.unipi.CineTicketBooking.service.*;
@@ -46,6 +47,8 @@ public class MovieController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+
+
     @PutMapping(path = "{movieName}")
     public ResponseEntity<Void> updateMovie(@PathVariable("movieName") String name, @RequestBody Movie newMovie) {
         movieService.updateMovie(name, newMovie);
@@ -53,16 +56,17 @@ public class MovieController {
     }
 
     @GetMapping(path = "movieList")
-    public ResponseEntity<ArrayList<MovieListObject>> getMovieList(){
-    List<Movie> temp = movieService.getMovieList();
-    ArrayList<MovieListObject> movies=new ArrayList<>();
-    for (int i=0; i<temp.size(); i++)
-    {
-        MovieListObject obj = new MovieListObject(temp.get(i).getId(), temp.get(i).getName());
-        movies.add(obj);
+    public ResponseEntity<String> getMovieList(){
+        Gson gson = new Gson();
+        System.out.println("Inside MovieController before service");
+        List<MovieListObject> temp = movieService.getMovieList();
+        System.out.println("Inside MovieController after service");
+        String movieList = gson.toJson(temp);
+
+        return new ResponseEntity<>(movieList, HttpStatus.OK);
     }
-    return new ResponseEntity<>(movies, HttpStatus.OK);
-    }
+
+
 
 
 }

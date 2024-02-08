@@ -1,6 +1,7 @@
 package com.unipi.CineTicketBooking.repository;
 
 import com.unipi.CineTicketBooking.model.Movie;
+import com.unipi.CineTicketBooking.model.secondary.MovieListObject;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -24,8 +25,9 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     boolean existsByName(String name);
 
-    @Query(value = "SELECT id, name FROM Movie")
-    List<Movie> getMovieList();
+    @Query("SELECT new com.unipi.CineTicketBooking.model.secondary.MovieListObject(m.id, m.name) FROM Movie m")
+    List<MovieListObject> findMovies();
+
 
 
 }
