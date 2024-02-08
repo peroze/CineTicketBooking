@@ -4,6 +4,11 @@ public class MovieListObject {
     private Long id;
     private String name;
 
+    public MovieListObject(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
@@ -17,11 +22,6 @@ public class MovieListObject {
     }
 
     public void setName(String name) {
-        this.name = name;
-    }
-
-    public MovieListObject(Long id, String name) {
-        this.id = id;
         this.name = name;
     }
 }

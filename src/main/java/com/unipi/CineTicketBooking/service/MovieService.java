@@ -1,6 +1,7 @@
 package com.unipi.CineTicketBooking.service;
 
 import com.unipi.CineTicketBooking.model.Movie;
+import com.unipi.CineTicketBooking.model.secondary.MovieListObject;
 import com.unipi.CineTicketBooking.repository.MovieRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,8 +75,9 @@ public class MovieService {
 
     }
 
-    public List<Movie> getMovieList()
+    public List<MovieListObject> getMovieList()
     {
-        return movieRepository.getMovieList();
+        System.out.println("Inside MovieService");
+        return movieRepository.findMovies();
     }
 }
