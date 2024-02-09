@@ -4,17 +4,22 @@ import com.unipi.CineTicketBooking.model.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class RegisterRequest {
     private Long id;
 
     private String firstName;
     private String lastName;
-    private String username;
     private String password;
     private String email;
-    private String role;
+    private Role role;
 
     public Long getId() {
         return id;
@@ -40,14 +45,6 @@ public class RegisterRequest {
         this.lastName = lastName;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -64,11 +61,11 @@ public class RegisterRequest {
         this.email = email;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }

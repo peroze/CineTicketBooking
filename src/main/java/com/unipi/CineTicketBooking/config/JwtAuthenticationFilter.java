@@ -1,6 +1,7 @@
 package com.unipi.CineTicketBooking.config;
 
 import com.unipi.CineTicketBooking.model.Users;
+import com.unipi.CineTicketBooking.repository.TokenRepository;
 import com.unipi.CineTicketBooking.repository.UsersRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,6 +25,7 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final TokenRepository tokenRepository;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -39,7 +41,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if(userName!=null && SecurityContextHolder.getContext().getAuthentication()==null){
             System.out.println(userName);
             UserDetails userDetails=this.userDetailsService.loadUserByUsername(userName);
-            if(jwtService.isTokenValid(jwt,userDetails)){
+            var isTokenValid = tokenRepository.findByToken(jwt)
+                    .map(t -> !t.isExpired() && !t.isRevoked())
+                    .orElse(false);
+            if(jwtService.isTokenValid(jwt,userDetails) && isTokenValid){
                 UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
