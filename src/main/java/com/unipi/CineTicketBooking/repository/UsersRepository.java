@@ -14,14 +14,12 @@ import java.util.Optional;
 @Repository
 public interface UsersRepository extends JpaRepository<Users, Long> {
 
-
-    @Query("SELECT user FROM Users user WHERE user.username =:Username")
-    Optional<Users> findUsersByUsername(String Username);
     @Query("SELECT user FROM Users user WHERE user.email =:email")
     Optional<Users> findUsersByEmail(String email);
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Users user WHERE user.username = :username")
-    void deleteByUsername(@Param("username") String username);
+    @Query("DELETE FROM Users user WHERE user.email = :email")
+    void deleteByEmail(@Param("email") String email);
+
 }
