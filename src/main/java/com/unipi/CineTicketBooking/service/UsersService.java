@@ -25,13 +25,9 @@ public class UsersService {
 
     public String createUser(Users user) {
         Optional<Users> optional=usersRepository.findById(user.getId());
-        Optional<Users> useropt=usersRepository.findUsersByUsername(user.getUsername());
         Optional<Users> mailopt=usersRepository.findUsersByEmail(user.getEmail());
         if (optional.isPresent()){
             throw new IllegalArgumentException("The users already exists");
-        }
-        if(useropt.isPresent()){
-            throw new IllegalArgumentException("The username is already used");
         }
         if(mailopt.isPresent()){
             throw new IllegalArgumentException("The email is already used");
@@ -43,7 +39,7 @@ public class UsersService {
 
     public String login(LoginRequest request){
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
-        Users user=usersRepository.findUsersByUsername(request.getUsername()).orElseThrow(); //If it reaches this point then the user is correct
+        Users user=usersRepository.findUsersByEmail(request.getUsername()).orElseThrow(); //If it reaches this point then the user is correct
         var jwtToken=jwtService.generateToken(user);
         return  jwtToken;
     }
@@ -51,16 +47,17 @@ public class UsersService {
     public List<Users> getAllUsers() { return usersRepository.findAll();
     }
 
-    public void deleteUser(String username){
-        if(usersRepository.findUsersByUsername(username).isEmpty()){
+    public void deleteUser(String email){
+        if(usersRepository.findUsersByEmail(email).isEmpty()){
             throw new IllegalArgumentException("The given user does not exist");
         }
-        usersRepository.deleteByUsername(username);
+        usersRepository.deleteByEmail(email);
     }
 
 
-    public Optional<Users> getUserByUsername(String username){
-        return usersRepository.findUsersByUsername(username);
+
+    public Optional<Users> getUserByEmail(String email){
+        return usersRepository.findUsersByEmail(email);
     }
 
     public void updateUser(long id,Users userUpd){
@@ -74,12 +71,11 @@ public class UsersService {
         if(user.getLastName()!=null){
             user.setLastName(userUpd.getLastName());
         }
-        if(user.getUsername()!=null){
-            user.setUsername(userUpd.getUsername());
-        }
         if(user.getPassword()!=null){
             user.setPassword(userUpd.getPassword());
         }
         usersRepository.save(user);
     }
+
+
 }

@@ -17,7 +17,6 @@ import java.util.List;
 
 @Builder
 @AllArgsConstructor
-
 @Entity
 @Table (name = "users")
 public class Users implements UserDetails {
@@ -26,21 +25,21 @@ public class Users implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="users_id")
     private Long id;
-
     private String firstName;
     private String lastName;
-    private String username;
     private String password;
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
+
     public Users() {
 
     }
-    public Users(String firstName, String lastName, String username, String password, String email,Role role) {
+    public Users(String firstName, String lastName, String password, String email,Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = username;
         this.password = password;
         this.email = email;
         this.role=role;
@@ -69,8 +68,9 @@ public class Users implements UserDetails {
         this.lastName = lastName;
     }
 
+    @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -93,14 +93,12 @@ public class Users implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
+
+
 
     public String getPassword() {
         return password;
