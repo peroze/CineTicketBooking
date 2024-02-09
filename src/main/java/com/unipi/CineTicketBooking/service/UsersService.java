@@ -1,6 +1,7 @@
 package com.unipi.CineTicketBooking.service;
 
 import com.unipi.CineTicketBooking.config.JwtService;
+import com.unipi.CineTicketBooking.controller.secondaryClasses.LoginRequest;
 import com.unipi.CineTicketBooking.model.Users;
 import com.unipi.CineTicketBooking.repository.UsersRepository;
 import jdk.swing.interop.SwingInterOpUtils;
@@ -34,6 +35,13 @@ public class UsersService {
         usersRepository.save(user);
         var jwtToken=jwtService.generateToken(user);
         return jwtToken;
+    }
+
+    public String login(LoginRequest request){
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
+        Users user=usersRepository.findUsersByEmail(request.getUsername()).orElseThrow(); //If it reaches this point then the user is correct
+        var jwtToken=jwtService.generateToken(user);
+        return  jwtToken;
     }
 
     public List<Users> getAllUsers() { return usersRepository.findAll();
