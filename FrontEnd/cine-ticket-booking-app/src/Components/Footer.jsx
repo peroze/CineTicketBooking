@@ -50,7 +50,7 @@ function Footer({icon,user}) {
                                 <a><FontAwesomeIcon className='fafooter' icon={faPaperPlane}/><i className="footerLink">CineTicketBooking@gmail.com</i></a>
                             </li>
                             <li><a><FontAwesomeIcon className='fafooter' icon={faPhone} /> <i className="footerLink">6998989898</i></a></li>
-                            <li><a><FontAwesomeIcon className='fafooter' icon={faMapLocationDot}/> <i className="footerLink">Syntagma Squere Athens</i></a></li>
+                            <li><a><FontAwesomeIcon className='fafooter' icon={faMapLocationDot}/> <i className="footerLink">University of Pireaus, Karaoli & Dimitriou 80</i></a></li>
                             
                         </ul>
                     </Col>
