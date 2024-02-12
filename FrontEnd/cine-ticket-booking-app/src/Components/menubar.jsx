@@ -43,7 +43,7 @@ function Menubar({icon,user}) {
                       <Nav.Link as={Link} to="/">Home</Nav.Link>
                       <Nav.Link as={Link} to="/movies" >Movies</Nav.Link>
                       <Nav.Link as={Link} to="/about">About Us</Nav.Link>
-                      <Nav.Link as={Link} to="/">Contact Us</Nav.Link>
+                      <Nav.Link as={Link} to="/contactus">Contact Us</Nav.Link>
                     </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>

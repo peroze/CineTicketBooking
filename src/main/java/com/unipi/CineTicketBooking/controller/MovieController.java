@@ -1,11 +1,15 @@
 package com.unipi.CineTicketBooking.controller;
 
+import com.google.gson.Gson;
 import com.unipi.CineTicketBooking.model.Movie;
+import com.unipi.CineTicketBooking.model.secondary.MovieListObject;
 import com.unipi.CineTicketBooking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,11 +47,26 @@ public class MovieController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+
+
     @PutMapping(path = "{movieName}")
     public ResponseEntity<Void> updateMovie(@PathVariable("movieName") String name, @RequestBody Movie newMovie) {
         movieService.updateMovie(name, newMovie);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping(path = "movieList")
+    public ResponseEntity<String> getMovieList(){
+        Gson gson = new Gson();
+        System.out.println("Inside MovieController before service");
+        List<MovieListObject> temp = movieService.getMovieList();
+        System.out.println("Inside MovieController after service");
+        String movieList = gson.toJson(temp);
+
+        return new ResponseEntity<>(movieList, HttpStatus.OK);
+    }
+
+
 
 
 }
