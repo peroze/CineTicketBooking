@@ -29,12 +29,8 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
-    private final UserDetailsService userDetailsService;
 
-    @Value("${application.cookie.secret-key}")
-    private String cookieSecretKey;
-    @Value("${application.cookie.expiration}")
-    private long cookieExpiration;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
@@ -45,17 +41,8 @@ public class SecurityConfiguration {
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new CookieAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .rememberMe(rememberMe ->
-                        rememberMe
-                                .key(cookieSecretKey)
-                                .userDetailsService(userDetailsService)
-                                .tokenValiditySeconds((int) cookieExpiration)
-                                .rememberMeParameter("rememberMe")
-                                .useSecureCookie(true)
-                )
                 .logout(logout ->
-                            logout.deleteCookies(CookieAuthenticationFilter.COOKIE_NAME)
+                            logout
                                     .logoutUrl("/api/auth/logout")
                                     .addLogoutHandler(logoutHandler)
                                     .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
