@@ -23,7 +23,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [rememberMe, setRememberMe] = useState(false);
+
 
 
     const handleButtonClick =() => {
@@ -46,9 +46,7 @@ const Login = () => {
         }
     };
 
-    const handleRememberMeChange = () => {
-        setRememberMe(!rememberMe);
-    };
+
 
    
 
@@ -116,15 +114,6 @@ const Login = () => {
 
                                                 </Form.Group>
 
-                                                <div className='d-flex justify-content-left mb-4'>
-                                                    <Form.Check 
-                                                        type="checkbox" 
-                                                        label="Remember me"
-                                                        name="rememberMe"
-                                                        checked={rememberMe}
-                                                        onChange={handleRememberMeChange}
-                                                    />   
-                                                </div>
 
                                                 <Button
                                                     onClick={handleButtonClick}
