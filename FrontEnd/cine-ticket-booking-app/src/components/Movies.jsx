@@ -7,28 +7,12 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route,Header } from "react-router-dom";
 import MoviePage from './MoviePage.jsx';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 
 
 const Movies = () => {
   const naviagte=useNavigate();
-  //const movies=[{id:2,name:"The Avengers"},{id:3,name:"Mission: Impossible Fallout"},{id:1,name:"The Avengers: Age of Ultron"}]
-  const movies =[];
-  axios.get('http://localhost:8080/api/movies/movieList')
-  .then(function (response) {
-    console.log(response.data);
-    const movieData = response.data;
-    movieData.forEach(movie => {
-      movies.push(movie);
-    });
-    console.log(movies);
-      
-  })
-  .catch(function (error) {
-      console.log(error);
-  });
-
+  const movies=[{id:2,name:"The Avengers"},{id:3,name:"Mission: Impossible Fallout"},{id:1,name:"The Avengers: Age of Ultron"}]
   return (
     <div>
           <h1>Movies</h1>
@@ -40,7 +24,7 @@ const Movies = () => {
               <MovieCard  name={movie.name} id={movie.id}></MovieCard>
             </div>
             ))}
-             <div className="cards" onClick={()=>{
+            <div className="cards" onClick={()=>{
                 naviagte('/movie',{state:1})
             }}><MovieCard name={'The Avengers 2'} id={1}/></div>
             <div className="cards"onClick={()=>{
@@ -48,7 +32,7 @@ const Movies = () => {
             }}><MovieCard name={'The Avengers'} id={2}/></div>
             <div className="cards"onClick={()=>{
                 naviagte('/movie',{state:3})
-            }}><MovieCard name={'Mission: Impossible Fallout'} id={3}/> </div> 
+            }}><MovieCard name={'Mission: Impossible Fallout'} id={3}/> </div>
         </div>
 
       
