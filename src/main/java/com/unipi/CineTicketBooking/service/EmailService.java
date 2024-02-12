@@ -1,22 +1,19 @@
-/* package com.unipi.CineTicketBooking.service;
+ package com.unipi.CineTicketBooking.service;
 
 import com.unipi.CineTicketBooking.model.Bookings;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 
+@RequiredArgsConstructor
 @Service
 public class EmailService {
     private final JavaMailSender javaMailSender;
-    @Autowired
-    public EmailService(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
-    }
 
     public void sendBookingConfirmation(Bookings booking) {
         MimeMessage message = javaMailSender.createMimeMessage();
@@ -25,7 +22,7 @@ public class EmailService {
         try {
             helper.setTo(booking.getUsers().getEmail());
             helper.setSubject("Booking Confirmation");
-            helper.setText("Dear " + booking.getUsers().getFirstName() + "Your booking has been confirmed.\nBooking details:\nMovie: "
+            helper.setText("Dear " + booking.getUsers().getFirstName() + ",\nYour booking has been confirmed.\nBooking details:\nMovie: "
                     + booking.getMovie().getTitle() + "\nBooking Time: " + booking.getBookingTime());
 
             javaMailSender.send(message);
@@ -33,5 +30,5 @@ public class EmailService {
             e.printStackTrace();
         }
     }
-} */
+}
 
