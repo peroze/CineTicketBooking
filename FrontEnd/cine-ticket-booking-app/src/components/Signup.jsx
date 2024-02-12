@@ -14,6 +14,7 @@ import {FaEyeSlash, FaEye} from 'react-icons/fa';
 import GoogleLoginButton from './GoogleLogin';
 
 
+
 import './Style/Signup.css'; // Import the external CSS file
 
 const Signup = () => {
@@ -23,6 +24,7 @@ const Signup = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
+  const [photo,setPhoto]=useState("")
 
   const handleSubmit =(e) => {
 
@@ -41,6 +43,8 @@ const Signup = () => {
     } else if (name === 'passwordConfirm') {
       setPasswordConfirm(value);
     }
+    
+
 
   };
 
