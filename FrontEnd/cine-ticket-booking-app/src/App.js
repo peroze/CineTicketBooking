@@ -18,6 +18,7 @@ import MovieCard from './Components/MovieCard.jsx'
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import MoviePage from './Components/MoviePage.jsx';
+import ContactUs from './Components/ContactUs.jsx';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
               <Route path="/movies" element={<Movies />} />
               <Route path="/about" element={<About />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/contactus" element={<ContactUs />} />
               <Route path="/movie" element={<MoviePage/>}></Route>
           </Routes>
           <Footer></Footer>
