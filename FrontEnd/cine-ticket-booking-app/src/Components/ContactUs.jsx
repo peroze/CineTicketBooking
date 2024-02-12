@@ -14,7 +14,7 @@ const ContactUs = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    // Στείλτε τα δεδομένα στον server χρησιμοποιώντας το Axios
+  
     axios({
       method: 'post',
       url: 'http://localhost:8080/api/ContactUs',
@@ -26,7 +26,7 @@ const ContactUs = () => {
       }
     })
     .then(function (response) {
-      // Επειτα από επιτυχή υποβολή, μπορείτε να χειριστείτε την απάντηση
+      
       console.log('Server Response:', response.data);
     })
     .catch(function (error) {
