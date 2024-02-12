@@ -14,6 +14,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import GoogleLoginButton from './GoogleLogin';
 import axios from 'axios';
+import AuthService from "../services/auth.service";
 
 import './Style/Login.css'; // Import the external CSS file
 
@@ -21,18 +22,13 @@ import './Style/Login.css'; // Import the external CSS file
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
+
 
     const handleButtonClick =() => {
         
-        
-        axios({
-            method: 'post',
-            url: 'http://localhost:8080/api/users/login',
-            data: {
-            username: email,
-            password: password
-            }
-        })
+        AuthService.login(email,password)
         .then(function (response) {
             console.log(response);
         })
@@ -50,7 +46,11 @@ const Login = () => {
         }
     };
 
-    const [showPassword, setShowPassword] = useState(false);
+    const handleRememberMeChange = () => {
+        setRememberMe(!rememberMe);
+    };
+
+   
 
 
     return(
@@ -117,7 +117,13 @@ const Login = () => {
                                                 </Form.Group>
 
                                                 <div className='d-flex justify-content-left mb-4'>
-                                                    <Form.Check type="checkbox" label="Remember me"/>   
+                                                    <Form.Check 
+                                                        type="checkbox" 
+                                                        label="Remember me"
+                                                        name="rememberMe"
+                                                        checked={rememberMe}
+                                                        onChange={handleRememberMeChange}
+                                                    />   
                                                 </div>
 
                                                 <Button
