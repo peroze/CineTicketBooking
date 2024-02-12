@@ -30,7 +30,7 @@ const ContactUs = () => {
       console.log('Server Response:', response.data);
     })
     .catch(function (error) {
-      // Χειρισμός σφαλμάτων
+      
       console.error('Error submitting form:', error);
     });
   };
