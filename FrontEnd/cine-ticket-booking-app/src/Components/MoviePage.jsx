@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 const MoviePage = () => {
     const location=useLocation();
     const id=location.state;
-    const naviagte=useNavigate();
+    const navigate=useNavigate();
     const [isLoading, setLoading] = useState(true);
     const [movie, setMovie] = useState();
     useEffect(() => {
@@ -31,7 +31,7 @@ const MoviePage = () => {
         <div className='movie  d-flex flex-column gap-3'>
             <div className="movieheader">
                 <div className="backButton" onClick={()=>{
-            naviagte('/movies')}}>
+            navigate('/movies')}}>
                     <FontAwesomeIcon icon={faAngleLeft} /> Return to Movies
                 </div>
                 <h1>{movie.moviename}</h1>
@@ -51,7 +51,9 @@ const MoviePage = () => {
             <div className="discription fields">{movie.description}</div>
 
             <div className='d-flex  align-items-start justify-content-center' >  
-                <button className="bookButton " role="button"><span className="text">Book Your Ticket </span></button>
+                <button onClick={()=>{
+            navigate('/calendar',{state:movie.id})
+            }} className="bookButton " role="button"><span className="text">Book Your Ticket </span></button>
             </div>
 
         </div>
