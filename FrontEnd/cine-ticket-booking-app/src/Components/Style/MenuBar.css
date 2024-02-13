@@ -166,3 +166,80 @@
     width:auto;
     vertical-align:middle;
   }
+  .userlist{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+  }
+  .useritem{
+    font-weight: bold;
+    position: relative;
+    cursor: pointer;
+
+  }
+  .useritem:hover{
+    color: #77ACA2;
+  }
+  .useritem::before{
+    content: "";
+    width: 0%;
+    height: 2px;
+    position: absolute;
+    left: 50%;
+    bottom: 0px;
+    transform: translateX(-50%);
+    background-color: #77ACA2;
+}
+.useritem:hover::before{
+    width: 100%;
+    transition: all 0.5s;
+}
+.logout{
+  color: red;
+}
+.useritem:hover{
+  color: #77ACA2;
+}
+.logout:hover{
+  color: red;
+  font-weight: bolder;
+  transition: all 0.5s ;
+}
+.logout::before{
+  content: "";
+  width: 0%;
+  height: 2px;
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+  transform: translateX(-50%);
+  background-color: red;
+}
+.logout:hover::before{
+  width: 100%;
+  transition: all 0.5s;
+}
+.usericon{
+  max-height:70px;
+  width:auto;
+  vertical-align:middle;
+}
+.usericoncontainer{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.popupcontainer{
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}

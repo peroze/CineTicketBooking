@@ -19,6 +19,7 @@ import Movies from './Movies.jsx';
 import About from './About.jsx';
 import Signup from './Signup.jsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Popup from 'reactjs-popup';
 
 
 
@@ -47,7 +48,24 @@ function Menubar({icon,user}) {
                     </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
-          <Nav.Link className='exlink rounded-pill' href="/login"><a className='extext'>{user}</a><img className="fic pull-right navbar-text rounded-pill" src={icon}/></Nav.Link>          
+          <Popup trigger={<Nav.Link className='exlink rounded-pill'><a className='extext'>{user}</a><img className="fic pull-right navbar-text rounded-pill" src={icon}/></Nav.Link>}position='bottom center'>
+            <div className="popupcontainer">
+              <div className='usericoncontainer'>
+              <img className="fic pull-right navbar-text rounded-pill usericon" src={icon}/>
+              </div>
+              <ul className='userlist'>
+                <li className='useritem'>
+                  Edit Users Information
+                </li>
+                <li className = 'useritem'>
+                  My Bookings
+                </li>
+                <li className='useritem logout'>
+                  LogOut
+                </li>
+              </ul>
+            </div>
+          </Popup>          
         </Container>
     </Navbar>
     );
