@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import MoviePage from './Components/MoviePage.jsx';
 import ContactUs from './Components/ContactUs.jsx';
+import CalendarPage from './Components/CalendarPage.jsx';
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/contactus" element={<ContactUs />} />
               <Route path="/movie" element={<MoviePage/>}></Route>
+              <Route path="/calendar" element={<CalendarPage/>}></Route>
           </Routes>
           <Footer></Footer>
         </Router>
