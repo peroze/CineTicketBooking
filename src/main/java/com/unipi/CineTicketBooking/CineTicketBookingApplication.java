@@ -1,13 +1,8 @@
 package com.unipi.CineTicketBooking;
 
 import com.unipi.CineTicketBooking.controller.secondaryClasses.RegisterRequest;
-import com.unipi.CineTicketBooking.model.Bookings;
-import com.unipi.CineTicketBooking.model.Movie;
-import com.unipi.CineTicketBooking.model.Role;
-import com.unipi.CineTicketBooking.model.Users;
-import com.unipi.CineTicketBooking.repository.BookingsRepository;
-import com.unipi.CineTicketBooking.repository.MovieRepository;
-import com.unipi.CineTicketBooking.repository.UsersRepository;
+import com.unipi.CineTicketBooking.model.*;
+import com.unipi.CineTicketBooking.repository.*;
 import com.unipi.CineTicketBooking.service.AuthenticationService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -38,7 +33,9 @@ public class CineTicketBookingApplication {
 	}
 
 	@Bean
-	CommandLineRunner run (MovieRepository movieRepository, UsersRepository usersRepository, BookingsRepository bookingsRepository,AuthenticationService authenticationService) {
+	CommandLineRunner run (RoomsRepository roomsRepository, MovieRepository movieRepository, UsersRepository usersRepository,
+						   BookingsRepository bookingsRepository, AuthenticationService authenticationService,
+							ShowtimeRepository showtimeRepository) {
 		return args ->{
 			List<String> names=new ArrayList<>();
 			names.add("Robert Downey Junior");
@@ -46,6 +43,8 @@ public class CineTicketBookingApplication {
 			names.add("Scarlett Johansson");
 			movieRepository.save(new Movie(Long.valueOf("1"),"Avengers 2","Action-Movie",120, LocalDate.now(),"SuperHero Movie","Joss Whedon",names,"PG-13","English"));
 			movieRepository.save(new Movie(Long.valueOf(2),"Avengers","Action Movie",130,LocalDate.now(),"SuperHero Movie","Joss Whedon",names,"PG-13","English"));
+			movieRepository.save(new Movie(3L,"Random movie : 2","Action Movie",150,LocalDate.now(),"Random Movie","Someone",names,"PG-13","English"));
+
 
 			var admin = RegisterRequest.builder()
 					.firstName("Admin")
@@ -61,6 +60,8 @@ public class CineTicketBookingApplication {
 			bookingsRepository.save(new Bookings(Long.valueOf('1'),usersRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),movieRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now()));
 			bookingsRepository.save(new Bookings(Long.valueOf('2'),usersRepository.findById(Long.valueOf(2)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),movieRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now()));
 			bookingsRepository.save(new Bookings(Long.valueOf('2'),usersRepository.findById(Long.valueOf(2)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),movieRepository.findById(Long.valueOf(2)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now()));
+
+			roomsRepository.save(new Rooms("Theater 1", 200));
 
 
 			LocalDateTime.now();
