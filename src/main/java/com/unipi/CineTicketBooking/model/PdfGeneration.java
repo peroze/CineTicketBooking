@@ -1,5 +1,6 @@
 package com.unipi.CineTicketBooking.model;
 
+import com.google.zxing.WriterException;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
@@ -70,8 +71,13 @@ public class PdfGeneration {
             document.add(movieName);
             document.add(showtimeTime);
             document.add(seatPdf);
+            QRCodeGenerator qr=new QRCodeGenerator();
+            byte[] qrcode=qr.getQRCodeImage("http://google.gr");
+            Image qrcodePrint=Image.getInstance(qrcode);
+            qrcodePrint.scaleAbsoluteHeight(200F);
+            qrcodePrint.scaleAbsoluteWidth(200F);
+            document.add(qrcodePrint);
             document.add(warning);
-
             document.close();
         } catch (FileNotFoundException | DocumentException e) {
             e.printStackTrace();
@@ -79,6 +85,8 @@ public class PdfGeneration {
             e.printStackTrace();
         } catch (IOException  e) {
             e.printStackTrace();
+        } catch (WriterException e) {
+            throw new RuntimeException(e);
         }
     }
 

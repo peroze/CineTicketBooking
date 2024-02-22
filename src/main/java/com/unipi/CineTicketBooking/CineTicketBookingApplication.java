@@ -37,6 +37,8 @@ public class CineTicketBookingApplication {
 						   BookingsRepository bookingsRepository, AuthenticationService authenticationService,
 							ShowtimeRepository showtimeRepository) {
 		return args ->{
+			PdfGeneration pdf=new PdfGeneration();
+			pdf.generate(1);
 			List<String> names=new ArrayList<>();
 			names.add("Robert Downey Junior");
 			names.add("Chris Evans");
