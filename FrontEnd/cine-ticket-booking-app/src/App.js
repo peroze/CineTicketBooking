@@ -21,6 +21,7 @@ import MoviePage from './Components/MoviePage.jsx';
 import ContactUs from './Components/ContactUs.jsx';
 import CalendarPage from './Components/CalendarPage.jsx';
 import BookingPage from './Components/BookingPage.jsx';
+import AddMovie from './Components/AddMovie.jsx';
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
               <Route path="/movie" element={<MoviePage/>}></Route>
               <Route path="/calendar" element={<CalendarPage/>}></Route>
               <Route path="/booking" element={<BookingPage/>}></Route>
+              <Route path="/addmovie" element={<AddMovie/>}></Route>
           </Routes>
           <Footer></Footer>
         </Router>
