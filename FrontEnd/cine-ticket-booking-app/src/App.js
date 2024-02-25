@@ -20,7 +20,7 @@ import { useState } from 'react';
 import MoviePage from './Components/MoviePage.jsx';
 import ContactUs from './Components/ContactUs.jsx';
 import CalendarPage from './Components/CalendarPage.jsx';
-
+import BookingPage from './Components/BookingPage.jsx';
 
 function App() {
 
@@ -45,6 +45,7 @@ function App() {
               <Route path="/contactus" element={<ContactUs />} />
               <Route path="/movie" element={<MoviePage/>}></Route>
               <Route path="/calendar" element={<CalendarPage/>}></Route>
+              <Route path="/booking" element={<BookingPage/>}></Route>
           </Routes>
           <Footer></Footer>
         </Router>
