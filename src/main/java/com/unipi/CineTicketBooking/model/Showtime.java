@@ -62,6 +62,11 @@ public class Showtime {
         return seats;
     }
 
+    public boolean setSeatBooked(int num){
+        seats.set(num,SeatStatus.BOOKED);
+        return true;
+    }
+
 
 
 
