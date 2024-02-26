@@ -23,8 +23,7 @@ public class EmailService {
             helper.setTo(booking.getUsers().getEmail());
             helper.setSubject("Booking Confirmation");
             helper.setText("Dear " + booking.getUsers().getFirstName() + ",\nYour booking has been confirmed.\nBooking details:\nMovie: "
-                    + booking.getMovie().getTitle() + "\nBooking Time: " + booking.getBookingTime());
-
+                    + booking.getShowtime().getMovie().getTitle() + "\nBooking Time: " + booking.getBookingTime());
             javaMailSender.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();

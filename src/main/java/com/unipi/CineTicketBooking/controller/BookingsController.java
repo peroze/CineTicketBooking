@@ -1,5 +1,8 @@
 package com.unipi.CineTicketBooking.controller;
 
+import com.unipi.CineTicketBooking.config.CustomHttpStatusExceptions.IllegalBookingStatusException;
+import com.unipi.CineTicketBooking.controller.secondaryClasses.AddBookingRequest;
+import com.unipi.CineTicketBooking.model.PdfGeneration;
 import org.springframework.web.bind.annotation.*;
 import com.unipi.CineTicketBooking.model.Bookings;
 import com.unipi.CineTicketBooking.service.BookingsService;
@@ -11,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -18,6 +22,8 @@ import java.util.List;
 @RequestMapping("/api/bookings")
 public class BookingsController {
     private final BookingsService bookingsService;
+
+
 
     @Autowired
     public BookingsController(BookingsService bookingsService) {
@@ -40,20 +46,45 @@ public class BookingsController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Bookings> createBooking(@RequestBody Bookings booking) {
-        Bookings createdBooking = bookingsService.createBooking(booking);
+    public ResponseEntity<Bookings> createBooking(@RequestBody AddBookingRequest bookingrequest) {
+        Bookings createdBooking = bookingsService.createBooking(bookingrequest);
+        PdfGeneration pdf=new PdfGeneration();
+        pdf.generate(createdBooking);
+        createdBooking.getShowtime().setSeatBooked(createdBooking.getSeat());
         return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Bookings> updateBooking(@PathVariable Long id, @RequestBody Bookings updatedBooking) {
-        Bookings booking = bookingsService.updateBooking(id, updatedBooking);
-        if (booking != null) {
-            return new ResponseEntity<>(booking, HttpStatus.OK);
-        } else {
+
+    @PutMapping("/checkin/{id}")
+    public ResponseEntity<Bookings> checkIn(@PathVariable Long id) {
+        try {
+            Bookings booking = bookingsService.checkIn(id);
+            return new ResponseEntity<>(booking,HttpStatus.OK);
+        }
+        catch (IllegalArgumentException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        catch (IllegalBookingStatusException e){
+            return new ResponseEntity<>(e.getHttpStatus());
+        }
+
     }
+
+    @PutMapping("/expire/{id}")
+    public ResponseEntity<Bookings> expire(@PathVariable Long id) {
+        try {
+            Bookings booking = bookingsService.expire(id);
+            return new ResponseEntity<>(booking,HttpStatus.OK);
+        }
+        catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch (IllegalBookingStatusException e){
+            return new ResponseEntity<>(e.getHttpStatus());
+        }
+
+    }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {

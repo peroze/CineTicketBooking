@@ -2,6 +2,7 @@ package com.unipi.CineTicketBooking;
 
 import com.unipi.CineTicketBooking.controller.secondaryClasses.RegisterRequest;
 import com.unipi.CineTicketBooking.model.*;
+import com.unipi.CineTicketBooking.model.secondary.BookingStatus;
 import com.unipi.CineTicketBooking.repository.*;
 import com.unipi.CineTicketBooking.service.AuthenticationService;
 import org.springframework.boot.CommandLineRunner;
@@ -37,8 +38,8 @@ public class CineTicketBookingApplication {
 						   BookingsRepository bookingsRepository, AuthenticationService authenticationService,
 							ShowtimeRepository showtimeRepository) {
 		return args ->{
-			PdfGeneration pdf=new PdfGeneration();
-			pdf.generate(1);
+			//PdfGeneration pdf=new PdfGeneration();
+			//pdf.generate(1);
 			List<String> names=new ArrayList<>();
 			names.add("Robert Downey Junior");
 			names.add("Chris Evans");
@@ -59,11 +60,14 @@ public class CineTicketBookingApplication {
 			System.out.println("Admin token: " + authenticationService.register(admin).getAccessToken());
 			usersRepository.save(new Users("Giwrgos","Gewrgiou","$2a$10$1b2k0DuAPefZPXkPdeKRFuOBuXV5VQkWmLXZYaFLfiWPh615fBfuO","g.gewrgiou@gmail.com", Role.ADMIN));
 			usersRepository.save(new Users("Nikolaos","Partsanakis","$2a$10$1b2k0DuAPefZPXkPdeKRFuOBuXV5VQkWmLXZYaFLfiWPh615fBfuO","n.partsanakis@gmail.com",Role.USER));
-			bookingsRepository.save(new Bookings(Long.valueOf('1'),usersRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),movieRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now()));
-			bookingsRepository.save(new Bookings(Long.valueOf('2'),usersRepository.findById(Long.valueOf(2)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),movieRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now()));
-			bookingsRepository.save(new Bookings(Long.valueOf('2'),usersRepository.findById(Long.valueOf(2)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),movieRepository.findById(Long.valueOf(2)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now()));
-
+			LocalDateTime.now().plusHours(2);
 			roomsRepository.save(new Rooms("Theater 1", 200));
+			showtimeRepository.save(new Showtime(movieRepository.findById(Long.valueOf("1")).get(),roomsRepository.findById(Long.valueOf("1")).get(),roomsRepository.findById(Long.valueOf("1")).get().getCapacity(),LocalDateTime.now(),LocalDateTime.now().plusMinutes(Long.valueOf(movieRepository.findById(Long.valueOf("1")).get().getDuration())),25));
+			bookingsRepository.save(new Bookings(usersRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),showtimeRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now(),13, BookingStatus.PENDING));
+			//bookingsRepository.save(new Bookings(Long.valueOf('2'),usersRepository.findById(Long.valueOf(2)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),movieRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now()));
+			//bookingsRepository.save(new Bookings(Long.valueOf('2'),usersRepository.findById(Long.valueOf(2)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),movieRepository.findById(Long.valueOf(2)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now()));
+
+
 
 
 			LocalDateTime.now();

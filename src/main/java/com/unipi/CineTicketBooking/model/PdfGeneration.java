@@ -23,16 +23,16 @@ public class PdfGeneration {
 
 
 
-    public void generate(int id) {
+    public void generate(Bookings booking) {
         try {
 
-            String name = "Anaximandos";
-            String surname = "Partsanakis";
-            String movie= "Maze Runner";
-            String showtime="Monday 19/02/2024 20:40";
-            String seat="13";
+            String name = booking.getUsers().getFirstName();
+            String surname = booking.getUsers().getLastName();
+            String movie= booking.getShowtime().getMovie().getName();
+            String showtime=booking.getShowtime().getStartTime().toString();
+            String seat=String.valueOf(booking.getSeat());
             Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream(id + ".pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(booking.getId() + ".pdf"));
             document.open();
             Image img = Image.getInstance("FrontEnd/cine-ticket-booking-app/src/Components/Images/Logo.png");
             Font header1 = FontFactory.getFont(FontFactory.COURIER, 15, BaseColor.BLACK);
@@ -72,7 +72,7 @@ public class PdfGeneration {
             document.add(showtimeTime);
             document.add(seatPdf);
             QRCodeGenerator qr=new QRCodeGenerator();
-            byte[] qrcode=qr.getQRCodeImage("http://google.gr");
+            byte[] qrcode=qr.getQRCodeImage("http://localhost:8080/checkin/"+booking.getId());
             Image qrcodePrint=Image.getInstance(qrcode);
             qrcodePrint.scaleAbsoluteHeight(200F);
             qrcodePrint.scaleAbsoluteWidth(200F);
