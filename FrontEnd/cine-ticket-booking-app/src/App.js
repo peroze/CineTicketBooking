@@ -20,6 +20,8 @@ import { useState , createContext } from 'react';
 import MoviePage from './Components/MoviePage.jsx';
 import ContactUs from './Components/ContactUs.jsx';
 import CalendarPage from './Components/CalendarPage.jsx';
+import BookingPage from './Components/BookingPage.jsx';
+import AddMovie from './Components/AddMovie.jsx';
 import AdminPanelMovies from './Components/admin-panel/AdminPanelMovies.jsx';
 import AdminPanelShowtimes from './Components/admin-panel/AdminPanelShowtimes.jsx';
 import AdminPanelRooms from './Components/admin-panel/AdminPanelRooms.jsx';
@@ -54,6 +56,8 @@ function App() {
               <Route path="/contactus" element={<ContactUs />} />
               <Route path="/movie" element={<MoviePage/>}></Route>
               <Route path="/calendar" element={<CalendarPage/>}></Route>
+              <Route path="/booking" element={<BookingPage/>}></Route>
+              <Route path="/addmovie" element={<AddMovie/>}></Route>
               <Route path="/admin-panel/movies" element={<AdminPanelMovies />}></Route>
               <Route path="/admin-panel/users" element={<AdminPanelUsers />}></Route>
               <Route path="/admin-panel/showtimes" element={<AdminPanelShowtimes />}></Route>
