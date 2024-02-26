@@ -2,6 +2,7 @@ package com.unipi.CineTicketBooking.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.unipi.CineTicketBooking.model.secondary.BookingStatus;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,11 +10,13 @@ import java.time.LocalDateTime;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 
 @Entity
 @Table(name = "bookings")
-
+@AllArgsConstructor
 public class Bookings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,21 +25,25 @@ public class Bookings {
     @ManyToOne(targetEntity = Users.class) //
     @JoinColumn(name = "users_id",referencedColumnName = "users_id",nullable = false)
     private Users users;
+    @ManyToOne(targetEntity = Showtime.class)
+    @JoinColumn(name="showtime_id",referencedColumnName = "showtime_id",nullable = false)
+    private Showtime showtime;
 
-
-    @ManyToOne(targetEntity = Movie.class)
-    @JoinColumn(name = "movie_id",referencedColumnName = "movie_id", nullable = false)
-    private Movie movie;
+    private BookingStatus status;
+    @Column
+    private int seat;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDateTime bookingTime; // Εδώ περιέχεται η ώρα της κράτησης με ημερομηνία και ώρα
 
 
-    public Bookings(Long id, Users users, Movie movie, LocalDateTime bookingTime) {
+    public Bookings(Users users, Showtime showtime, LocalDateTime bookingTime,int seat,BookingStatus status) {
         this.id = id;
         this.users = users;
-        this.movie = movie;
+        this.showtime = showtime;
         this.bookingTime = bookingTime;
+        this.seat=seat;
+        this.status=status;
     }
 
     public Bookings() {
@@ -51,8 +58,8 @@ public class Bookings {
         return users;
     }
 
-    public Movie getMovie() {
-        return movie;
+    public Showtime getShowtime() {
+        return showtime;
     }
 
     public LocalDateTime getBookingTime() {
@@ -67,11 +74,27 @@ public class Bookings {
         this.users = users;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public void setShowtime(Showtime showtime) {
+        this.showtime = showtime;
     }
 
     public void setBookingTime(LocalDateTime bookingTime) {
         this.bookingTime = bookingTime;
+    }
+
+    public int getSeat() {
+        return seat;
+    }
+
+    public void setSeat(int seat) {
+        this.seat = seat;
+    }
+
+    public BookingStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BookingStatus status) {
+        this.status = status;
     }
 }

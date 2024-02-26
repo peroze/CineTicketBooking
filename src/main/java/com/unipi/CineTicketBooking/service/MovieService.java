@@ -31,7 +31,7 @@ public class MovieService {
     public void addNewMovie(Movie movie) {
         Optional<Movie> movieOptional = movieRepository.findMovieByName(movie.getName());
         if(movieOptional.isPresent()){
-            throw new IllegalStateException("name already in list");
+            throw new IllegalStateException("Movie name already in list");
         }
         movieRepository.save(movie);
     }

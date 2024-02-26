@@ -1,23 +1,29 @@
 package com.unipi.CineTicketBooking.service;
 
+import com.unipi.CineTicketBooking.config.CustomHttpStatusExceptions.IllegalBookingStatusException;
+import com.unipi.CineTicketBooking.controller.secondaryClasses.AddBookingRequest;
 import com.unipi.CineTicketBooking.model.Bookings;
+import com.unipi.CineTicketBooking.model.secondary.BookingStatus;
 import com.unipi.CineTicketBooking.repository.BookingsRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BookingsService {
 
     private final BookingsRepository bookingsRepository;
+    private final ShowtimeService showtimeService;
+    private final UsersService usersService;
 
-    public BookingsService(BookingsRepository bookingsRepository) {
-        this.bookingsRepository = bookingsRepository;
-    }
-
-    public Bookings createBooking(Bookings booking) {
-
+    public Bookings createBooking(AddBookingRequest bookingRequest) {
+        Bookings booking=new Bookings(usersService.getUserByEmail(bookingRequest.getUserEmail()).get(),showtimeService.getShowtimeById(bookingRequest.getShowtimeid()).get(), LocalDateTime.now(),bookingRequest.getSeat(), BookingStatus.PENDING);
         return bookingsRepository.save(booking);
     }
 
@@ -25,20 +31,42 @@ public class BookingsService {
         List<Bookings> bookingsList = bookingsRepository.findAll();
         return bookingsList;
     }
+
     public Bookings getBookingById(Long id) {
         Optional<Bookings> optionalBooking = bookingsRepository.findById(id);
         return optionalBooking.orElse(null);
     }
-    public Bookings updateBooking(Long id, Bookings updatedBooking) {
-        Optional<Bookings> optionalBooking = bookingsRepository.findById(id);
 
-        if (optionalBooking.isPresent()) {
-            Bookings booking = optionalBooking.get();
-            return bookingsRepository.save(booking);
-        } else {
-            return null;
+    public Bookings checkIn(Long id){
+        Bookings optionalBooking = bookingsRepository.findById(id).orElse(null);
+        if (optionalBooking==null){
+            throw new IllegalArgumentException("There is no booking with this id");
         }
+       if( optionalBooking.getStatus()==BookingStatus.CHECKED_IN){
+           throw new IllegalBookingStatusException(HttpStatus.BAD_REQUEST,"The given booking is already checked-in");
+       }
+       else if( optionalBooking.getStatus()==BookingStatus.EXPIRED){
+            throw new IllegalBookingStatusException(HttpStatus.BAD_REQUEST,"The given booking is already expired");
+       }
+       optionalBooking.setStatus(BookingStatus.CHECKED_IN);
+       return optionalBooking;
     }
+
+    public Bookings expire(Long id){
+        Bookings optionalBooking = bookingsRepository.findById(id).orElse(null);
+        if (optionalBooking==null){
+            throw new IllegalArgumentException("Wrong Booking Number");
+        }
+        if( optionalBooking.getStatus()==BookingStatus.CHECKED_IN){
+            throw new IllegalBookingStatusException(HttpStatus.BAD_REQUEST,"The Booking is already checked in and can't be set to EXPIRED");
+        }
+        if( optionalBooking.getStatus()==BookingStatus.EXPIRED){
+           return optionalBooking;
+        }
+        optionalBooking.setStatus(BookingStatus.EXPIRED);
+        return optionalBooking;
+    }
+
     public boolean deleteBooking(Long id) {
         Optional<Bookings> optionalBooking = bookingsRepository.findById(id);
 
