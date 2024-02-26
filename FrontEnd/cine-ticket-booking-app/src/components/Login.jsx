@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import LoadingButton from './LoadingButton';
@@ -15,6 +15,10 @@ import Col from 'react-bootstrap/Col';
 import GoogleLoginButton from './GoogleLogin';
 import axios from 'axios';
 import AuthService from "../services/auth.service";
+import UserService from "../services/user.service.js";
+
+import { useEffect } from 'react';
+import { UserContext } from '../App.js';
 
 import './Style/Login.css'; // Import the external CSS file
 
@@ -24,13 +28,17 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-
+    const {isLoggedIn,setIsLoggedIn} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
 
     const handleButtonClick =() => {
         
         AuthService.login(email,password)
         .then(function (response) {
             console.log(response);
+            handleLogin();
+            setIsLoggedIn(true);
+            console.log("Is the user logged in? " ,isLoggedIn);
         })
         .catch(function (error) {
             console.log(error);
@@ -46,9 +54,21 @@ const Login = () => {
         }
     };
 
+    const handleLogin = () => {
+        UserService.getUserByEmail(email)
+        .then(function (response) {
+            console.log(response);
+            //We set the current user in the global scope
+            setUser(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        
+    }
 
 
-   
+    
 
 
     return(
