@@ -23,9 +23,7 @@
 .booking-card {
     box-sizing: border-box;
     background-color: #77ACA2 !important;
-    border-radius: 35px !important;  
-    overflow-x:auto;
-    overflow-y:auto;
+    border-radius: 35px !important; 
     height: 100%;
     backdrop-filter: saturate(200%) blur(25px);
     max-height: 100%;
@@ -56,13 +54,22 @@
 }
 
 #booking-form .custom-Btn {
-    background-color: #031926;
+    background-color: white;
     border: 1px solid #031926;
+    color: black;
+    transition: all 0.5s; 
+}
+
+#booking-form .custom-Btn:hover {
+  transform: scale(1.05);
+  transition: all 0.5s; 
+  background-color: #F4E9CD;
 }
 
 #oauth2-btn .custom-google-btn {
     background-color: transparent;
 }
+
 #oauth2-btn {
     background-color: transparent;
 }
@@ -88,13 +95,27 @@
 }
 
 .cinemaoutside{
-    width: 30%;
-    height: 50%;
+    height: 100%;
+    width: 100%;
     background-color: rgba(0,0,0,0.3);
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 20px;
+    flex-direction: column;
+}
+
+.cinema-outside-outside{
+  width: 30%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.cinema-outside-outside h1{
+  margin-bottom: 15px;
 }
 
 .formoutside {

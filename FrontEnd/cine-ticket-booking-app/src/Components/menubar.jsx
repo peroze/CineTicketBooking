@@ -23,7 +23,7 @@ import Popup from 'reactjs-popup';
 
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../App.js';
-import AuthService from "../services/auth.service";
+import AuthService from "../services/auth.service.js";
 import { useNavigate } from 'react-router-dom';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 

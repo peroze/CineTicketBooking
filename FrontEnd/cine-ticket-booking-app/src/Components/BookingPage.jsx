@@ -35,6 +35,7 @@ const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
   const [email, setEmail] = useState("");
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
+  const [telephone, settelephone] = useState("");
   const [seat,setseat]=useState("");
   const [selectedSeats, setSelectedSeats] = useState([]);
 
@@ -52,6 +53,8 @@ const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
       setlastName(value);
     } else if (name === 'number of seat') {
       setseat(value);
+    } else if (name === 'telephone') {
+      settelephone(value);
     }
     
   };
@@ -68,12 +71,18 @@ const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
 
 
     <div className='outside-booking-container'>
-    <div className="cinemaoutside">
+      <div className='cinema-outside-outside'>
+      <h1>
+        Select Your Seat
+      </h1>
+      <div className="cinemaoutside">
         <Cinema movie = {movie} selectedSeats={selectedSeats}
         onSelectedSeatsChange={selectedSeats => setSelectedSeats(selectedSeats)}>
     
         </Cinema>
     </div>
+      </div>
+    
    <div className="formoutside">
 
    <Container fluid className="booking-page align-items-center justify-content-center">
@@ -118,6 +127,18 @@ const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
                             placeholder="Enter email" 
                             name="email"
                             value={email}
+                            onChange={handleInputChange}                                                    
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formEmail">
+                    <Form.Label>Telephone</Form.Label>
+                        <Form.Control 
+                            type="tel"
+                            className="custom-fields" 
+                            placeholder="Enter your phone number" 
+                            name="telephone"
+                            value={telephone}
                             onChange={handleInputChange}                                                    
                         />
                     </Form.Group>
