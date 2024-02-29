@@ -2,11 +2,17 @@ import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import styles from"./Style/CalendarPage.css"
 import { ViewState } from '@devexpress/dx-react-scheduler';
+import { useLocation } from 'react-router-dom';
+
 import {
   Scheduler,
   WeekView,
   Appointments,
+  DateNavigator,
+  Toolbar,
+  TodayButton
 } from '@devexpress/dx-react-scheduler-material-ui';
+
 function formatDate(date) {
   var d = new Date(date),
       month = '' + (d.getMonth() + 1),
@@ -28,7 +34,9 @@ const schedulerData = [
   { startDate: '2024-02-20T20:00', endDate: '2024-02-20T22:30', title: 'Play2' },
 ];
 const CalendarPage = () => {
-  const [date, setDate] = useState(new Date());
+const [date, setDate] = useState(new Date());
+const location=useLocation();
+const movie = location.state;
 
   const handleDateChange = (newDate) => {
     setDate(newDate);
@@ -45,7 +53,10 @@ const CalendarPage = () => {
       <ViewState
         currentDate={currentDate}
       />
+     <Toolbar />
     <WeekView startDayHour={17} endDayHour={24} />
+    <DateNavigator />
+    <TodayButton />
       <Appointments />
     </Scheduler>
   </Paper>

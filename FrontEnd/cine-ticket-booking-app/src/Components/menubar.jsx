@@ -83,6 +83,8 @@ function Menubar({icon,username}) {
                       <Nav.Link as={Link} to="/movies" >Movies</Nav.Link>
                       <Nav.Link as={Link} to="/about">About Us</Nav.Link>
                       <Nav.Link as={Link} to="/contactus">Contact Us</Nav.Link>
+                      <Nav.Link as={Link} to="/validate-page">Validate</Nav.Link>
+
                       {isLoggedIn && adminStatus && (
                         <>             
                           <NavDropdown title="Admin Panel">
