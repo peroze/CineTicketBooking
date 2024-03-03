@@ -5,13 +5,17 @@ import MovieService from "../../services/movie.service.js";
 import React, { useState, useContext,useEffect } from 'react';
 import EditMovieModal from './EditMovieModal';
 import AddMovieModal from './AddMovieModal';
+import DeleteMovieModal from './DeleteMovieModal.jsx';
 import Button from 'react-bootstrap/Button';
+
+import "../Style/MovieDataTable.css";
 
 
 const MovieDataTable = ({ moviesData, isPending ,handleReload}) => {
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const handleEditShow = (movie) => {
         setSelectedMovie(movie);
@@ -22,6 +26,13 @@ const MovieDataTable = ({ moviesData, isPending ,handleReload}) => {
 
     const handleAddShow = () => setShowAddModal(true);
     const handleAddClose = () => setShowAddModal(false);
+
+    const handleDeleteShow = (movie) => {
+        setSelectedMovie(movie);
+        setShowDeleteModal(true);
+    }
+    const handleDeleteClose = () => setShowDeleteModal(false);
+
 
     const columns = [
         { 
@@ -38,15 +49,15 @@ const MovieDataTable = ({ moviesData, isPending ,handleReload}) => {
         {
             name: 'Actions',
             cell: (row) => (
-            <Dropdown>
+            <Dropdown className="movie-data-drop-down">
                 <Dropdown.Toggle variant="secondary" id={`dropdown-${row.id}`}>
                 {/* Three dots for the ellipsis */}
                 <AiOutlineEllipsis />
                 </Dropdown.Toggle>
     
-                <Dropdown.Menu>
+                <Dropdown.Menu align="end">
                 <Dropdown.Item onClick={() => handleEditShow(row)}>Edit</Dropdown.Item>
-                <Dropdown.Item className="text-danger">Delete</Dropdown.Item>
+                <Dropdown.Item onClick={() => handleDeleteShow(row)} className="text-danger">Delete</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
             ),
@@ -72,6 +83,7 @@ const MovieDataTable = ({ moviesData, isPending ,handleReload}) => {
                     data={moviesData} 
                     pagination
                     progressPending={isPending}
+                    className="movie-data-table"
         />
         {showEditModal && (<EditMovieModal
                 show={showEditModal}
@@ -88,6 +100,15 @@ const MovieDataTable = ({ moviesData, isPending ,handleReload}) => {
                 onHide={() => setShowAddModal(false)}
                 showModal = {handleAddShow}
                 closeModal = {handleAddClose}
+                handleReload = {handleReload}
+        />
+        )}
+        {showDeleteModal && (<DeleteMovieModal
+                show={showDeleteModal}
+                movie={selectedMovie}
+                onHide={() => setShowDeleteModal(false)}
+                showModal = {handleDeleteShow}
+                closeModal = {handleDeleteClose}
                 handleReload = {handleReload}
         />
         )}

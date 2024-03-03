@@ -5,9 +5,10 @@ import React, { useState,useEffect } from 'react';
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import MovieService from "../../services/movie.service.js";
 
 
-const EditMovieModal = ({ movie, showModal, closeModal,handleRefresh}) => {
+const EditMovieModal = ({ movie, showModal, closeModal,handleReload}) => {
 
     const [currentTitle, setCurrentTitle] = useState(movie.name);
     const [currentGenre, setCurrentGenre] = useState(movie.genre);
@@ -20,7 +21,18 @@ const EditMovieModal = ({ movie, showModal, closeModal,handleRefresh}) => {
     const [currentLanguage, setCurrentLanguage] = useState(movie.language);
 
     const applyChanges = () =>{
-        closeModal();
+        MovieService.editMovie(movie.id,currentGenre,currentDuration,currentReleaseDate,currentDescription
+            ,currentDirector,currentActors,currentRating,currentLanguage)
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            .finally( () => {
+                closeModal();
+                handleReload();
+            })
     }
 
 

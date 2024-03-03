@@ -36,6 +36,43 @@ class MovieService {
             throw error; // Rethrow the error to handle it in the caller
         });
     }
+
+    deleteMovie(id){
+        return api
+        .delete("/movies/delete/"+id)
+        .then(response =>{
+            return response.data;
+        })
+        .catch(error => {
+            console.error("Error deleting movie:", error);
+            throw error; // Rethrow the error to handle it in the caller
+        });
+    }
+
+    editMovie(id,genre,duration,releaseDate,description,director,actors,rating,language){
+        if (typeof actors === 'string') {
+            actors = actors.split(',').map(actor => actor.trim());
+        }
+
+        return api
+        .put("/movies/update/"+id,{
+            genre,
+            duration,
+            releaseDate,
+            description,
+            director,
+            actors,
+            rating,
+            language
+        })
+        .then(response =>{
+            return response.data;
+        })
+        .catch(error => {
+            console.error("Error updating movie:", error);
+            throw error; // Rethrow the error to handle it in the caller
+        });
+    }
     
 
 }
