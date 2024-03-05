@@ -1,7 +1,8 @@
 package com.unipi.CineTicketBooking.service;
 
-import com.unipi.CineTicketBooking.config.CustomHttpStatusExceptions.IllegalBookingStatusException;
+import com.unipi.CineTicketBooking.exception.IllegalBookingStatusException;
 import com.unipi.CineTicketBooking.controller.secondaryClasses.AddBookingRequest;
+import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
 import com.unipi.CineTicketBooking.model.Bookings;
 import com.unipi.CineTicketBooking.model.secondary.BookingStatus;
 import com.unipi.CineTicketBooking.repository.BookingsRepository;
@@ -69,12 +70,11 @@ public class BookingsService {
 
     public boolean deleteBooking(Long id) {
         Optional<Bookings> optionalBooking = bookingsRepository.findById(id);
-
         if (optionalBooking.isPresent()) {
             bookingsRepository.deleteById(id);
             return true;
         } else {
-            return false;
+            throw new NoEntryWithIdException("There is no booking with the given id");
         }
     }
 

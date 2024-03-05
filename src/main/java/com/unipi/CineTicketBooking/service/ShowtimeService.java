@@ -2,6 +2,7 @@ package com.unipi.CineTicketBooking.service;
 
 import com.unipi.CineTicketBooking.controller.secondaryClasses.AddShowtimeRequest;
 import com.unipi.CineTicketBooking.controller.secondaryClasses.UpdateShowtimeRequest;
+import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
 import com.unipi.CineTicketBooking.exception.ShowtimeAvailabilityException;
 import com.unipi.CineTicketBooking.model.Movie;
 import com.unipi.CineTicketBooking.model.Rooms;
@@ -72,6 +73,7 @@ public class ShowtimeService {
     }
 
     public void deleteShowtime(Long id) {
+        getShowtimeById(id).orElseThrow(()->new NoEntryWithIdException("There is no showtime with this idd"));
         showtimeRepository.deleteShowtime(id);
     }
 
@@ -79,7 +81,7 @@ public class ShowtimeService {
     public void updateShowtime(Long showtimeId, UpdateShowtimeRequest showtimeRequest) {
         //We don't allow Movie or Room changes because that would mess up the seats that are already booked.
         //If the admin wants to change the room and the movie, he can delete it and add it manually
-        Showtime showtime = showtimeRepository.findById(showtimeId).orElseThrow(() -> new EntityNotFoundException(
+        Showtime showtime = showtimeRepository.findById(showtimeId).orElseThrow(() -> new NoEntryWithIdException(
                 "The showtime you requested was not found in the database"
         ));
 

@@ -1,5 +1,6 @@
 package com.unipi.CineTicketBooking.service;
 
+import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
 import com.unipi.CineTicketBooking.model.Movie;
 import com.unipi.CineTicketBooking.model.secondary.MovieListObject;
 import com.unipi.CineTicketBooking.repository.MovieRepository;
@@ -40,14 +41,14 @@ public class MovieService {
     public void deleteMovie(String name) {
         boolean exists = movieRepository.existsByName(name);
         if(!exists){
-            throw new IllegalStateException("Movie with name "+name+" does not exists");
+            throw new NoEntryWithIdException("Movie with name "+name+" does not exists");
         }
         movieRepository.deleteByName(name);
     }
 
     @Transactional
     public void updateMovie(String movieName, Movie newMovie) {
-        Movie movie = movieRepository.findMovieByName(movieName).orElseThrow(() -> new IllegalStateException(
+        Movie movie = movieRepository.findMovieByName(movieName).orElseThrow(() -> new NoEntryWithIdException(
                 "movie with name "+movieName+ " does not exist"
         ));
 

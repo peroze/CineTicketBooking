@@ -1,5 +1,6 @@
 package com.unipi.CineTicketBooking.config;
-import com.unipi.CineTicketBooking.config.CustomHttpStatusExceptions.IllegalBookingStatusException;
+import com.unipi.CineTicketBooking.exception.IllegalBookingStatusException;
+import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
 import com.unipi.CineTicketBooking.exception.ShowtimeAvailabilityException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler extends RuntimeException {
 
     @ExceptionHandler(ShowtimeAvailabilityException.class)
-    public ResponseEntity<String> handleShowtimeAvailabilityException(ShowtimeAvailabilityException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    public ResponseEntity handleShowtimeAvailabilityException(ShowtimeAvailabilityException e) {
+        return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
@@ -32,6 +33,12 @@ public class GlobalExceptionHandler extends RuntimeException {
 
     @ExceptionHandler(IllegalBookingStatusException.class)
     public ResponseEntity handleException(IllegalBookingStatusException e) {
+        // log exception
+        return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+    }
+
+    @ExceptionHandler(NoEntryWithIdException.class)
+    public ResponseEntity handleException(NoEntryWithIdException e) {
         // log exception
         return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
     }

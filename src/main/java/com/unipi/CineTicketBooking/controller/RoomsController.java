@@ -22,43 +22,72 @@ public class RoomsController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Rooms>> getAllRooms() {
-        List<Rooms> rooms = roomsService.getAllRooms();
-        return new ResponseEntity<>(rooms, HttpStatus.OK);
+        try {
+            List<Rooms> rooms = roomsService.getAllRooms();
+            return new ResponseEntity<>(rooms, HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Rooms> getRoomById(@PathVariable Long id) {
-        Rooms room = roomsService.getRoomsById(id);
-        if (room != null) {
-            return new ResponseEntity<>(room, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            Rooms room = roomsService.getRoomsById(id);
+            if (room != null) {
+                return new ResponseEntity<>(room, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/create")
     public ResponseEntity<Rooms> createRoom(@RequestBody Rooms rooms) {
-        Rooms createdRoom = roomsService.createRooms(rooms);
-        return new ResponseEntity<>(createdRoom, HttpStatus.CREATED);
+        try {
+            Rooms createdRoom = roomsService.createRooms(rooms);
+            return new ResponseEntity<>(createdRoom, HttpStatus.CREATED);
+        }catch (IllegalStateException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Rooms> updateRoom(@PathVariable Long id, @RequestBody Rooms updatedRoom) {
-        Rooms room = roomsService.updateRooms(id, updatedRoom);
-        if (room != null) {
-            return new ResponseEntity<>(room, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            Rooms room = roomsService.updateRooms(id, updatedRoom);
+            if (room != null) {
+                return new ResponseEntity<>(room, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
-        boolean deleted = roomsService.deleteRooms(id);
-        if (deleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> deleteRoom(@PathVariable Long id) {
+        try {
+            boolean deleted = roomsService.deleteRooms(id);
+            if (deleted) {
+                return new ResponseEntity<>("The room has been successfully Deleted", HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

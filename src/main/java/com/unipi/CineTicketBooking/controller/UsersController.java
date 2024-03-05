@@ -1,6 +1,7 @@
 package com.unipi.CineTicketBooking.controller;
 
 import com.unipi.CineTicketBooking.controller.secondaryClasses.RegisterRequest;
+import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
 import com.unipi.CineTicketBooking.model.Role;
 import com.unipi.CineTicketBooking.model.Users;
 import com.unipi.CineTicketBooking.service.UsersService;
@@ -41,6 +42,9 @@ public class UsersController {
         try {
             usersService.deleteUser(email);
         }
+        catch(NoEntryWithIdException e){
+            new ResponseEntity<>(e.getMessage(),e.getHttpStatus());
+        }
         catch (IllegalArgumentException e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
@@ -52,9 +56,15 @@ public class UsersController {
     public ResponseEntity updateUser(@PathVariable("userId") long id, @RequestBody Users user){
         try {
             usersService.updateUser(id, user);
+        }catch (NoEntryWithIdException e){
+            return new ResponseEntity<>(e.getMessage(),e.getHttpStatus());
         }
         catch (IllegalArgumentException e){
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return ResponseEntity.ok(user) ;
     }

@@ -1,7 +1,8 @@
 package com.unipi.CineTicketBooking.controller;
 
-import com.unipi.CineTicketBooking.config.CustomHttpStatusExceptions.IllegalBookingStatusException;
+import com.unipi.CineTicketBooking.exception.IllegalBookingStatusException;
 import com.unipi.CineTicketBooking.controller.secondaryClasses.AddBookingRequest;
+import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
 import com.unipi.CineTicketBooking.model.PdfGeneration;
 import org.springframework.web.bind.annotation.*;
 import com.unipi.CineTicketBooking.model.Bookings;
@@ -32,26 +33,46 @@ public class BookingsController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Bookings>> getAllBookings() {
-        List<Bookings> bookings = bookingsService.getAllBookings();
-        return new ResponseEntity<>(bookings, HttpStatus.OK);
+        try{
+            List<Bookings> bookings = bookingsService.getAllBookings();
+            return new ResponseEntity<>(bookings, HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
     @GetMapping("/{id}")
     public ResponseEntity<Bookings> getBookingById(@PathVariable Long id) {
-        Bookings booking = bookingsService.getBookingById(id);
-        if (booking != null) {
-            return new ResponseEntity<>(booking, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            Bookings booking = bookingsService.getBookingById(id);
+            if (booking != null) {
+                return new ResponseEntity<>(booking, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/create")
     public ResponseEntity<Bookings> createBooking(@RequestBody AddBookingRequest bookingrequest) {
-        Bookings createdBooking = bookingsService.createBooking(bookingrequest);
-        PdfGeneration pdf=new PdfGeneration();
-        pdf.generate(createdBooking);
-        createdBooking.getShowtime().setSeatBooked(createdBooking.getSeat());
-        return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
+        try {
+            Bookings createdBooking = bookingsService.createBooking(bookingrequest);
+            PdfGeneration pdf = new PdfGeneration();
+            pdf.generate(createdBooking);
+            createdBooking.getShowtime().setSeatBooked(createdBooking.getSeat());
+            return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 
@@ -62,9 +83,11 @@ public class BookingsController {
             return new ResponseEntity<>(booking,HttpStatus.OK);
         }
         catch (IllegalArgumentException e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch (IllegalBookingStatusException e){
+            e.printStackTrace();
             return new ResponseEntity<>(e.getHttpStatus());
         }
 
@@ -77,9 +100,11 @@ public class BookingsController {
             return new ResponseEntity<>(booking,HttpStatus.OK);
         }
         catch (IllegalArgumentException e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch (IllegalBookingStatusException e){
+            e.printStackTrace();
             return new ResponseEntity<>(e.getHttpStatus());
         }
 
@@ -87,9 +112,18 @@ public class BookingsController {
 
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
-        bookingsService.deleteBooking(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> deleteBooking(@PathVariable Long id) {
+        try {
+            bookingsService.deleteBooking(id);
+            return new ResponseEntity<>("Succesfully Deleted", HttpStatus.NO_CONTENT);
+        }
+        catch (NoEntryWithIdException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(),e.getHttpStatus());
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
