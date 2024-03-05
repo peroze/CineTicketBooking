@@ -53,8 +53,8 @@ const MoviePage = () => {
 
             <div className='d-flex  align-items-start justify-content-center' >  
                 <button onClick={()=>{
-            navigate('/booking',{state:new ShowTime("25/02/2024, 15:25", "25/02/2024, 18:05", movie.moviename, [9, 41, 35, 11, 65, 26])})
-            }} className="bookButton " role="button"><span className="text">Book Your Ticket </span></button>
+            // navigate('/booking',{state:new ShowTime("25/02/2024, 15:25", "25/02/2024, 18:05", movie.moviename, [9, 41, 35, 11, 65, 26])})
+            navigate('/calendar', {state:movie}) }} className="bookButton " role="button"><span className="text">Book Your Ticket </span></button>
             </div>
 
         </div>

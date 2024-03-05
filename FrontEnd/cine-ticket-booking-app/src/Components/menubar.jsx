@@ -83,6 +83,8 @@ function Menubar({icon,username}) {
                       <Nav.Link as={Link} to="/movies" >Movies</Nav.Link>
                       <Nav.Link as={Link} to="/about">About Us</Nav.Link>
                       <Nav.Link as={Link} to="/contactus">Contact Us</Nav.Link>
+                      <Nav.Link as={Link} to="/validate-page">Validate</Nav.Link>
+
                       {isLoggedIn && adminStatus && (
                         <>             
                           <NavDropdown title="Admin Panel">
@@ -131,7 +133,7 @@ function Menubar({icon,username}) {
 
           ) : (
                 <Nav.Link className='exlink rounded-pill' as={Link} to="/login">
-                  <a className='extext'>Login</a>
+                  <i className='extext'>Login</i>
                   <img className="fic pull-right navbar-text rounded-pill" src={unknownUserIcon}/></Nav.Link>              
           )}
               
