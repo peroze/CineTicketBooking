@@ -25,14 +25,13 @@ public class PdfGeneration {
 
     public void generate(Bookings booking) {
         try {
-
             String name = booking.getUsers().getFirstName();
             String surname = booking.getUsers().getLastName();
             String movie= booking.getShowtime().getMovie().getName();
             String showtime=booking.getShowtime().getStartTime().toString();
             String seat=String.valueOf(booking.getSeat());
             Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream(booking.getId() + ".pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("bookingConfirmation/"+booking.getId() + ".pdf"));
             document.open();
             Image img = Image.getInstance("FrontEnd/cine-ticket-booking-app/src/Components/Images/Logo.png");
             Font header1 = FontFactory.getFont(FontFactory.COURIER, 15, BaseColor.BLACK);

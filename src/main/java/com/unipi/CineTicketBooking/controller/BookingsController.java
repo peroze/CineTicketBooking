@@ -3,6 +3,7 @@ package com.unipi.CineTicketBooking.controller;
 import com.unipi.CineTicketBooking.config.CustomHttpStatusExceptions.IllegalBookingStatusException;
 import com.unipi.CineTicketBooking.controller.secondaryClasses.AddBookingRequest;
 import com.unipi.CineTicketBooking.model.PdfGeneration;
+import com.unipi.CineTicketBooking.service.EmailService;
 import org.springframework.web.bind.annotation.*;
 import com.unipi.CineTicketBooking.model.Bookings;
 import com.unipi.CineTicketBooking.service.BookingsService;
@@ -22,12 +23,13 @@ import java.util.List;
 @RequestMapping("/api/bookings")
 public class BookingsController {
     private final BookingsService bookingsService;
-
+    private final EmailService emailService;
 
 
     @Autowired
-    public BookingsController(BookingsService bookingsService) {
+    public BookingsController(BookingsService bookingsService,EmailService emailService) {
         this.bookingsService = bookingsService;
+        this.emailService = emailService;
     }
 
     @GetMapping("/all")
@@ -51,6 +53,7 @@ public class BookingsController {
         PdfGeneration pdf=new PdfGeneration();
         pdf.generate(createdBooking);
         createdBooking.getShowtime().setSeatBooked(createdBooking.getSeat());
+        emailService.sendBookingConfirmation(createdBooking);
         return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
     }
 

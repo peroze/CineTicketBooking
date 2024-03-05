@@ -5,9 +5,11 @@ import com.unipi.CineTicketBooking.model.*;
 import com.unipi.CineTicketBooking.model.secondary.BookingStatus;
 import com.unipi.CineTicketBooking.repository.*;
 import com.unipi.CineTicketBooking.service.AuthenticationService;
+import com.unipi.CineTicketBooking.service.EmailService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +29,8 @@ public class CineTicketBookingApplication {
 
 
 	private PasswordEncoder passwordEncoder;
+
+
 	public static void main(String[] args) {
 		SpringApplication.run(CineTicketBookingApplication.class, args);
 
@@ -52,22 +56,18 @@ public class CineTicketBookingApplication {
 			var admin = RegisterRequest.builder()
 					.firstName("Admin")
 					.lastName("Admin")
-					.email("admin@mail.com")
+					.email("cineticketbooking@gmail.com")
 					.password("12345")
 					.role(Role.ADMIN)
 					.build();
 
 			System.out.println("Admin token: " + authenticationService.register(admin).getAccessToken());
-			usersRepository.save(new Users("Giwrgos","Gewrgiou","$2a$10$1b2k0DuAPefZPXkPdeKRFuOBuXV5VQkWmLXZYaFLfiWPh615fBfuO","g.gewrgiou@gmail.com", Role.ADMIN));
-			usersRepository.save(new Users("Nikolaos","Partsanakis","$2a$10$1b2k0DuAPefZPXkPdeKRFuOBuXV5VQkWmLXZYaFLfiWPh615fBfuO","n.partsanakis@gmail.com",Role.USER));
+			usersRepository.save(new Users("Giwrgos","Gewrgiou","$2a$10$1b2k0DuAPefZPXkPdeKRFuOBuXV5VQkWmLXZYaFLfiWPh615fBfuO","g.gewrgiou@gmails.com", Role.ADMIN));
+			usersRepository.save(new Users("Nikolaos","Partsanakis","$2a$10$1b2k0DuAPefZPXkPdeKRFuOBuXV5VQkWmLXZYaFLfiWPh615fBfuO","cineticketbooking@gmail.com",Role.USER));
 			LocalDateTime.now().plusHours(2);
 			roomsRepository.save(new Rooms("Theater 1", 200));
 			showtimeRepository.save(new Showtime(movieRepository.findById(Long.valueOf("1")).get(),roomsRepository.findById(Long.valueOf("1")).get(),roomsRepository.findById(Long.valueOf("1")).get().getCapacity(),LocalDateTime.now(),LocalDateTime.now().plusMinutes(Long.valueOf(movieRepository.findById(Long.valueOf("1")).get().getDuration())),25));
 			bookingsRepository.save(new Bookings(usersRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),showtimeRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now(),13, BookingStatus.PENDING));
-			//bookingsRepository.save(new Bookings(Long.valueOf('2'),usersRepository.findById(Long.valueOf(2)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),movieRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now()));
-			//bookingsRepository.save(new Bookings(Long.valueOf('2'),usersRepository.findById(Long.valueOf(2)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),movieRepository.findById(Long.valueOf(2)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now()));
-
-
 
 
 			LocalDateTime.now();
