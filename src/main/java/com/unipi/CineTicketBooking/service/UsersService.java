@@ -52,18 +52,22 @@ public class UsersService {
 
     public void updateUser(long id,Users userUpd){
         Users user=usersRepository.findById(id).orElseThrow(()->new IllegalArgumentException("The User does not exist"));
-        if(user.getEmail()!=null){
+        if(userUpd.getEmail()!=null){
             user.setEmail(userUpd.getEmail());
         }
-        if(user.getFirstName()!=null){
+        if(userUpd.getFirstName()!=null){
             user.setFirstName(userUpd.getFirstName());
         }
-        if(user.getLastName()!=null){
+        if(userUpd.getLastName()!=null){
             user.setLastName(userUpd.getLastName());
         }
-        if(user.getPassword()!=null){
+        if(userUpd.getPassword()!=null){
             user.setPassword(userUpd.getPassword());
         }
+        if(userUpd.getRole()!=null){
+            user.setRole(userUpd.getRole());
+        }
+
         usersRepository.save(user);
     }
 

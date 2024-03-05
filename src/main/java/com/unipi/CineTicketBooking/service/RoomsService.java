@@ -1,5 +1,6 @@
 package com.unipi.CineTicketBooking.service;
 
+import com.unipi.CineTicketBooking.model.Movie;
 import com.unipi.CineTicketBooking.model.Rooms;
 import com.unipi.CineTicketBooking.repository.RoomsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,12 @@ public class RoomsService {
         if (optionalRoom.isPresent()) {
             Rooms existingRoom = optionalRoom.get();
 
-            existingRoom.setName(updatedRoom.getName());
-            existingRoom.setCapacity(updatedRoom.getCapacity());
+            if(updatedRoom.getName() != null) {
+                existingRoom.setName(updatedRoom.getName());
+            }
+            if(updatedRoom.getCapacity() > 0) {
+                existingRoom.setCapacity(updatedRoom.getCapacity());
+            }
 
             return roomsRepository.save(existingRoom);
         } else {
