@@ -37,7 +37,7 @@ function Menubar({icon,username}) {
 
   const isAdmin = (user) => {
     const authority = user.authorities[0]?.authority;
-    if(authority === "ROLE_ADMIN" ){
+    if(authority === "ADMIN" ){
       return true;
     }
     return false;
