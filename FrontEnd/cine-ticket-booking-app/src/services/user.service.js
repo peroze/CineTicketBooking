@@ -7,6 +7,49 @@ class UserService {
         .then(response => {
             console.log(response.data);
           return response.data;
+        })
+        .catch(error => {
+            console.error("Error getting user:", error);
+            throw error; // Rethrow the error to handle it in the caller
+        });
+    }
+
+    getAllUsers(){
+        return api
+        .get("/users/getAllUsers")
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            console.error("Error getting users:", error);
+            throw error; // Rethrow the error to handle it in the caller
+        });
+    }
+
+    editUserRole(id,role){
+        return api
+        .put("/users/"+id,{
+            role
+        })
+        .then(response => {
+            console.log(response);
+            return response.data;
+        })
+        .catch(error => {
+            console.error("Error editing user role:", error);
+            throw error; // Rethrow the error to handle it in the caller
+        });
+    }
+
+    getAllRoles(){
+        return api
+        .get("/users/getAllRoles")
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            console.error("Error getting roles:", error);
+            throw error; // Rethrow the error to handle it in the caller
         });
     }
 

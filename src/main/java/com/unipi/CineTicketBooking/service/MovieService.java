@@ -40,9 +40,17 @@ public class MovieService {
     public void deleteMovie(String name) {
         boolean exists = movieRepository.existsByName(name);
         if(!exists){
-            throw new IllegalStateException("Movie with name "+name+" does not exists");
+            throw new IllegalStateException("Movie with name "+name+" does not exist");
         }
         movieRepository.deleteByName(name);
+    }
+
+    public void deleteMovieById(Long id) {
+        boolean exists = movieRepository.existsById(id);
+        if(!exists){
+            throw new IllegalStateException("Movie with id "+id+" does not exist");
+        }
+        movieRepository.deleteById(id);
     }
 
     @Transactional
@@ -76,6 +84,39 @@ public class MovieService {
             movie.setLanguage(newMovie.getLanguage());
         }
 
+
+    }
+
+    @Transactional
+    public void updateMovieById(Long Id, Movie newMovie) {
+        Movie movie = movieRepository.findById(Id).orElseThrow(() -> new IllegalStateException(
+                "movie with Id "+Id+ " does not exist"
+        ));
+
+        if(newMovie.getGenre() != null && !newMovie.getGenre().isBlank()){
+            movie.setGenre(newMovie.getGenre());
+        }
+        if (newMovie.getDuration() != null && newMovie.getDuration() > 0) {
+            movie.setDuration(newMovie.getDuration());
+        }
+        if (newMovie.getReleaseDate() != null) {
+            movie.setReleaseDate(newMovie.getReleaseDate());
+        }
+        if (newMovie.getDescription() != null && !newMovie.getDescription().isBlank()) {
+            movie.setDescription(newMovie.getDescription());
+        }
+        if (newMovie.getDirector() != null && !newMovie.getDirector().isBlank()) {
+            movie.setDirector(newMovie.getDirector());
+        }
+        if (newMovie.getActors() != null && !newMovie.getActors().isEmpty()) {
+            movie.setActors(newMovie.getActors());
+        }
+        if (newMovie.getRating() != null && !newMovie.getRating().isBlank()) {
+            movie.setRating(newMovie.getRating());
+        }
+        if (newMovie.getLanguage() != null && !newMovie.getLanguage().isBlank()) {
+            movie.setLanguage(newMovie.getLanguage());
+        }
 
     }
 

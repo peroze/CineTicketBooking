@@ -29,6 +29,9 @@ const AddMovieModal = ({ showModal, closeModal,handleReload}) => {
         .then((response) => {
             console.log(response.data);
         })
+        .catch(error => {
+            console.log(error);
+        })
         .finally( () => {
             closeModal();
             handleReload();

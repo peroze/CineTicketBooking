@@ -132,12 +132,14 @@ box-sizing: border-box;
 }
 
 body {
-margin: 0;
-padding: 0;
-font-family: 'Exo 2', sans-serif;
-background: #222222;
-color: white;
-font-size: 14px;
+
+  margin: 0;
+  padding: 0;
+  font-family: 'Exo 2', sans-serif;
+  background: #222222;
+  /* color: white; */
+  font-size: 14px;
+}
 
 min-height: 100vh;
 display: grid;

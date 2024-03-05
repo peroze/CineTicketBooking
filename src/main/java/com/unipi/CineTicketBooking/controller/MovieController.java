@@ -47,11 +47,23 @@ public class MovieController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @DeleteMapping(path ="/delete/{id}")
+    public ResponseEntity<Void> deleteMovieById(@PathVariable("id") Long id){
+        movieService.deleteMovieById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 
     @PutMapping(path = "{movieName}")
     public ResponseEntity<Void> updateMovie(@PathVariable("movieName") String name, @RequestBody Movie newMovie) {
         movieService.updateMovie(name, newMovie);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/update/{id}")
+    public ResponseEntity<Void> updateMovie(@PathVariable("id") Long id, @RequestBody Movie newMovie) {
+        movieService.updateMovieById(id, newMovie);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
