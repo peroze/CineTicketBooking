@@ -56,10 +56,13 @@ public class UsersController {
         catch (IllegalArgumentException e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok(user) ;
+        return ResponseEntity.ok("User Updated") ;
     }
 
-
+    @GetMapping("/getAllRoles")
+    public ResponseEntity getAllRoles() {
+        return ResponseEntity.ok().body(Role.values());
+    }
 
 
 
