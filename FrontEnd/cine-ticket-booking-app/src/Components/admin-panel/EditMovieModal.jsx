@@ -95,6 +95,7 @@ const EditMovieModal = ({ movie, showModal, closeModal,handleReload}) => {
 
                             <Form.Label>Description</Form.Label>
                             <Form.Control 
+                                as="textarea"
                                 type="textarea"  
                                 value={currentDescription}
                                 onChange={(e) => setCurrentDescription(e.target.value)}
