@@ -133,7 +133,7 @@ function Menubar({icon,username}) {
 
           ) : (
                 <Nav.Link className='exlink rounded-pill' as={Link} to="/login">
-                  <a className='extext'>Login</a>
+                  <i className='extext'>Login</i>
                   <img className="fic pull-right navbar-text rounded-pill" src={unknownUserIcon}/></Nav.Link>              
           )}
               

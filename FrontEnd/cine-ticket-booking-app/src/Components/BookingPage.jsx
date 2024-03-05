@@ -15,34 +15,34 @@ import GoogleLoginButton from './GoogleLogin';
 import styles from"./Style/BookingPage.css";
 import clsx from 'clsx'
 import { useLocation } from 'react-router-dom';
-
-
-
+ 
+ 
+ 
 const BookingPage = () => {
-const occupied = [9, 41, 35, 11, 65, 26];
+//const occupied = [9, 41, 35, 11, 65, 26];
 const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
-
-
-/* const movie = {
+ 
+ 
+/* const showtime = {
     name: 'Joker',
     occupied: [9, 41, 35, 11, 65, 26],
   } */
-
+ 
   const location=useLocation();
-  const movie = location.state;
+  const showtime = location.state;
   
-
+ 
   const [email, setEmail] = useState("");
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [telephone, settelephone] = useState("");
   const [seat,setseat]=useState("");
   const [selectedSeats, setSelectedSeats] = useState([]);
-
+ 
   const handleSubmit =(e) => {
-
+ 
   };
-
+ 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === 'email') {
@@ -58,7 +58,7 @@ const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
     }
     
   };
-
+ 
   const handleButtonClick = () => {
     //onClick logic here
   };
@@ -66,17 +66,17 @@ const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
   return (
     <div className="outsidecontainter">
         <h1>
-            Booking Details for {movie.name}
+            Booking Details for {showtime.title}
         </h1>
-
-
+ 
+ 
     <div className='outside-booking-container'>
       <div className='cinema-outside-outside'>
       <h1>
         Select Your Seat
       </h1>
       <div className="cinemaoutside">
-        <Cinema movie = {movie} selectedSeats={selectedSeats}
+        <Cinema showtime = {showtime} selectedSeats={selectedSeats}
         onSelectedSeatsChange={selectedSeats => setSelectedSeats(selectedSeats)}>
     
         </Cinema>
@@ -84,94 +84,94 @@ const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
       </div>
     
    <div className="formoutside">
-
+ 
    <Container fluid className="booking-page align-items-center justify-content-center">
       <Row className="booking-row text-center d-flex w-100 align-items-center justify-content-center">
         <Col sm={12} lg={12} md={12} className="booking-card-col d-flex align-items-center justify-content-center">
           <Card className= "booking-card my-sm-3 my-md-4 flex-wrap">
             <Card.Body className="p-sm-3 p-md-4">
               <Row>
-
+ 
                 <Form className="p-4 p-sm-0" id="booking-form">
-
+ 
                   <Form.Group className="mb-3" controlId="formFullName" >
                     <Form.Label>Full Name</Form.Label>
                     <InputGroup className="mb-3">
-                      <Form.Control 
+                      <Form.Control
                         type="text"
-                        className="custom-fields" 
-                        placeholder="First Name" 
+                        className="custom-fields"
+                        placeholder="First Name"
                         name="firstName"
                         value={firstName}
                         onChange={handleInputChange}                                                    
                       />
-                      <Form.Control 
+                      <Form.Control
                         type="text"
-                        className="custom-fields" 
-                        placeholder="Last Name" 
+                        className="custom-fields"
+                        placeholder="Last Name"
                         name="lastName"
                         value={lastName}
                         onChange={handleInputChange}                                                    
                       />
                         
                     </InputGroup>
-
+ 
                   </Form.Group>
-
-
+ 
+ 
                     <Form.Group className="mb-3" controlId="formEmail">
                     <Form.Label>Email</Form.Label>
-                        <Form.Control 
+                        <Form.Control
                             type="email"
-                            className="custom-fields" 
-                            placeholder="Enter email" 
+                            className="custom-fields"
+                            placeholder="Enter email"
                             name="email"
                             value={email}
                             onChange={handleInputChange}                                                    
                         />
                     </Form.Group>
-
+ 
                     <Form.Group className="mb-3" controlId="formEmail">
                     <Form.Label>Telephone</Form.Label>
-                        <Form.Control 
+                        <Form.Control
                             type="tel"
-                            className="custom-fields" 
-                            placeholder="Enter your phone number" 
+                            className="custom-fields"
+                            placeholder="Enter your phone number"
                             name="telephone"
                             value={telephone}
                             onChange={handleInputChange}                                                    
                         />
                     </Form.Group>
-
+ 
                     <LoadingButton
                         name="Submit"    
                         loadingText="Submitting..."
                         onClick={handleButtonClick}                                                  
                     />
-
+ 
                 </Form>
                 
               </Row>
             </Card.Body>
           </Card>
-
-
-
-
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
         </Col>
       </Row>
     </Container>
-
+ 
    </div>
     </div>
     </div>
   );
-  function Cinema({ movie, selectedSeats, onSelectedSeatsChange }) {
+  function Cinema({ showtime, selectedSeats, onSelectedSeatsChange }) {
     function handleSelectedState(seat) {
       const isSelected = selectedSeats.includes(seat)
       if (isSelected) {
@@ -190,7 +190,7 @@ const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
         <div className="seats">
           {seats.map(seat => {
             const isSelected = selectedSeats.includes(seat)
-            const isOccupied = movie.occupied.includes(seat)
+            const isOccupied = showtime.occupied.includes(seat)
             return (
               <span
                 tabIndex="0"
@@ -218,5 +218,5 @@ const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
     )
     }
 };
-
+ 
 export default BookingPage;

@@ -1,18 +1,12 @@
 export class ShowTime {
     
     
-    constructor(startdate, enddate, name, occupied){
-
-    this.startdate = startdate;
-    this.enddate = enddate;
-    this.name = name;
-    this.occupied = occupied;
-
-
-}
-
-
-
-
+    constructor(id,startDate, endDate, title, occupied){
+        this.id=id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.title = title;
+        this.occupied = occupied;
+    }
 
 } 

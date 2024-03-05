@@ -31,45 +31,42 @@ const ValidatePage = () => {
     useEffect(() => {createdata()})
 
     function createdata() {
-        var data = [{Id:1,name:"Konstantinos",Status:"checkedin"}, {Id:2,name:"Lamprini",Status:"pending"}]
+        var data = [{Id:1,name:"Konstantinos",Status:"Checked-In"}, {Id:2,name:"Lamprini",Status:"Pending"}]
         setbookingsdata(data);
         
     }
 
-    const ConditionalsRowsStyle  = [ 
-        {
-            when: row => row.Id < 2,
+  
+    const customStyle = {
+      rows: {
+          style: {
+              fontWeight:"bold",
+              minHeight:"60px",
+          },
+      },
+   
+  }
 
-                style: 
-                { backgroundColor: "green",
-                  color: "white"
-                },
+const ConditionalsRowsStyle  = [
+  {
+      when: row => row.Status === "Checked-In",
 
+          style:
+          { 
+            color: "green"
+          },
+
+  },
+  {
+    when: row => row.Status === "Pending",
+
+        style:
+        {   
+          color: "#D36135"
         },
-    ]
 
-
-//TEST
-const conditionalRowStyles = [ 
-    {   
-        when: row => row.Id < 300,    
-        style: {      
-            backgroundColor: 'green',      color: 'white',      '&:hover': 
-            {        cursor: 'pointer',      
-        },    
-    },  
-}
+},
 ]
-
-const CustomStyle = {
-    rows: {
-        style: {
-            minHeight: '200px'
-        }
-    }
-
-}
-
     
     const columns = [
         { 
@@ -92,22 +89,6 @@ const CustomStyle = {
         // Add more columns as needed
     ];
 
-    const bookingstable = () => {
-        return (<DataTable 
-            title={
-                <div style={{ textAlign: 'center' }}>
-                Bookings 
-                </div>
-            }
-            //conditionalRowStyles={conditionalRowStyles}
-
-            columns={columns} 
-            data={bookingsdata} 
-            pagination
-            customStyles={CustomStyle}
-/>
-)
-    }
 return (
 
     <div className='outside-validate-page'>
@@ -170,6 +151,9 @@ return (
             columns={columns} 
             data={bookingsdata} 
             pagination
+            customStyles={customStyle}
+            conditionalRowStyles={ConditionalsRowsStyle}
+
 />
        </div>
         </div>
