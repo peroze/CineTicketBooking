@@ -52,7 +52,7 @@ const EditUserModal = ({ user, showModal, closeModal,handleReload, roles}) => {
                                 disabled
                             />
 
-                            <Form.Label>Title</Form.Label>
+                            <Form.Label>First Name</Form.Label>
                             <Form.Control 
                                 type="text" 
                                 value={user.firstName} 
