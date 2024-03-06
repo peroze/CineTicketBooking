@@ -80,7 +80,7 @@ const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
         onSelectedSeatsChange={selectedSeats => setSelectedSeats(selectedSeats)}>
     
         </Cinema>
-    </div>
+      </div>
       </div>
     
    <div className="formoutside">

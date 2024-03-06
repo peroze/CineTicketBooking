@@ -27,6 +27,7 @@ import AdminPanelShowtimes from './Components/admin-panel/AdminPanelShowtimes.js
 import AdminPanelRooms from './Components/admin-panel/AdminPanelRooms.jsx';
 import AdminPanelUsers from './Components/admin-panel/AdminPanelUsers.jsx';
 import ValidatePage from './Components/ValidatePage.jsx';
+import BookingConfirmationPage from './Components/BookingConfirmationPage.jsx';
 import AddShowTime
  from './Components/AddShowTime.jsx';
 export const UserContext = createContext();
@@ -66,9 +67,13 @@ function App() {
               <Route path="/admin-panel/rooms" element={<AdminPanelRooms />}></Route>
               <Route path="/add-show-time" element={<AddShowTime />}></Route>
               <Route path="/validate-page" element={<ValidatePage />}></Route>
+              <Route path="/confirmation-page" element={<BookingConfirmationPage/>}></Route>
               
           </Routes>
-          <Footer></Footer>
+          <footer>
+            <Footer></Footer>
+          </footer>
+         
         </Router>
         
       </div>

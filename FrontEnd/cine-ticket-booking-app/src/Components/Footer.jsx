@@ -34,7 +34,7 @@ function Footer({icon,user}) {
                         <Navbar.Brand className='brandFooter' href="#home"><img width="150"  className="Navbarlogo" src={logo}></img></Navbar.Brand>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
                     </Col>
-                    <Col className='footerMenuContainer'>
+                    <Col className='footerMenuContainer' id ="roadmap">
                         <h2>Site Roadmap</h2>
                         <ul className='footerMenu d-flex flex-column align-items-center justify-content-flex-end gap-2'>
                             <li><i className="footerLink"><Link to="/">Home Page</Link></i></li>

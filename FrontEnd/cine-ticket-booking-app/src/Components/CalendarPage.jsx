@@ -40,8 +40,8 @@ const CalendarPage = () => {
   const movie = location.state;
   const [isLoading, setLoading] = useState(true);
   const navigate=useNavigate();
-  const ShowtimeList=[new ShowTime(0,'2024-03-03T17:30','2024-03-03T19:30',movie.moviename,[9, 41, 35, 11, 65, 26]),
-  new ShowTime(1,'2024-03-03T20:00','2024-03-03T22:30',movie.moviename,[9, 41, 35, 11, 65, 26])];
+  const ShowtimeList=[new ShowTime(0,'2024-03-03T17:30','2024-03-03T19:30',movie.moviename,[9, 41, 35, 11, 65, 26],1),
+  new ShowTime(1,'2024-03-03T20:00','2024-03-03T22:30',movie.moviename,[9, 41, 35, 11, 65, 26],1)];
   const [schedulerData,setSchedulerData] =useState([]);
   var inserts=0;
   useEffect(() => {

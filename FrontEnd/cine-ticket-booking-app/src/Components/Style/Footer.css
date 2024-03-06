@@ -10,8 +10,6 @@
 }
 
 
-
-
 .Footer h2{
     margin-top: 5%;
     color: white;
@@ -110,6 +108,15 @@ p {
     padding:3px;
     border-radius: 20px;
     border: 2px solid white;
+}
+@media (max-width: 991px) {
+    #roadmap{
+        display: none;
+    }
+    .container{
+        align-items: flex-start;
+
+    }
 }
 
 

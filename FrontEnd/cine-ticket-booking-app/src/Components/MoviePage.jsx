@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { ShowTime } from './Models/ShowTime';
+import { Booking } from './Models/Booking';
 
 
 
@@ -54,7 +55,8 @@ const MoviePage = () => {
             <div className='d-flex  align-items-start justify-content-center' >  
                 <button onClick={()=>{
             // navigate('/booking',{state:new ShowTime("25/02/2024, 15:25", "25/02/2024, 18:05", movie.moviename, [9, 41, 35, 11, 65, 26])})
-            navigate('/calendar', {state:movie}) }} className="bookButton " role="button"><span className="text">Book Your Ticket </span></button>
+            //navigate('/calendar', {state:movie}) }} className="bookButton " role="button"><span className="text">Book Your Ticket </span></button>
+            navigate('/confirmation-page', {state:new Booking(1,"Giorgos",new ShowTime(0,'2024-03-03T17:30','2024-03-03T19:30',movie.moviename,[9, 41, 35, 11, 65, 26],1),17)}) }} className="bookButton " role="button"><span className="text">Book Your Ticket </span></button>
             </div>
 
         </div>
