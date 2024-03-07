@@ -20,7 +20,7 @@ import { useLocation } from 'react-router-dom';
  
 const BookingPage = () => {
 //const occupied = [9, 41, 35, 11, 65, 26];
-const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
+
  
  
 /* const showtime = {
@@ -30,6 +30,8 @@ const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
  
   const location=useLocation();
   const showtime = location.state;
+  
+  const seats = Array.from({ length: showtime.capacity }, (_, i) => i);
   
  
   const [email, setEmail] = useState("");

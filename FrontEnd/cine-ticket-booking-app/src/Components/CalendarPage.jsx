@@ -5,6 +5,7 @@ import { ViewState } from '@devexpress/dx-react-scheduler';
 import { useLocation } from 'react-router-dom';
 import { ShowTime } from './Models/ShowTime';
 import { useNavigate } from 'react-router-dom';
+import showtimeService from '../services/showtime.service';
  
 import {
   Scheduler,
@@ -31,43 +32,62 @@ function formatDate(date) {
 }
  
  
-console.log(formatDate(new Date().toDateString()));
 const currentDate = formatDate(new Date().toDateString());
  
  
 const CalendarPage = () => {
+  
   const location=useLocation();
   const movie = location.state;
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setisLoading] = useState(true);
   const navigate=useNavigate();
-  const ShowtimeList=[new ShowTime(0,'2024-03-03T17:30','2024-03-03T19:30',movie.moviename,[9, 41, 35, 11, 65, 26]),
-  new ShowTime(1,'2024-03-03T20:00','2024-03-03T22:30',movie.moviename,[9, 41, 35, 11, 65, 26])];
+  var ShowtimeList=[];
   const [schedulerData,setSchedulerData] =useState([]);
-  var inserts=0;
-  useEffect(() => {
-    const data=[]
-    inserts=inserts+1;
-    for (let i = 0; i < ShowTime.length; i++){
-      if(schedulerData.length<2){
-       let name="Night Show"
-       if (i%2==0){
-        name="Afternoon Show"
-       }
-       schedulerData.push({id:ShowtimeList[i].id,startDate:ShowtimeList[i].startDate,endDate:ShowtimeList[i].endDate,title:name})
-       console.log(schedulerData[i]);
-      }
- 
+
+  const loadShowtimes=()=>{
+    showtimeService.getShowtimesbyId(movie.id)
+    .then(function (response) {
+      ShowtimeList=[response]
+  })
+  .catch(function (error) {
+      console.log("Error getting all movies: ",error);
+  }).finally(() => {
+    if(schedulerData.length<1){
+      for (let i = 0; i < ShowtimeList.length; i++){
+        let name="Night Show"
+        if (i%2==0){
+          name="Afternoon Show"
+        }
+        console.log(ShowtimeList[i].endTime)
+        console.log(ShowtimeList[i].startTime)
+        schedulerData.push({id:ShowtimeList[i].id,startDate:ShowtimeList[i].startTime,endDate:ShowtimeList[i].endTime,title:name})
     }
-    setLoading(false)
+  }
+    setisLoading(false)    
+});
+  };
+
+  useEffect(() => {
     
-  });
+    loadShowtimes();
+  },[isLoading]);
+
   const newAppointment= (props) =>{
-    console.log(props.data.id)
  
     return(
     <Appointments.Appointment {...props} onClick={()=>{
-      // navigate('/booking',{state:new ShowTime("25/02/2024, 15:25", "25/02/2024, 18:05", movie.moviename, [9, 41, 35, 11, 65, 26])})
-      navigate('/booking', {state:ShowtimeList[props.data.id]}) }} />)
+      if(props.data.id==2){
+        var occupied=[];
+        for(let i=0;i<ShowtimeList[0].seats.length;i++){
+          if(ShowtimeList[0].seats[i]!="AVAILABLE"){
+            occupied.push(i)
+          }
+        }
+        console.log(ShowtimeList[0].room)
+        navigate('/booking', {state:new ShowTime(ShowtimeList[0].id,ShowtimeList[0].startTime,ShowtimeList[0].endTime,movie.moviename,occupied,ShowtimeList[0].room.capacity)})
+      }
+      else
+      {navigate('/booking', {state:ShowtimeList[props.data.id]})} }} />)
   };
  
   const DayScaleCell = props => (
