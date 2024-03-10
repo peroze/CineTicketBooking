@@ -62,7 +62,7 @@ const BookingPage = () => {
   };
  
   const handleButtonClick = () => {
-    //onClick logic here
+    bookingService.addBookings(email, firstName, lastName,telephone, seat, selectedSeats[0],showtime)
   };
   
   return (
