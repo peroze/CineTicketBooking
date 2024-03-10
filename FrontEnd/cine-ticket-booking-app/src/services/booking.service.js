@@ -1,19 +1,22 @@
 import api from "./api";
-import Booking from "../Components/Models/Booking"
 import axios from 'axios';
 
 class BookingService {
 
     validatebookingbyId(id){
-        var booking = this.getBookingById(id)
-        var user=booking.user
-        var id=booking.id
-        var time=booking.time
-        var seat=booking.seat
+        
         return api
         .put("/bookings/checkin/"+id,
             
     )}
+
+    getBookingsByShowTimeId(id){
+        return api
+        .get("/bookings/showtime/"+id)
+        .then(response => {
+          return response.data;
+        });
+    }
 
     expirebookingbyId(id){
         var booking = this.getBookingById(id)

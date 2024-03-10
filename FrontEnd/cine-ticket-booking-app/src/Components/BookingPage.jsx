@@ -62,7 +62,12 @@ const BookingPage = () => {
   };
  
   const handleButtonClick = () => {
-    bookingService.addBookings(email, firstName, lastName,telephone, seat, selectedSeats[0],showtime)
+    console.log(email);
+    console.log(seat);
+    console.log(selectedSeats[0]);
+    console.log(showtime.id);
+
+    //bookingService.addBookings(email, firstName, lastName,telephone, seat, selectedSeats[0],showtime)
   };
   
   return (

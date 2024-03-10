@@ -10,13 +10,19 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { useLocation } from 'react-router-dom';
 import LoadingButton from './LoadingButton';
+import bookingService from '../services/booking.service';
 
 
 const ValidatePage = () => {
     const [bookingsdata, setbookingsdata] = useState("");
 
     const [bookingid, setbookingid ] = useState("");
+
+    const location=useLocation();
+    const ShowTimeId=location.state;
+    const [isLoading, setisLoading] = useState(true);
 
     const handleInputChange = (e) => {
         
@@ -25,17 +31,27 @@ const ValidatePage = () => {
         }; 
 
       const handleButtonClick = () => {
-        //onClick logic here
+        bookingService.validatebookingbyId(bookingid);
+        createdata();
       };
 
     useEffect(() => {createdata()})
 
     function createdata() {
-        var data = [{Id:1,name:"Konstantinos",Status:"Checked-In"}, {Id:2,name:"Lamprini",Status:"Pending"}]
-        setbookingsdata(data);
+        //var data = [{Id:1,name:"Konstantinos",Status:"Checked-In"}, {Id:2,name:"Lamprini",Status:"Pending"}]
+        //setbookingsdata(data);
+
+        bookingService.getBookingsByShowTimeId(ShowTimeId)
+    .then(function (response) {
+      var data=response
+      setbookingsdata(data)
+      setisLoading(false)
+  })
+  .catch(function (error) {
+      console.log("Error getting all movies: ",error);
+  })
         
     }
-
   
     const customStyle = {
       rows: {
@@ -71,18 +87,18 @@ const ConditionalsRowsStyle  = [
     const columns = [
         { 
             name: 'Id', 
-            selector: row => row.Id,
+            selector: row => row.id,
             sortable: true,
         },
         {
             name: 'Name',
-            selector: row => row.name,
+            selector: row => row.lastName,
             sortable: true,
         },
         {
             
             name: 'Status',
-            selector: row => row.Status,
+            selector: row => row.status,
             sortable: true,
         }
        
