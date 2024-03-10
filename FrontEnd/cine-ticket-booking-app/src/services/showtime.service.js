@@ -10,6 +10,14 @@ class ShowtimeService {
         });
     }
 
+    getShowtimesbyMovieId(id){
+        return api
+        .get("/showtime/movie/"+id)
+        .then(response => {
+          return response.data;
+        });
+    }
+
     addShowtimes(movieid,startDate,endDate,room){
         return api
         .post("showtime/addauto",{

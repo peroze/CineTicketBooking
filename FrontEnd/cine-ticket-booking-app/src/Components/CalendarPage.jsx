@@ -32,9 +32,8 @@ function formatDate(date) {
 }
  
  
-const currentDate = formatDate(new Date().toDateString());
- 
- 
+
+
 const CalendarPage = () => {
   
   const location=useLocation();
@@ -43,11 +42,13 @@ const CalendarPage = () => {
   const navigate=useNavigate();
   var ShowtimeList=[];
   const [schedulerData,setSchedulerData] =useState([]);
+  const [currentDate,currentDateChange] = useState(formatDate(new Date().toDateString()));
 
   const loadShowtimes=()=>{
-    showtimeService.getShowtimesbyId(movie.id)
+   // showtimeService.getShowtimesbyId(movie.id)
+    showtimeService.getShowtimesbyMovieId(movie.id)
     .then(function (response) {
-      ShowtimeList=[response]
+      ShowtimeList=response
   })
   .catch(function (error) {
       console.log("Error getting all movies: ",error);
@@ -68,7 +69,13 @@ const CalendarPage = () => {
   };
 
   useEffect(() => {
-    
+    /*showtimeService.getShowtimesbyMovieId(movie.id)
+    .then(function (response) {
+      console.log(response);
+  })
+  .catch(function (error) {
+      console.log("Error getting all movies: ",error);
+  })*/
     loadShowtimes();
   },[isLoading]);
 
@@ -76,18 +83,16 @@ const CalendarPage = () => {
  
     return(
     <Appointments.Appointment {...props} onClick={()=>{
-      if(props.data.id==2){
+        
+      var ind=ShowtimeList.findIndex((sh) => sh.id==props.data.id)
         var occupied=[];
         for(let i=0;i<ShowtimeList[0].seats.length;i++){
-          if(ShowtimeList[0].seats[i]!="AVAILABLE"){
+          if(ShowtimeList[ind].seats[i]!="AVAILABLE"){
             occupied.push(i)
           }
         }
-        console.log(ShowtimeList[0].room)
-        navigate('/booking', {state:new ShowTime(ShowtimeList[0].id,ShowtimeList[0].startTime,ShowtimeList[0].endTime,movie.moviename,occupied,ShowtimeList[0].room.capacity)})
-      }
-      else
-      {navigate('/booking', {state:ShowtimeList[props.data.id]})} }} />)
+        navigate('/booking', {state:new ShowTime(ShowtimeList[ind].id,ShowtimeList[ind].startTime,ShowtimeList[ind].endTime,movie.moviename,occupied,ShowtimeList[ind].room.capacity)})
+    }} />)
   };
  
   const DayScaleCell = props => (
@@ -116,9 +121,10 @@ const [date, setDate] = useState(new Date());
     >
       <ViewState
         currentDate={currentDate}
+        onCurrentDateChange={currentDateChange}
       />
      <Toolbar />
-    <WeekView startDayHour={17} endDayHour={24} dayScaleCellComponent={DayScaleCell} />
+    <WeekView startDayHour={17} startDayMinute={30} endDayHour={24} dayScaleCellComponent={DayScaleCell} />
     <DateNavigator />
     <TodayButton />
     <Appointments appointmentComponent={newAppointment}/>
