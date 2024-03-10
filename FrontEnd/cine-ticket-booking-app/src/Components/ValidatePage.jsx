@@ -11,6 +11,9 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LoadingButton from './LoadingButton';
+import BookingService from '../services/booking.service';
+
+
 
 
 const ValidatePage = () => {
@@ -25,7 +28,7 @@ const ValidatePage = () => {
         }; 
 
       const handleButtonClick = () => {
-        //onClick logic here
+        BookingService.validatebookingbyId(bookingid)
       };
 
     useEffect(() => {createdata()})
