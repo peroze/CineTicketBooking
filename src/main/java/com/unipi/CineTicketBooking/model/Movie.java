@@ -18,6 +18,7 @@ public class Movie {
     private String genre;
     private Integer duration; //in minutes
     private LocalDate releaseDate;
+    @Column(length=1000000)
     private String description;
     private String director;
 

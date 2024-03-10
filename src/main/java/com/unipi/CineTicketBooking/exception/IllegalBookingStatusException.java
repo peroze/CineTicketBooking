@@ -1,4 +1,4 @@
-package com.unipi.CineTicketBooking.config.CustomHttpStatusExceptions;
+package com.unipi.CineTicketBooking.exception;
 
 import org.springframework.http.HttpStatus;
 

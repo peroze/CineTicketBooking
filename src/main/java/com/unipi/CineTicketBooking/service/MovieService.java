@@ -1,5 +1,6 @@
 package com.unipi.CineTicketBooking.service;
 
+import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
 import com.unipi.CineTicketBooking.model.Movie;
 import com.unipi.CineTicketBooking.model.secondary.MovieListObject;
 import com.unipi.CineTicketBooking.repository.MovieRepository;
@@ -55,7 +56,7 @@ public class MovieService {
 
     @Transactional
     public void updateMovie(String movieName, Movie newMovie) {
-        Movie movie = movieRepository.findMovieByName(movieName).orElseThrow(() -> new IllegalStateException(
+        Movie movie = movieRepository.findMovieByName(movieName).orElseThrow(() -> new NoEntryWithIdException(
                 "movie with name "+movieName+ " does not exist"
         ));
 
@@ -89,7 +90,7 @@ public class MovieService {
 
     @Transactional
     public void updateMovieById(Long Id, Movie newMovie) {
-        Movie movie = movieRepository.findById(Id).orElseThrow(() -> new IllegalStateException(
+        Movie movie = movieRepository.findById(Id).orElseThrow(() -> new NoEntryWithIdException(
                 "movie with Id "+Id+ " does not exist"
         ));
 

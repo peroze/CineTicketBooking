@@ -1,7 +1,9 @@
 package com.unipi.CineTicketBooking.service;
 
-import com.unipi.CineTicketBooking.config.CustomHttpStatusExceptions.IllegalBookingStatusException;
+import com.unipi.CineTicketBooking.controller.secondaryClasses.UpdateShowtimeRequest;
+import com.unipi.CineTicketBooking.exception.IllegalBookingStatusException;
 import com.unipi.CineTicketBooking.controller.secondaryClasses.AddBookingRequest;
+import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
 import com.unipi.CineTicketBooking.model.Bookings;
 import com.unipi.CineTicketBooking.model.secondary.BookingStatus;
 import com.unipi.CineTicketBooking.repository.BookingsRepository;
@@ -24,6 +26,7 @@ public class BookingsService {
 
     public Bookings createBooking(AddBookingRequest bookingRequest) {
         Bookings booking=new Bookings(usersService.getUserByEmail(bookingRequest.getUserEmail()).get(),showtimeService.getShowtimeById(bookingRequest.getShowtimeid()).get(), LocalDateTime.now(),bookingRequest.getSeat(), BookingStatus.PENDING);
+        showtimeService.updateShowtimeSeats(booking.getShowtime().getId(),booking.getSeat());
         return bookingsRepository.save(booking);
     }
 
@@ -74,7 +77,7 @@ public class BookingsService {
             bookingsRepository.deleteById(id);
             return true;
         } else {
-            return false;
+            throw new NoEntryWithIdException("There is no booking with the given id");
         }
     }
 

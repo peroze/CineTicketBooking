@@ -48,8 +48,8 @@ public class CineTicketBookingApplication {
 			names.add("Robert Downey Junior");
 			names.add("Chris Evans");
 			names.add("Scarlett Johansson");
-			movieRepository.save(new Movie(Long.valueOf("1"),"Avengers 2","Action-Movie",120, LocalDate.now(),"SuperHero Movie","Joss Whedon",names,"PG-13","English"));
-			movieRepository.save(new Movie(Long.valueOf(2),"Avengers","Action Movie",130,LocalDate.now(),"SuperHero Movie","Joss Whedon",names,"PG-13","English"));
+			movieRepository.save(new Movie(3L,"Avengers 2","Action-Movie",120, LocalDate.now(),"SuperHero Movie","Joss Whedon",names,"PG-13","English"));
+			movieRepository.save(new Movie(2L,"Avengers","Action Movie",130,LocalDate.now(),"Marvel Studios presents in association with Paramount Pictures \"Marvel's The Avengers\" — the superhero team-up of a lifetime, featuring iconic Marvel superheroes Iron Man, The Incredible Hulk, Thor, Captain America, Hawkeye, and Black Widow. When an unexpected enemy emerges that threatens global safety and security, Nick Fury, Director of the international peacekeeping agency known as S.H.I.E.L.D., finds himself in need of a team to pull the world back from the brink of disaster. Spanning the globe, a daring recruitment effort begins.","Joss Whedon",names,"PG-13","English"));
 			movieRepository.save(new Movie(3L,"Random movie : 2","Action Movie",150,LocalDate.now(),"Random Movie","Someone",names,"PG-13","English"));
 
 
