@@ -15,6 +15,7 @@ import GoogleLoginButton from './GoogleLogin';
 import styles from"./Style/BookingPage.css";
 import clsx from 'clsx'
 import { useLocation } from 'react-router-dom';
+import bookingService from '../services/booking.service';
  
  
  
@@ -58,9 +59,9 @@ const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
     }
     
   };
- 
+  
   const handleButtonClick = () => {
-    //onClick logic here
+    bookingService.addBookings(email, firstName, lastName,telephone, seat, selectedSeats[0],showtime)
   };
   
   return (
