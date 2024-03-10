@@ -67,7 +67,7 @@ public class CineTicketBookingApplication {
 			LocalDateTime.now().plusHours(2);
 			roomsRepository.save(new Rooms("Theater 1", 200));
 			showtimeRepository.save(new Showtime(movieRepository.findById(Long.valueOf("1")).get(),roomsRepository.findById(Long.valueOf("1")).get(),roomsRepository.findById(Long.valueOf("1")).get().getCapacity(),LocalDateTime.now(),LocalDateTime.now().plusMinutes(Long.valueOf(movieRepository.findById(Long.valueOf("1")).get().getDuration())),25));
-			bookingsRepository.save(new Bookings(usersRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),showtimeRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now(),13, BookingStatus.PENDING));
+			bookingsRepository.save(new Bookings(usersRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),showtimeRepository.findById(Long.valueOf(1)).orElseThrow(()->new IllegalArgumentException("The User does not exist")),LocalDateTime.now(),13, BookingStatus.PENDING, "Konstantinos", "Perrakis", "6969696969"));
 
 
 			LocalDateTime.now();

@@ -25,7 +25,7 @@ public class BookingsService {
     private final UsersService usersService;
 
     public Bookings createBooking(AddBookingRequest bookingRequest) {
-        Bookings booking=new Bookings(usersService.getUserByEmail(bookingRequest.getUserEmail()).get(),showtimeService.getShowtimeById(bookingRequest.getShowtimeid()).get(), LocalDateTime.now(),bookingRequest.getSeat(), BookingStatus.PENDING);
+        Bookings booking=new Bookings(usersService.getUserByEmail(bookingRequest.getUserEmail()).get(),showtimeService.getShowtimeById(bookingRequest.getShowtimeid()).get(), LocalDateTime.now(),bookingRequest.getSeat(), BookingStatus.PENDING, bookingRequest.getFirstName(), bookingRequest.getLastName(), bookingRequest.getTelephone());
         showtimeService.updateShowtimeSeats(booking.getShowtime().getId(),booking.getSeat());
         return bookingsRepository.save(booking);
     }
