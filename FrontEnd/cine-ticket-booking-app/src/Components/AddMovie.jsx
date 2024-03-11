@@ -12,6 +12,7 @@ import LoadingButton from './LoadingButton';
 import GoogleLogin from './GoogleLogin';
 import {FaEyeSlash, FaEye} from 'react-icons/fa';
 import GoogleLoginButton from './GoogleLogin';
+import MovieService from '../services/movie.service'
 
 
 
@@ -26,24 +27,38 @@ const [photo,setPhoto]=useState("")
   };
 
    const handleInputChange = (e) => {
-    /*
-    const { name, value } = e.target;
-    if (name === 'email') {
-      setEmail(value);
-    } else if (name === 'password') {
-      setPassword(value);
-    } else if (name === 'firstName') {
-      setfirstName(value);
-    } else if (name === 'lastName') {
-      setlastName(value);
-    } else if (name === 'passwordConfirm') {
-      setPasswordConfirm(value);
-    } */
+    
+  const { name, value } = e.target;
+    if (name === 'moviename' ) {
+      setCurrentTitle(value)
+    } else if (name === 'genre') {
+      setCurrentGenre(value)
+    } else if (name === 'duration') {
+      setCurrentDuration(value)
+    } else if (name === 'director') {
+      setCurrentDirector(value)
+    } else if (name === 'actors') {
+      setCurrentActors(value)
+    } else if (name === 'description') {
+      setCurrentDescription(value)
+    } else if (name === 'rating') {
+      setCurrentRating(value)
+    } else if (name === 'realeaseDate') {
+      setCurrentReleaseDate(value)
+    }
     
   }; 
 
   const handleButtonClick = () => {
-    //onClick logic here
+    console.log("Submit was pressed");
+                MovieService.addMovie(currentTitle,currentGenre,currentDuration,currentReleaseDate,currentDescription,
+                  currentDirector,currentActors,currentRating,currentLanguage)
+                .then((response) => {
+                  console.log(response.data);
+                })
+                .catch(error => {
+                console.log(error);
+              })
   };
 
 
