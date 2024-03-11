@@ -13,18 +13,22 @@ import { ShowTime } from './Models/ShowTime';
 
 const MoviePage = () => {
     const location=useLocation();
+    const [checker,setChecker]=useState(true);
     const id=location.state;
     const navigate=useNavigate();
     const [isLoading, setLoading] = useState(true);
     const [movie, setMovie] = useState();
     useEffect(() => {
+        if (checker==true){
           axios.get("http://localhost:8080/api/movies/movie/"+id).then(response => {
           var movietemp=  new Movie(response.data.name,response.data.id,response.data.genre,response.data.duration,response.data.releaseDate,response.data.description,response.data.director,response.data.actors,response.data.rating); 
           console.log(response)
           setMovie(movietemp);
           setLoading(false);
         });
-      }, []);
+        setChecker(false);
+    }
+      }, [checker]);
     
       if (isLoading) {
         return <div className="App">Loading...</div>;

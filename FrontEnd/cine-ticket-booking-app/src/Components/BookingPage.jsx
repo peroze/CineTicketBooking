@@ -15,7 +15,9 @@ import GoogleLoginButton from './GoogleLogin';
 import styles from"./Style/BookingPage.css";
 import clsx from 'clsx'
 import { useLocation } from 'react-router-dom';
- 
+ import bookingService from '../services/booking.service';
+ import { useNavigate } from 'react-router-dom';
+
  
  
 const BookingPage = () => {
@@ -30,7 +32,8 @@ const BookingPage = () => {
  
   const location=useLocation();
   const showtime = location.state;
-  
+  const navigate=useNavigate();
+
   const seats = Array.from({ length: showtime.capacity }, (_, i) => i);
   
  
@@ -62,12 +65,10 @@ const BookingPage = () => {
   };
  
   const handleButtonClick = () => {
-    console.log(email);
-    console.log(seat);
-    console.log(selectedSeats[0]);
-    console.log(showtime.id);
-
-    //bookingService.addBookings(email, firstName, lastName,telephone, seat, selectedSeats[0],showtime)
+    bookingService.addBookings(email, firstName, lastName,telephone,selectedSeats[0],showtime).then(function (response) {
+      //console.log(response);
+      navigate('/booking-confirmation', {state:response})
+    })
   };
   
   return (

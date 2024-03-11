@@ -4,7 +4,6 @@ import axios from 'axios';
 class BookingService {
 
     validatebookingbyId(id){
-        
         return api
         .put("/bookings/checkin/"+id,
             
@@ -14,6 +13,7 @@ class BookingService {
         return api
         .get("/bookings/showtime/"+id)
         .then(response => {
+            console.log(response)
           return response.data;
         });
     }
@@ -53,20 +53,19 @@ class BookingService {
         });
     }
       
-    addBookings(UserEmail,firstName,lastName,telephone,seat,selectedSeats,showtime){
-        var Showtimeid = showtime.id 
+    addBookings(userEmail,firstName,lastName,telephone,seat,showtime){
+        var showtimeid = showtime.id 
         return api
         .post("/bookings/create",{
-            Showtimeid,
-            UserEmail,
+            showtimeid,
+            userEmail,
             firstName,
             lastName,
             telephone,
-            seat,
-            selectedSeats
+            seat
         })
         .then(response => {
-            console.log(response.data);
+          console.log(response.data);
           return response.data;
         })
         .catch(error => {

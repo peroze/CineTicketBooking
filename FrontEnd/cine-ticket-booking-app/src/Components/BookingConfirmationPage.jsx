@@ -30,9 +30,10 @@ const BookingConfirmationPage = () => {
         The details of your booking have been sent in your email along with a pdf file.<i className='warning'>The pdf file is necessary to enter in the cinema.</i> <br/>
         
         <div className='bookings-details'>
-            Name: {booking.user}<br/><br/>
-            Time: {booking.time.startDate}<br/><br/>
-            Room: {booking.time.room}<br/><br/>
+            Name: {booking.firstName} {booking.lastName}<br/><br/>
+            Movie: {booking.showtime.movie.name}<br/><br/>
+            Time: {booking.showtime.startTime}<br/><br/>
+            Room: {booking.showtime.room.id}<br/><br/>
             Seat: {booking.seat}<br/><br/>
             <a className='warning'>
             Please, note that your reservation is valid until 30 minutes before the start of the movie

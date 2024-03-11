@@ -59,8 +59,6 @@ const CalendarPage = () => {
         if (i%2==0){
           name="Afternoon Show"
         }
-        console.log(ShowtimeList[i].endTime)
-        console.log(ShowtimeList[i].startTime)
         schedulerData.push({id:ShowtimeList[i].id,startDate:ShowtimeList[i].startTime,endDate:ShowtimeList[i].endTime,title:name})
     }
   }
@@ -88,6 +86,7 @@ const CalendarPage = () => {
         var occupied=[];
         for(let i=0;i<ShowtimeList[0].seats.length;i++){
           if(ShowtimeList[ind].seats[i]!="AVAILABLE"){
+            console.log("OCUPPIED  " +i)
             occupied.push(i)
           }
         }

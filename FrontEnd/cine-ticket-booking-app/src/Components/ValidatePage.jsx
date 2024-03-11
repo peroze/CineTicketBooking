@@ -17,12 +17,13 @@ import bookingService from '../services/booking.service';
 
 const ValidatePage = () => {
     const [bookingsdata, setbookingsdata] = useState("");
-
     const [bookingid, setbookingid ] = useState("");
-
     const location=useLocation();
-    const ShowTimeId=location.state;
+    //const ShowTimeId=location.state;
+    const ShowTimeId=2;
+    const [checker,setChecker]=useState(true);
     const [isLoading, setisLoading] = useState(true);
+
 
     const handleInputChange = (e) => {
         
@@ -31,11 +32,19 @@ const ValidatePage = () => {
         }; 
 
       const handleButtonClick = () => {
-        bookingService.validatebookingbyId(bookingid);
-        createdata();
+        bookingService.validatebookingbyId(bookingid).
+        then(()=>{
+            setChecker(true);
+        });
+        
       };
 
-    useEffect(() => {createdata()})
+    useEffect(() => {
+      if(checker==true){
+        createdata()
+        setChecker(false)
+      }
+    },[checker])
 
     function createdata() {
         //var data = [{Id:1,name:"Konstantinos",Status:"Checked-In"}, {Id:2,name:"Lamprini",Status:"Pending"}]
@@ -46,7 +55,7 @@ const ValidatePage = () => {
       var data=response
       setbookingsdata(data)
       setisLoading(false)
-  })
+  },[])
   .catch(function (error) {
       console.log("Error getting all movies: ",error);
   })
@@ -65,7 +74,7 @@ const ValidatePage = () => {
 
 const ConditionalsRowsStyle  = [
   {
-      when: row => row.Status === "Checked-In",
+      when: row => row.status === "CHECKED_IN",
 
           style:
           { 
@@ -74,7 +83,7 @@ const ConditionalsRowsStyle  = [
 
   },
   {
-    when: row => row.Status === "Pending",
+    when: row => row.status === "PENDING",
 
         style:
         {   
