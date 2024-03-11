@@ -13,6 +13,10 @@ import GoogleLogin from './GoogleLogin';
 import {FaEyeSlash, FaEye} from 'react-icons/fa';
 import GoogleLoginButton from './GoogleLogin';
 import { useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faAngleLeft} from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -21,6 +25,7 @@ import './Style/BookingConfirmationPage.css'; // Import the external CSS file
 const BookingConfirmationPage = () => {
   const location=useLocation();
   const booking=location.state;
+  const navigate=useNavigate();
     
   return (
     <div className="w-500 booking-container">
@@ -38,7 +43,10 @@ const BookingConfirmationPage = () => {
             <a className='warning'>
             Please, note that your reservation is valid until 30 minutes before the start of the movie
             </a>
-
+        <div className="backButton" onClick={()=>{
+            navigate('/movies')}}>
+                    <FontAwesomeIcon icon={faAngleLeft} /> Return to Movies
+                </div>
         </div>
     </div>
   );
