@@ -19,15 +19,15 @@ import MovieService from '../services/movie.service'
 import './Style/AddMovie.css'; // Import the external CSS file
 
 const AddMovie = () => {
-  const [currentTitle, setCurrentTitle] = useState();
-  const [currentGenre, setCurrentGenre] = useState();
-  const [currentDuration, setCurrentDuration] = useState();
-  const [currentDescription, setCurrentDescription] = useState();
-  const [currentDirector, setCurrentDirector] = useState();
-  const [currentActors, setCurrentActors] = useState();
-  const [currentRating, setCurrentRating] = useState();
-  const [currentReleaseDate, setCurrentReleaseDate] = useState();
-  const [currentLanguage, setCurrentLanguage] = useState();
+  const [currentTitle, setCurrentTitle] = useState("");
+  const [currentGenre, setCurrentGenre] = useState("");
+  const [currentDuration, setCurrentDuration] = useState("");
+  const [currentDescription, setCurrentDescription] = useState("");
+  const [currentDirector, setCurrentDirector] = useState("");
+  const [currentActors, setCurrentActors] = useState("");
+  const [currentRating, setCurrentRating] = useState("");
+  const [currentReleaseDate, setCurrentReleaseDate] = useState(new Date());
+  const [currentLanguage, setCurrentLanguage] = useState("");
   const [photo,setPhoto]=useState("")
 
   const handleSubmit =(e) => {
@@ -58,7 +58,6 @@ const AddMovie = () => {
   }; 
 
   const handleButtonClick = () => {
-    console.log("Submit was pressed");
                 MovieService.addMovie(currentTitle,currentGenre,currentDuration,currentReleaseDate,currentDescription,
                   currentDirector,currentActors,currentRating,currentLanguage)
                 .then((response) => {
@@ -66,9 +65,22 @@ const AddMovie = () => {
                 })
                 .catch(error => {
                 console.log(error);
-              })
+              }) 
   };
 
+  function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+   
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+   
+    return [year, month, day].join('-');
+  }
 
   return (
       <Container fluid className="addmovie-page w-500 align-items-center justify-content-center">
@@ -191,7 +203,7 @@ const AddMovie = () => {
                               type="date"
                               className="custom-fields" 
                               placeholder="ReleaseDate"
-                              name="releaseDate"
+                              name="realeaseDate"
                               value={currentReleaseDate}
                               onChange={handleInputChange}
                               />
