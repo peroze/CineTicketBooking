@@ -3,8 +3,8 @@ package com.unipi.CineTicketBooking.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class ShowtimeAvailabilityException extends RuntimeException {
-    private HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+public class NoEntryWithIdException extends RuntimeException {
+    private HttpStatus httpStatus = HttpStatus.NOT_FOUND;
 
     public HttpStatus getHttpStatus() {
         return httpStatus;
@@ -17,7 +17,7 @@ public class ShowtimeAvailabilityException extends RuntimeException {
      * @param message the detail message. The detail message is saved for later retrieval by the {@link #getMessage()}
      *                method.
      */
-    public ShowtimeAvailabilityException( String message) {
+    public NoEntryWithIdException(String message) {
         super(message);
     }
 }

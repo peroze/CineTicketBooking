@@ -32,17 +32,26 @@ public class Bookings {
     private BookingStatus status;
     @Column
     private int seat;
+    @Column
+    private String firstName;
+    @Column
+    private String lastName;
+    @Column
+    private String telephone;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDateTime bookingTime; // Εδώ περιέχεται η ώρα της κράτησης με ημερομηνία και ώρα
 
 
-    public Bookings(Users users, Showtime showtime, LocalDateTime bookingTime,int seat,BookingStatus status) {
+    public Bookings(Users users, Showtime showtime, LocalDateTime bookingTime,int seat,BookingStatus status, String firstName, String lastName, String telephone) {
         this.id = id;
         this.users = users;
         this.showtime = showtime;
         this.bookingTime = bookingTime;
         this.seat=seat;
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.telephone=telephone;
         this.status=status;
     }
 

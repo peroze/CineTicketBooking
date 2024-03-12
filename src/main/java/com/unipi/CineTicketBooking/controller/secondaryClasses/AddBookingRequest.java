@@ -13,4 +13,9 @@ public class AddBookingRequest  {
     private String UserEmail;
     private int seat;
     private String status;
+    private String firstName;
+    private String lastName;
+    private String telephone;
+
+
 }
