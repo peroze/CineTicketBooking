@@ -63,7 +63,7 @@ public class CineTicketBookingApplication {
 
 			System.out.println("Admin token: " + authenticationService.register(admin).getAccessToken());
 			usersRepository.save(new Users("Giwrgos","Gewrgiou","$2a$10$1b2k0DuAPefZPXkPdeKRFuOBuXV5VQkWmLXZYaFLfiWPh615fBfuO","g.gewrgiou@gmails.com", Role.ADMIN));
-			usersRepository.save(new Users("Nikolaos","Partsanakis","$2a$10$1b2k0DuAPefZPXkPdeKRFuOBuXV5VQkWmLXZYaFLfiWPh615fBfuO","cineticketbooking@gmail.com",Role.USER));
+			usersRepository.save(new Users("Nikolaos","Partsanakis","$2a$10$1b2k0DuAPefZPXkPdeKRFuOBuXV5VQkWmLXZYaFLfiWPh615fBfuO","cineticketbooking@gmails.com",Role.USER));
 			LocalDateTime.now().plusHours(2);
 			roomsRepository.save(new Rooms("Theater 1", 200));
 			showtimeRepository.save(new Showtime(movieRepository.findById(Long.valueOf("1")).get(),roomsRepository.findById(Long.valueOf("1")).get(),roomsRepository.findById(Long.valueOf("1")).get().getCapacity(),LocalDateTime.now(),LocalDateTime.now().plusMinutes(Long.valueOf(movieRepository.findById(Long.valueOf("1")).get().getDuration())),25));
