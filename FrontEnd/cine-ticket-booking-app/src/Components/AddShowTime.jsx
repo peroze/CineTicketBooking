@@ -13,6 +13,7 @@ import GoogleLogin from './GoogleLogin';
 import {FaEyeSlash, FaEye} from 'react-icons/fa';
 import GoogleLoginButton from './GoogleLogin';
 import { useLocation } from 'react-router-dom';
+import showtimeService from '../services/showtime.service';
 
 
 
@@ -22,13 +23,13 @@ import './Style/AddShowTime.css'; // Import the external CSS file
 const AddShowTime = () => {
 const location=useLocation();
 const movie = location.state;
-const [startdate,setstartdate]=useState("")
-const [enddate,setenddate]=useState("")
+const [startDate,setstartdate]=useState("")
+const [endDate,setenddate]=useState("")
 const [room,setroom]=useState("room1")
 
 
   const handleSubmit =(e) => {
-    console.log(room);
+    
   };
 
    const change = (e) => {
@@ -50,7 +51,13 @@ const [room,setroom]=useState("room1")
   }; 
 
   const handleButtonClick = () => {
-    console.log(room);
+    showtimeService.addShowtimes(movie.id,startDate,endDate)
+    .then((response) => {
+      console.log(response.data);
+  })
+  .catch(error => {
+      console.log(error);
+  })
   };
 
 
@@ -90,7 +97,7 @@ const [room,setroom]=useState("room1")
                             className="custom-fields" 
                             placeholder="Starting Date"
                             name="startdate"
-                            value={startdate}
+                            value={startDate}
                             onChange={handleInputChange}
                             />
                         </InputGroup>
@@ -105,7 +112,7 @@ const [room,setroom]=useState("room1")
                             className="custom-fields" 
                             placeholder="Ending Date"
                             name="enddate"
-                            value={enddate}
+                            value={endDate}
                             onChange={handleInputChange}
                             />
                         </InputGroup>
