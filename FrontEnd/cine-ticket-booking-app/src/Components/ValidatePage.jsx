@@ -13,6 +13,8 @@ import Col from 'react-bootstrap/Col';
 import { useLocation } from 'react-router-dom';
 import LoadingButton from './LoadingButton';
 import bookingService from '../services/booking.service';
+import showtimeService from '../services/showtime.service';
+import { ShowTime } from './Models/ShowTime';
 
 
 const ValidatePage = () => {
@@ -20,11 +22,11 @@ const ValidatePage = () => {
     const [bookingid, setbookingid ] = useState("");
     const location=useLocation();
     //const ShowTimeId=location.state;
-    const ShowTimeId=2;
+    //const ShowTimeId=2;
     const [checker,setChecker]=useState(true);
     const [isLoading, setisLoading] = useState(true);
-
-
+    const [ShowTimeId, setShowTimeId] = useState(1);
+    const [ShowTimes, setShowTimes] = useState([])
     const handleInputChange = (e) => {
         
         const { name, value } = e.target;
@@ -39,12 +41,30 @@ const ValidatePage = () => {
         
       };
 
-    useEffect(() => {
+      const change = (e) => {
+        console.log(e.target.value)
+        setShowTimeId (e.target.value);
+        setChecker(true)
+       }
+
+
+      useEffect(() => {
+        if(isLoading==(true)) {
+          showtimeService.getAllShowtimes(ShowTimeId)
+      .then(function (response) {
+      var data=response
+      setShowTimes(data)
+      console.log(data);
+  },[])
+  .catch(function (error) {
+      console.log("Error getting all ShowTimes: ",error);
+  })
+        }
       if(checker==true){
         createdata()
         setChecker(false)
       }
-    },[checker])
+    },[checker, ShowTimeId])
 
     function createdata() {
         //var data = [{Id:1,name:"Konstantinos",Status:"Checked-In"}, {Id:2,name:"Lamprini",Status:"Pending"}]
@@ -134,7 +154,16 @@ return (
               </Row>
               <Row>
                 <Form className="p-4 p-sm-0" id="validate-form">
+                <Form.Group className="mb-3 w-100" controlId="formDuration" >
+                        <Form.Label>Room</Form.Label>
+                        <InputGroup className="mb-3">
+                        <select id="rooms" name="roomlist" form="add-movie-form" onChange={change} value={ShowTimeId}>
+                        {ShowTimes.map((object, i) =>
+                         <option value={object.id}> Id = {object.id} movie = {object.movie.name} </option>)}
+                        </select>
+                        </InputGroup>
 
+                    </Form.Group>
                   <Form.Group className="mb-3 w-100" controlId="formFullName" >
                     <Form.Label>Booking Id</Form.Label>
                     <InputGroup className="mb-3">

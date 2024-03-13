@@ -22,7 +22,12 @@ const Home = () => {
     gsap.from("h4",{opacity:0,delay:1.5})
     gsap.to(".top",{opacity:0,delay:1.5})
     gsap.to(".bottom",{opacity:0,delay:1.5})
-    gsap.from("h4",{fontSize:"100px",delay:2.5,duration:0.7})
+    if (window.innerWidth < 500) {
+        gsap.from("h4",{fontSize:"40px",delay:2.5,duration:0.7})
+    }else{
+        gsap.from("h4",{fontSize:"100px",delay:2.5,duration:0.7})
+
+    }
     gsap.from(".HomeImage",{width: 0,duration:1.2,delay:3});
     gsap.from("h1",{opacity:0,delay:2.5})
     gsap.from(".TextContainerHome",{transform: "translateX(20%)",duration:1.2,delay:3});
@@ -61,9 +66,10 @@ const Home = () => {
         <div ><h1>BOOK YOUR <br/> TICKET <br/> <i className='NowText' onClick={()=>{
                 navigate('/movies')}}  >NOW!</i></h1></div>
         <div className='HomeA'>
-          <a>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus aliquam mauris id gravida. Vestibulum in nunc nec lectus dictum</a>
+          <a><span className='Captivating'> Captivating Stories Begin with a Click.</span>
+          <br/> Reserve Your Cinematic Escape Now!</a>
         </div>
-        <div className='socials' onMouseEnter={()=>{hoverAnimation()}} onMouseLeave={()=>{hoverExit()}}>
+        <div className='socials' onMouseEnter={()=>{hoverAnimation()}} onClick={()=>{hoverAnimation()}} onMouseLeave={()=>{hoverExit()}}>
           <div className='social' >
             <FontAwesomeIcon icon={faShareFromSquare}/></div>
           <div className='socialIcon face'> <FontAwesomeIcon icon={faFacebook} /></div>

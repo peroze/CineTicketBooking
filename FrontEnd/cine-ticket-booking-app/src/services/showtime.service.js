@@ -10,6 +10,14 @@ class ShowtimeService {
         });
     }
 
+    getAllShowtimes(){
+        return api
+        .get("/showtime/all")
+        .then(response => {
+          return response.data;
+        });
+    }
+
     getShowtimesbyMovieId(id){
         return api
         .get("/showtime/movie/"+id)
