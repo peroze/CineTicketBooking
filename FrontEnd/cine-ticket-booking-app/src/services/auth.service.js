@@ -14,6 +14,8 @@ class AuthService {
         }
 
         return response.data;
+      }).catch(error => {
+        throw error;
       });
   }
 

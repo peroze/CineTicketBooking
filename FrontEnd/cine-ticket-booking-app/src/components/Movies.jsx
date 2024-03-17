@@ -17,7 +17,7 @@ const Movies = () => {
     <div>
           <div className="movie-header">
           <h1>Movies</h1>
-          <div className='add-movie-button' onClick={()=>{navigate("/addmovie")}}>
+          <div className='add-movie-button' onClick={()=>{navigate("/add-movie")}}>
             <a>
               <FontAwesomeIcon icon={faPlus} style={{color: "#ffffff",}} />
             </a>

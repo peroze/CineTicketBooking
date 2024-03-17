@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import React, { useState,useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import MovieService from "../../services/movie.service.js";
+import { toast } from 'react-toastify';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -13,9 +14,11 @@ const DeleteMovieModal = ({ movie, showModal, closeModal,handleReload}) => {
     const applyChanges = () =>{
         MovieService.deleteMovie(movie.id)
         .then((response) => {
+            toast.success("Successfully deleted the movie");
             console.log(response.data);
         })
         .catch(error => {
+            toast.success("An error occurred. Please try later");
             console.log(error);
         })
         .finally( () => {

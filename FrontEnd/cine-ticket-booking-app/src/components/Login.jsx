@@ -19,6 +19,7 @@ import UserService from "../services/user.service.js";
 
 import { useEffect } from 'react';
 import { UserContext } from '../App.js';
+import { toast } from 'react-toastify';
 
 import './Style/Login.css'; // Import the external CSS file
 
@@ -38,9 +39,12 @@ const Login = () => {
             console.log(response);
             handleLogin();
             setIsLoggedIn(true);
+            toast.success("Successful Login");
             console.log("Is the user logged in? " ,isLoggedIn);
         })
         .catch(function (error) {
+            setIsLoggedIn(false);
+            toast.error("An error occurred. Please try again later.");
             console.log(error);
         });
     };
@@ -57,8 +61,7 @@ const Login = () => {
     const handleLogin = () => {
         UserService.getUserByEmail(email)
         .then(function (response) {
-            console.log(response);
-            //We set the current user in the global scope
+            console.log(response); 
             setUser(response);
         })
         .catch(function (error) {
