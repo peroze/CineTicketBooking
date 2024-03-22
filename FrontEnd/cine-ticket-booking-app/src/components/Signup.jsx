@@ -53,7 +53,26 @@ const Signup = () => {
 
 
   const handleButtonClick = () => {
-    //onClick logic here
+    document.getElementById('email').classList.remove('error');
+    document.getElementById('pass').classList.remove('error');
+    document.getElementById('first').classList.remove('error');
+    document.getElementById('last').classList.remove('error');
+    document.getElementById('passconf').classList.remove('.error');
+
+    if (email === '') {
+      document.getElementById('email').classList.add('error');
+    }if (password === '') {
+      document.getElementById('pass').classList.add('error');
+    }if (firstName === '') {
+      document.getElementById('first').classList.add('error');
+    }if (lastName === '') {
+      document.getElementById('last').classList.add('error');
+    }if (passwordConfirm === '') {
+      document.getElementById('pasconf').classList.add('error');
+    }if (password != passwordConfirm ){
+      document.getElementById('pass').classList.add('error');
+      document.getElementById('passconf').classList.add('error');
+    }
   };
 
 
@@ -79,6 +98,7 @@ const Signup = () => {
                     <Form.Label>Full Name</Form.Label>
                     <InputGroup className="mb-3">
                       <Form.Control 
+                        id='first'
                         type="text"
                         className="custom-fields" 
                         placeholder="First Name" 
@@ -87,6 +107,7 @@ const Signup = () => {
                         onChange={handleInputChange}                                                    
                       />
                       <Form.Control 
+                      id='last'
                         type="text"
                         className="custom-fields" 
                         placeholder="Last Name" 
@@ -102,7 +123,8 @@ const Signup = () => {
 
                     <Form.Group className="mb-3" controlId="formEmail">
                     <Form.Label>Email</Form.Label>
-                        <Form.Control 
+                        <Form.Control
+                            id='email'
                             type="email"
                             className="custom-fields" 
                             placeholder="Enter email" 
@@ -116,6 +138,7 @@ const Signup = () => {
                         <Form.Label>Password</Form.Label>
                         <InputGroup className="mb-3">
                             <Form.Control
+                            id='pass'
                             type={showPassword ? "text" : "password"}
                             placeholder="Password"
                             className="custom-fields"
@@ -137,6 +160,7 @@ const Signup = () => {
                         <Form.Label>Confirm Password</Form.Label>
                         <InputGroup className="mb-3">
                             <Form.Control
+                            id='passconf'
                             type={showPasswordConfirm ? "text" : "password"}
                             placeholder="Re-enter Password"
                             className="custom-fields"

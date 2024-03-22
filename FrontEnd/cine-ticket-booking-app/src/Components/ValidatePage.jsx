@@ -18,6 +18,7 @@ import { ShowTime } from './Models/ShowTime';
 
 
 const ValidatePage = () => {
+  
     const [bookingsdata, setbookingsdata] = useState("");
     const [bookingid, setbookingid ] = useState("");
     const location=useLocation();
@@ -179,6 +180,7 @@ return (
                     </InputGroup>
 
                   </Form.Group>
+                  
 
                     <LoadingButton
                         name="Submit"    
@@ -187,6 +189,7 @@ return (
                     />
 
                 </Form>
+            
                 
               </Row>
             </Card.Body>

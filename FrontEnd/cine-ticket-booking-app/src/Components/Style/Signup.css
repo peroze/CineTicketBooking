@@ -49,6 +49,10 @@
     border: 1px solid #468189;
 }
 
+#signup-form .error{
+    border: 1px solid red;
+}
+
 #signup-form .custom-Btn {
     background-color: #031926;
     border: 1px solid #031926;

@@ -58,14 +58,43 @@ const AddMovie = () => {
   }; 
 
   const handleButtonClick = () => {
-                MovieService.addMovie(currentTitle,currentGenre,currentDuration,currentReleaseDate,currentDescription,
-                  currentDirector,currentActors,currentRating,currentLanguage)
-                .then((response) => {
-                  console.log(response.data);
-                })
-                .catch(error => {
-                console.log(error);
-              }) 
+
+    document.getElementById('title').classList.remove('error');
+    document.getElementById('genre').classList.remove('error');
+    document.getElementById('date').classList.remove('error');
+    document.getElementById('age').classList.remove('error');
+    document.getElementById('director').classList.remove('error');
+    document.getElementById('description').classList.remove('error');
+    document.getElementById('actors').classList.remove('error');
+    document.getElementById('duration').classList.remove('error');
+    document.getElementById('language').classList.remove('error');
+
+    if (currentTitle === '') {
+      document.getElementById('title').classList.add('error');
+    } if (currentGenre === '') {
+      document.getElementById('genre').classList.add('error');
+    } if (currentReleaseDate === '') {
+      document.getElementById('date').classList.add('error');
+    } if (currentRating === '') {
+      document.getElementById('age').classList.add('error');
+    } if (currentDescription === '') {
+      document.getElementById('description').classList.add('error');
+    } if (currentActors === '') {
+      document.getElementById('actors').classList.add('error');
+    } if (currentDuration === '') {
+      document.getElementById('duration').classList.add('error');
+    } if (currentLanguage === '') {
+      document.getElementById('language').classList.add('error');
+    } 
+
+    MovieService.addMovie(currentTitle,currentGenre,currentDuration,currentReleaseDate,currentDescription,
+      currentDirector,currentActors,currentRating,currentLanguage)
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch(error => {
+    console.log(error);
+  }) 
   };
 
   function formatDate(date) {
@@ -99,7 +128,8 @@ const AddMovie = () => {
                     <Form.Group className="mb-3 w-100" controlId="formFullName" >
                       <Form.Label>Movie Title</Form.Label>
                       <InputGroup className="mb-3">
-                        <Form.Control 
+                        <Form.Control
+                          id='title'
                           type="text"
                           className="custom-fields" 
                           placeholder="Movie Title" 
@@ -115,7 +145,8 @@ const AddMovie = () => {
   
                       <Form.Group className="mb-3 w-100" controlId="formGenre">
                       <Form.Label>Genre</Form.Label>
-                          <Form.Control 
+                          <Form.Control
+                              id='genre'
                               type="text"
                               className="custom-fields" 
                               placeholder="Genre" 
@@ -129,6 +160,7 @@ const AddMovie = () => {
                           <Form.Label>Duration</Form.Label>
                           <InputGroup className="mb-3">
                               <Form.Control
+                              id='duration'
                               type="number"
                               className="custom-fields" 
                               placeholder="Duration"
@@ -143,6 +175,7 @@ const AddMovie = () => {
                           <Form.Label>Director</Form.Label>
                           <InputGroup className="mb-3">
                               <Form.Control
+                              id='director'
                               type="text"
                               className="custom-fields" 
                               placeholder="Director"
@@ -157,6 +190,7 @@ const AddMovie = () => {
                           <Form.Label>Actors</Form.Label>
                           <InputGroup className="mb-3">
                               <Form.Control
+                              id='actprs'
                               type="text"
                               className="custom-fields" 
                               placeholder="Actors"
@@ -172,6 +206,7 @@ const AddMovie = () => {
                           <Form.Label>Description</Form.Label>
                           <InputGroup className="mb-3">
                               <textarea
+                              id='description'
                               className="descform" 
                               placeholder="Description"
                               name="description"
@@ -186,6 +221,7 @@ const AddMovie = () => {
                           <Form.Label>Age Rating</Form.Label>
                           <InputGroup className="mb-3">
                               <Form.Control
+                              id='age'
                               type="text"
                               className="custom-fields" 
                               placeholder="Age Rating"
@@ -200,6 +236,7 @@ const AddMovie = () => {
                           <Form.Label>ReleaseDate</Form.Label>
                           <InputGroup className="mb-3">
                               <Form.Control
+                              id='date'
                               type="date"
                               className="custom-fields" 
                               placeholder="ReleaseDate"

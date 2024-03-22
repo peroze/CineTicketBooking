@@ -37,7 +37,9 @@
 
 }
 
-
+#addmovie-form .error{
+    border: 1px solid red;
+}
 
 #addmovie-form .form-control:focus{
     border: 1px solid #031926;
