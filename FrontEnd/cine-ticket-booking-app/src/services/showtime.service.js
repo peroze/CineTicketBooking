@@ -1,6 +1,6 @@
 import api from "./api";
 
-class MovieService {
+class ShowtimeService {
     getAllShowtimes(){
         return api
         .get("/showtime/all")
@@ -45,4 +45,4 @@ class MovieService {
 
 }
 
-export default new MovieService() ;
+export default new ShowtimeService() ;
