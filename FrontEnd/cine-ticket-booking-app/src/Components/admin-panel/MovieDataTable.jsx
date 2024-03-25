@@ -7,6 +7,7 @@ import EditMovieModal from './EditMovieModal';
 import AddMovieModal from './AddMovieModal';
 import DeleteMovieModal from './DeleteMovieModal.jsx';
 import Button from 'react-bootstrap/Button';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 import "../Style/MovieDataTable.css";
 
@@ -49,22 +50,20 @@ const MovieDataTable = ({ moviesData, isPending ,handleReload}) => {
         {
             name: 'Actions',
             cell: (row) => (
-            <Dropdown className="movie-data-drop-down">
-                <Dropdown.Toggle variant="secondary" id={`dropdown-${row.id}`}>
-                {/* Three dots for the ellipsis */}
-                <AiOutlineEllipsis />
-                </Dropdown.Toggle>
-    
-                <Dropdown.Menu align="end">
-                <Dropdown.Item onClick={() => handleEditShow(row)}>Edit</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleDeleteShow(row)} className="text-danger">Delete</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+                <div>
+            
+            <Button variant="primary" className="button1-admin-panel-movies" onClick={() => handleEditShow(row)}>
+                <FaEdit />
+            </Button>
+            <Button variant="danger" onClick={() => handleDeleteShow(row)}>
+                <FaTrash />
+            </Button>
+            </div>
             ),
             ignoreRowClick: true, // Ignore row clicks for this column
             allowOverflow: true,
             button: true,
-            width: '56px', // Adjust the width of the column as needed
+            
         }
         // Add more columns as needed
     ];

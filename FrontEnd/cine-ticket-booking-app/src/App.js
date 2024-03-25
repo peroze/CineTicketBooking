@@ -16,7 +16,7 @@ import {jwtDecode} from 'jwt-decode';
 import Menubar from './Components/MenuBar.jsx';
 import MovieCard from './Components/MovieCard.jsx' 
 import { Link } from 'react-router-dom';
-import { useState , createContext } from 'react';
+import { useState , createContext, useEffect,useRef } from 'react';
 import MoviePage from './Components/MoviePage.jsx';
 import ContactUs from './Components/ContactUs.jsx';
 import CalendarPage from './Components/CalendarPage.jsx';
@@ -32,29 +32,71 @@ import PageNotFound from './Components/PageNotFound.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
+import refreshPageService from './services/refresh.page.service.js';
 
 export const UserContext = createContext();
 
 function App() {
 
-  const [usericon,setUsericon]=useState("https://ik.imagekit.io/cineticketbooking/Users/konper.jpeg")
-  const [username,setUsername]=useState("Konper98");
+  const [userIcon,setUserIcon]=useState("")
+  const [firstName,setFirstName]=useState("");
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState("");
   const [isAdmin,setIsAdmin] = useState(false);
   const [isInspector,setIsInspector] = useState(false);
 
+  const [shouldRun, setShouldRun] = useState(false);
+  const hasRun = useRef(false);
+
+  useEffect(() => {
+    if(!hasRun.current){
+      if(refreshPageService.getReload() === 'true'){
+        hasRun.current = true;
+
+       refreshPageService.onPageLoad()
+        .then((localUser) => {
+          console.log(localUser);
+          if (localUser != null) {
+            setUser(localUser);
+            setIsLoggedIn(refreshPageService.getIsLoggedIn());
+            setUserIcon("https://ik.imagekit.io/cineticketbooking/Users/" + localUser.id + ".jpeg");
+            setFirstName(localUser.firstName);
+          }
+        }).catch((error) => {
+          // Handle any errors during fetching
+          console.error("Error fetching localUser:", error);
+        });
+        
+      }
+      refreshPageService.setReload(true);
+      
+    }
+    
+  }, []);
+
+  useEffect(() => {
+    if(user != ""){
+      refreshPageService.onPageRefresh(isLoggedIn,user.id);
+    }
+  },[isLoggedIn,user])
+  
+  const startShouldRun = () => {
+    setShouldRun(true);
+  }
+
   return (
     <div className="App p-1" > 
       
-      <UserContext.Provider value={{isLoggedIn, setIsLoggedIn, user, setUser,isAdmin,setIsAdmin,isInspector,setIsInspector}}>
+      <UserContext.Provider 
+        value={{isLoggedIn, setIsLoggedIn, user, setUser,isAdmin,setIsAdmin,
+                isInspector,setIsInspector,userIcon,setUserIcon,firstName,setFirstName}
+              }>
 
       <div className="content-container">
         <Router>
         <header className="sticky-header">
-          <Menubar  icon={usericon} username={username}/>
+          <Menubar  icon={userIcon} username={firstName}/>
         </header>
           <Routes> 
               <Route path="/login" element={<Login />} />

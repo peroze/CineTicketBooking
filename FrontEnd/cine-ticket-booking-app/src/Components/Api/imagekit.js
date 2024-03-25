@@ -1,4 +1,5 @@
 import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react';
+import ImageKit from 'imagekitio-react';
 
 
     const publicK="public_RpxufWizWBajeZch607qowKJCrg="
@@ -6,7 +7,7 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react';
     const authEndpoint="http://localhost:8080/api/imagekitauth"
 
 
-    function uploadProfile(data,id,folder,file) {
+    export function uploadProfile(data,id,folder,file) {
         var imagekit = new ImageKit({
             publicKey : publicK,
             urlEndpoint : urlEP+"/Users",
@@ -24,7 +25,7 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react';
     })
 }
 
-    function uploadMovie(data,id,file) {
+    export function uploadMovie(data,id,file) {
         var imagekit = new ImageKit({
             publicKey : "public_RpxufWizWBajeZch607qowKJCrg=",
             urlEndpoint : "https://ik.imagekit.io/cineticketbooking/Movies",

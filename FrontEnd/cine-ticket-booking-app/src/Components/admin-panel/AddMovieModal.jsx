@@ -66,7 +66,6 @@ const AddMovieModal = ({ showModal, closeModal,handleReload}) => {
                             <Form.Control 
                                 type="text" 
                                 onChange={(e) => setCurrentTitle(e.target.value)} 
-
                             />
                             
                             

@@ -37,6 +37,7 @@ class AuthService {
   getCurrentUser() {
     return TokenService.getUser();
   }
+
 }
 
 export default new AuthService()

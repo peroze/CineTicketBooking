@@ -1,5 +1,5 @@
 // components/Signup.js
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -13,22 +13,42 @@ import GoogleLogin from './GoogleLogin';
 import {FaEyeSlash, FaEye} from 'react-icons/fa';
 import GoogleLoginButton from './GoogleLogin';
 
+import AuthService from '../services/auth.service.js'
+import { uploadProfile} from './Api/imagekit.js';
+import { UserContext } from '../App.js';
+import { useNavigate } from 'react-router-dom';
+
 
 
 import './Style/Signup.css'; // Import the external CSS file
 
 const Signup = () => {
-
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
-  const [photo,setPhoto]=useState("")
+  const [profilePicture,setProfilePicture]=useState("")
+  const {user} = useContext(UserContext);
+  const navigate = useNavigate();
 
-  const handleSubmit =(e) => {
+  const handleSubmit = async () => {
+    await AuthService.register(firstName,lastName,email,password)
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    })
 
-  };
+    let data="";
+    let folder="";
+    
+    uploadProfile(data, user.id, folder, profilePicture);
+    navigate("/login");
+    
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -53,7 +73,14 @@ const Signup = () => {
 
 
   const handleButtonClick = () => {
-    //onClick logic here
+    
+  };
+
+  const handleFileChange = (e) => {
+    // Access the selected file from the event
+    const selectedFile = e.target.files[0];
+    // Update the state variable with the selected file
+    setProfilePicture(selectedFile);
   };
 
 
@@ -159,15 +186,16 @@ const Signup = () => {
                       <Form.Label>Profile Picture</Form.Label>
                       <Form.Control 
                         type="file" 
-                        accept=".png, .jpeg, .jpg"
+                        accept=".jpeg"
                         customName="custom-fields"
+                        onChange={handleFileChange}
                         />
                     </Form.Group>
 
                     <LoadingButton
                         name="Submit"    
                         loadingText="Submitting..."
-                        onClick={handleButtonClick}                                                  
+                        onClick={handleSubmit}                                                  
                     />
 
                 </Form>

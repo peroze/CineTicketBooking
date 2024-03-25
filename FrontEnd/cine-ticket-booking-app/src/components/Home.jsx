@@ -1,16 +1,17 @@
 // components/Home.js
-import React from 'react';
+import React ,{useContext } from 'react';
 import { Link } from 'react-router-dom';
 import MoviePage from './MoviePage';
 import { Movie } from './Models/Movie';
 import styles from './Style/Home.css'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import gsap from "gsap"; // <-- import GSAP
 import { useGSAP } from "@gsap/react";
 import HomePageIcon from "./Images/HomePageIcon.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareFromSquare } from '@fortawesome/free-regular-svg-icons';
 import {faFacebook,faXTwitter,faInstagram,faYoutube} from '@fortawesome/free-brands-svg-icons';
+
 
 
 
@@ -53,6 +54,9 @@ const Home = () => {
     gsap.to(".social",{opacity:1,delay:0.7})
 
   }
+
+  
+
   return (
     <div className='HomeContainer'>
       

@@ -99,7 +99,7 @@ function Menubar({icon,username}) {
 
                       {isLoggedIn && isAdmin && (
                         <>             
-                          <NavDropdown title="Admin Panel">
+                          <NavDropdown title="Admin Panel" className='admin-panel-nav'>
                             <NavDropdown.Item>
                               <Nav.Link as={Link} to="/admin-panel/movies">Edit Movies</Nav.Link>
                             </NavDropdown.Item>

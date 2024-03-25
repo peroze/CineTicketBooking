@@ -3,25 +3,22 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { AiOutlineEllipsis } from "react-icons/ai";
 import Button from 'react-bootstrap/Button';
 import MovieService from "../../services/movie.service.js";
+import RoomService from "../../services/room.service.js";
 
 import React, { useState, useContext,useEffect } from 'react';
 
 import "../Style/ShowtimeDataTable.css";
+import AddShowtimeModal from './AddShowtimeModal';
+import DeleteShowtimeModal from './DeleteShowtimeModal.jsx';
 
 
 const ShowtimeDataTable = ({ showtimesData, isPending ,handleReload}) => {
 
     const [selectedShowtime, setSelectedShowtime] = useState(null);
-    const [showEditModal, setShowEditModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-
-    const handleEditShow = (showtime) => {
-        setSelectedShowtime(showtime);
-        setShowEditModal(true);
-    };
-
-    const handleEditClose = () => setShowEditModal(false);
+    const [movies, setMovies] = useState(null);
+    const [rooms, setRooms] = useState(null);
 
     const handleAddShow = () => setShowAddModal(true);
     const handleAddClose = () => setShowAddModal(false);
@@ -34,13 +31,14 @@ const ShowtimeDataTable = ({ showtimesData, isPending ,handleReload}) => {
 
     useEffect(() => {
         getAllMovies();
+        getAllRooms();
     }, []);
 
     const getAllMovies = () =>{
         MovieService.getAllMovies()
         .then((response) => {
             console.log(response);
-            setRoles(response);
+            setMovies(response);
         })
         .catch(error => {
             console.log(error);
@@ -48,7 +46,14 @@ const ShowtimeDataTable = ({ showtimesData, isPending ,handleReload}) => {
     };
 
     const getAllRooms = () => {
-        
+        RoomService.getAllRooms()
+        .then((response) => {
+            console.log(response);
+            setRooms(response);
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
     const getLocalTime = (showtime,timeLabel) => {
@@ -86,6 +91,10 @@ const ShowtimeDataTable = ({ showtimesData, isPending ,handleReload}) => {
             selector: row => getLocalTime(row,"endTime")
         },
         {
+            name: "Ticket Price",
+            selector: row => row.ticketPrice
+        },
+        {
             name: 'Actions',
             cell: (row) => (
                 <Button variant='danger' onClick={() => handleDeleteShow(row)}>Delete</Button>
@@ -118,11 +127,13 @@ const ShowtimeDataTable = ({ showtimesData, isPending ,handleReload}) => {
                 showModal = {handleAddShow}
                 closeModal = {handleAddClose}
                 handleReload = {handleReload}
+                movieList = {movies}
+                roomList = {rooms}
         />
         )}
         {showDeleteModal && (<DeleteShowtimeModal
                 show={showDeleteModal}
-                movie={selectedMovie}
+                showtime={selectedShowtime}
                 onHide={() => setShowDeleteModal(false)}
                 showModal = {handleDeleteShow}
                 closeModal = {handleDeleteClose}

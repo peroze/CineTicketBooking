@@ -16,6 +16,7 @@ import GoogleLoginButton from './GoogleLogin';
 import axios from 'axios';
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service.js";
+import { useNavigate } from 'react-router-dom';
 
 import { useEffect } from 'react';
 import { UserContext } from '../App.js';
@@ -31,6 +32,9 @@ const Login = () => {
 
     const {isLoggedIn,setIsLoggedIn} = useContext(UserContext);
     const {user, setUser} = useContext(UserContext);
+    const {setUserIcon,setFirstName} = useContext(UserContext);
+
+    const navigate = useNavigate();
 
     const handleButtonClick =() => {
         
@@ -44,7 +48,16 @@ const Login = () => {
         })
         .catch(function (error) {
             setIsLoggedIn(false);
-            toast.error("An error occurred. Please try again later.");
+            if (!error.response) {
+                toast.error("No response from the server. Please try again later.");
+                return;
+            }
+            if(error.response.status == 401){
+                toast.error("Invalid Credentials")
+            }
+            else{
+                toast.error("An error occurred. Please try again later.");
+            }
             console.log(error);
         });
     };
@@ -58,21 +71,18 @@ const Login = () => {
         }
     };
 
-    const handleLogin = () => {
-        UserService.getUserByEmail(email)
-        .then(function (response) {
-            console.log(response); 
-            setUser(response);
-        })
-        .catch(function (error) {
+    const handleLogin = async () => {
+        try {
+            const response = await UserService.getUserByEmail(email);
+            await setUser(response);
+            await setFirstName(response.firstName);
+            const imageUrl = "https://ik.imagekit.io/cineticketbooking/Users/" + response.id + ".jpeg";
+            await setUserIcon(imageUrl);
+            navigate("/");
+        } catch (error) {
             console.log(error);
-        });
-        
+        }
     }
-
-
-    
-
 
     return(
         <Container fluid className="login-page align-items-center justify-content-center">
@@ -137,17 +147,11 @@ const Login = () => {
 
                                                 </Form.Group>
 
-
-                                                <Button
-                                                    onClick={handleButtonClick}
-                                                >
-                                                    Log in
-                                                </Button>
-                                                {/* <LoadingButton
+                                                <LoadingButton
                                                     name="Log in"    
                                                     loadingText="Logging in..."
                                                     onClick={handleButtonClick}                                                  
-                                                /> */}
+                                                />
                     
                                             </Form>
                                
