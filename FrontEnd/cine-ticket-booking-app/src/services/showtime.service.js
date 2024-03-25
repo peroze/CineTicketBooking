@@ -10,6 +10,14 @@ class ShowtimeService {
         });
     }
 
+    getAllShowtimes(){
+        return api
+        .get("/showtime/all")
+        .then(response => {
+          return response.data;
+        });
+    }
+
     getShowtimesbyMovieId(id){
         return api
         .get("/showtime/movie/"+id)
@@ -18,13 +26,16 @@ class ShowtimeService {
         });
     }
 
-    addShowtimes(movieid,startDate,endDate,room){
+    addShowtimes(movieId,startTime,endTime,roomId){
+        var ticketPrice=15;
+        roomId=1;
         return api
         .post("showtime/addauto",{
-            movieid,
-            startDate,
-            endDate,
-            room
+            movieId,
+            startTime,
+            endTime,
+            roomId,
+            ticketPrice
         })
         .then(response => {
             console.log(response.data);

@@ -51,7 +51,8 @@ const [room,setroom]=useState("room1")
   }; 
 
   const handleButtonClick = () => {
-    showtimeService.addShowtimes(movie.id,startDate,endDate)
+    console.log(movie.id,startDate,endDate);
+    showtimeService.addShowtimes(movie.id,startDate,endDate,room)
     .then((response) => {
       console.log(response.data);
   })
@@ -80,9 +81,9 @@ const [room,setroom]=useState("room1")
                         <Form.Label>Room</Form.Label>
                         <InputGroup className="mb-3">
                         <select id="rooms" name="roomlist" form="add-movie-form" onChange={change} value={room}>
-                        <option value="room1">Room1
+                        <option value="1">Room1
                         </option>
-                        <option value="room2">Room2
+                        <option value="2">Room2
                         </option>
                         </select>
                         </InputGroup>

@@ -12,13 +12,19 @@ import LoadingButton from './LoadingButton';
 import GoogleLogin from './GoogleLogin';
 import {FaEyeSlash, FaEye} from 'react-icons/fa';
 import GoogleLoginButton from './GoogleLogin';
-import MovieService from '../services/movie.service'
+import MovieService from '../services/movie.service';
+//import uploadMovie from '../services/imagekit.service';
+import {uploadMovie} from '../services/imagekit.service';
+import { useNavigate } from 'react-router-dom';
+
+
 
 
 
 import './Style/AddMovie.css'; // Import the external CSS file
 
 const AddMovie = () => {
+  const navigate=useNavigate();
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentGenre, setCurrentGenre] = useState("");
   const [currentDuration, setCurrentDuration] = useState("");
@@ -53,19 +59,67 @@ const AddMovie = () => {
       setCurrentRating(value)
     } else if (name === 'realeaseDate') {
       setCurrentReleaseDate(value)
+    }else if(name==='language'){
+      setCurrentLanguage(value);
+    }
+    else{
+      setPhoto(e.target.files[0]);
     }
     
   }; 
 
   const handleButtonClick = () => {
-                MovieService.addMovie(currentTitle,currentGenre,currentDuration,currentReleaseDate,currentDescription,
-                  currentDirector,currentActors,currentRating,currentLanguage)
-                .then((response) => {
-                  console.log(response.data);
-                })
-                .catch(error => {
-                console.log(error);
-              }) 
+    var counter=0;
+    document.getElementById('title').classList.remove('error');
+    document.getElementById('genre').classList.remove('error');
+    document.getElementById('date').classList.remove('error');
+    document.getElementById('age').classList.remove('error');
+    document.getElementById('director').classList.remove('error');
+    document.getElementById('description').classList.remove('error');
+    document.getElementById('actors').classList.remove('error');
+    document.getElementById('duration').classList.remove('error');
+    document.getElementById('language').classList.remove('error');
+
+    if (currentTitle === '') {
+      document.getElementById('title').classList.add('error');
+      counter++;
+    } if (currentGenre === '') {
+      document.getElementById('genre').classList.add('error');
+      counter++;
+    } if (currentReleaseDate === '') {
+      document.getElementById('date').classList.add('error');
+      counter++;
+    } if (currentRating === '') {
+      document.getElementById('age').classList.add('error');
+      counter++;
+    } if (currentDescription === '') {
+      document.getElementById('description').classList.add('error');
+      counter++;
+    } if (currentActors === '') {
+      document.getElementById('actors').classList.add('error');
+      counter++;
+    } if (currentDuration === '') {
+      document.getElementById('duration').classList.add('error');
+      counter++;
+    } if (currentLanguage === '') {
+      document.getElementById('language').classList.add('error');
+      counter++;
+    } 
+    if(photo ===''){
+      counter++;
+    }
+    if(counter==0){
+      MovieService.addMovie(currentTitle,currentGenre,currentDuration,currentReleaseDate,currentDescription,
+      currentDirector,currentActors,currentRating,currentLanguage)
+      .then((response) => {
+        console.log(response.id);
+        uploadMovie(response.id,photo);
+        navigate('/add-show-time',{state:response});
+      })
+      .catch(error => {
+      console.log(error);
+    }) 
+  }
   };
 
   function formatDate(date) {
@@ -99,7 +153,8 @@ const AddMovie = () => {
                     <Form.Group className="mb-3 w-100" controlId="formFullName" >
                       <Form.Label>Movie Title</Form.Label>
                       <InputGroup className="mb-3">
-                        <Form.Control 
+                        <Form.Control
+                          id='title'
                           type="text"
                           className="custom-fields" 
                           placeholder="Movie Title" 
@@ -115,7 +170,8 @@ const AddMovie = () => {
   
                       <Form.Group className="mb-3 w-100" controlId="formGenre">
                       <Form.Label>Genre</Form.Label>
-                          <Form.Control 
+                          <Form.Control
+                              id='genre'
                               type="text"
                               className="custom-fields" 
                               placeholder="Genre" 
@@ -129,6 +185,7 @@ const AddMovie = () => {
                           <Form.Label>Duration</Form.Label>
                           <InputGroup className="mb-3">
                               <Form.Control
+                              id='duration'
                               type="number"
                               className="custom-fields" 
                               placeholder="Duration"
@@ -139,10 +196,26 @@ const AddMovie = () => {
                           </InputGroup>
   
                       </Form.Group>
+                      <Form.Group className="mb-3 w-100" controlId="formDuration" >
+                          <Form.Label>Language</Form.Label>
+                          <InputGroup className="mb-3">
+                              <Form.Control
+                              id='language'
+                              type="text"
+                              className="custom-fields" 
+                              placeholder="Language"
+                              name="language"
+                              value={currentLanguage}
+                              onChange={handleInputChange}
+                              />
+                          </InputGroup>
+  
+                      </Form.Group>
                       <Form.Group className="mb-3 w-100" controlId="formDirector" >
                           <Form.Label>Director</Form.Label>
                           <InputGroup className="mb-3">
                               <Form.Control
+                              id='director'
                               type="text"
                               className="custom-fields" 
                               placeholder="Director"
@@ -157,6 +230,7 @@ const AddMovie = () => {
                           <Form.Label>Actors</Form.Label>
                           <InputGroup className="mb-3">
                               <Form.Control
+                              id='actors'
                               type="text"
                               className="custom-fields" 
                               placeholder="Actors"
@@ -172,6 +246,7 @@ const AddMovie = () => {
                           <Form.Label>Description</Form.Label>
                           <InputGroup className="mb-3">
                               <textarea
+                              id='description'
                               className="descform" 
                               placeholder="Description"
                               name="description"
@@ -186,6 +261,7 @@ const AddMovie = () => {
                           <Form.Label>Age Rating</Form.Label>
                           <InputGroup className="mb-3">
                               <Form.Control
+                              id='age'
                               type="text"
                               className="custom-fields" 
                               placeholder="Age Rating"
@@ -200,6 +276,7 @@ const AddMovie = () => {
                           <Form.Label>ReleaseDate</Form.Label>
                           <InputGroup className="mb-3">
                               <Form.Control
+                              id='date'
                               type="date"
                               className="custom-fields" 
                               placeholder="ReleaseDate"
@@ -210,6 +287,16 @@ const AddMovie = () => {
                           </InputGroup>
   
                       </Form.Group>
+
+                      <Form.Group controlId="formImage" className="mb-4">
+                      <Form.Label>Movie Picture</Form.Label>
+                      <Form.Control 
+                        type="file" 
+                        accept=".png, .jpeg, .jpg"
+                        className="custom-fields"
+                        onChange={handleInputChange}
+                        />
+                    </Form.Group>
   
                     
   
