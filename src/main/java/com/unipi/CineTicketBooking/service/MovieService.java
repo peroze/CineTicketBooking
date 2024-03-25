@@ -122,7 +122,6 @@ public class MovieService {
 
     public List<MovieListObject> getMovieList()
     {
-        System.out.println("Inside MovieService");
         return movieRepository.findMovies();
     }
 }

@@ -50,6 +50,10 @@ public class UsersService {
         return usersRepository.findUsersByEmail(email);
     }
 
+    public Optional<Users> getUserById(Long id){
+        return usersRepository.findUsersById(id);
+    }
+
     public void updateUser(long id,Users userUpd){
         Users user=usersRepository.findById(id).orElseThrow(()->new IllegalArgumentException("The User does not exist"));
         if(userUpd.getEmail()!=null){

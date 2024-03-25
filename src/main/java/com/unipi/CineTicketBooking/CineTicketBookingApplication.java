@@ -56,7 +56,7 @@ public class CineTicketBookingApplication {
 			var admin = RegisterRequest.builder()
 					.firstName("Admin")
 					.lastName("Admin")
-					.email("cineticketbooking@gmail.com")
+					.email("admin@mail.com")
 					.password("12345")
 					.role(Role.ADMIN)
 					.build();
