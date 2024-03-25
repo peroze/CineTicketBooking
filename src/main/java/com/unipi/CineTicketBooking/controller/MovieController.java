@@ -47,10 +47,10 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> addNewMovie(@RequestBody Movie movie) {
+    public ResponseEntity<Movie> addNewMovie(@RequestBody Movie movie) {
        try {
-           movieService.addNewMovie(movie);
-           return new ResponseEntity<>(HttpStatus.CREATED);
+           Movie addedmovie=movieService.addNewMovie(movie);
+           return new ResponseEntity<>(addedmovie,HttpStatus.CREATED);
        }catch (Exception e){
            e.printStackTrace();
            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
