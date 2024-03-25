@@ -52,6 +52,20 @@ public class ShowtimeController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping(path="/all")
+    public  ResponseEntity<List<Showtime>> getAllShowTime(){
+        try{
+            //Gson gson = new Gson();
+            List<Showtime> showtimes=showtimeService.getAllShowTime();
+            //String movieList = gson.toJson(showtimes);
+            return new ResponseEntity<>(showtimes,HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @PostMapping
     public ResponseEntity<String> addNewShowtime(@RequestBody AddShowtimeRequest addShowtimeRequest) {
