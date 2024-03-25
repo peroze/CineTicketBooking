@@ -29,7 +29,14 @@ class AuthService {
       email,
       password,
       role
-    });
+    }).then(response => {
+      console.log(response.data);
+      return response.data;
+  })
+  .catch(error => {
+      console.error("Error in Register:", error);
+      throw error; // Rethrow the error to handle it in the caller
+  });;
   }
 
   getCurrentUser() {

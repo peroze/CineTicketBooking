@@ -82,7 +82,7 @@ function Menubar({icon,username}) {
                       <Nav.Link as={Link} to="/">Home</Nav.Link>
                       <Nav.Link as={Link} to="/movies" >Movies</Nav.Link>
                       <Nav.Link as={Link} to="/about">About Us</Nav.Link>
-                      <Nav.Link as={Link} to="/contactus">Contact Us</Nav.Link>
+                      <Nav.Link as={Link} to="/addmovie">Contact Us</Nav.Link>
                       <Nav.Link as={Link} to={{ pathname:'/validate-page',state: {ShowTimeId:1} }}>Validate</Nav.Link>                      
 
                       {isLoggedIn && adminStatus && (

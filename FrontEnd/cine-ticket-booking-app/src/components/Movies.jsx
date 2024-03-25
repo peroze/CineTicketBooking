@@ -13,14 +13,19 @@ import { useContext } from 'react';
 import { UserContext } from '../App.js';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import movieService from '../services/movie.service.js';
 
 
 
 const Movies = () => {
+  const [isLoading, setisLoading] = useState(true);
   const navigate=useNavigate();
   const {isLoggedIn, setIsLoggedIn} = useContext(UserContext);
   const [adminStatus, setAdminStatus] = useState(false);
   const {user, setUser} = useContext(UserContext);
+  const [movies,setMovies]=useState([]);
+  //const {movies,setMovies}=useEffect("")
+
 
   const isAdmin = (user) => {
     const authority = user.authorities[0]?.authority;
@@ -37,9 +42,26 @@ const Movies = () => {
       console.log("Is the user logged in? ",isLoggedIn);
       setAdminStatus(isAdmin(user));
     }
-  }, [user]);
-
-  const movies=[{id:2,name:"The Avengers"},{id:3,name:"Mission: Impossible Fallout"},{id:1,name:"The Avengers: Age of Ultron"}]
+    if(isLoading){
+      //setMovies([]);
+      movieService.getAllMovies().then((response)=>{
+        const list=response;
+        console.log(response.length);
+        for (let i = 0; i < list.length; i++){
+          if((movies.length<list.length)){
+            movies.push({id:list[i].id,name:list[i].name})
+          }
+        }
+        setisLoading(false);
+      })
+    }
+  }, [user,isLoading]);
+  //var movies=[];
+   
+   //setMovies([{id:2,name:"The Avengers"},{id:3,name:"Mission: Impossible Fallout"},{id:1,name:"The Avengers: Age of Ultron"}]);
+  if (isLoading) {
+    return <div className="App">Loading...</div>;
+  }
   return (
     <div>
           <div className="movie-header">
@@ -53,22 +75,13 @@ const Movies = () => {
           </div>)}
           </div>
          <div className='d-flex flex-row flex-wrap align-items-center justify-content-center gap-2' >
-         {movies.map(movie => (
-            <div className="cards"onClick={()=>{
+         {movies.map((movie) => (
+            <div className="cards" onClick={()=>{
             navigate('/movie',{state:movie.id})
             }}>
               <MovieCard  name={movie.name} id={movie.id}></MovieCard>
             </div>
             ))}
-            <div className="cards" onClick={()=>{
-                navigate('/movie',{state:1})
-            }}><MovieCard name={'The Avengers 2'} id={1}/></div>
-            <div className="cards"onClick={()=>{
-                navigate('/movie',{state:2})
-            }}><MovieCard name={'The Avengers'} id={2}/></div>
-            <div className="cards"onClick={()=>{
-                navigate('/movie',{state:3})
-            }}><MovieCard name={'Mission: Impossible Fallout'} id={3}/> </div>
         </div>
 
       

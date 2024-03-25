@@ -12,10 +12,13 @@ import LoadingButton from './LoadingButton';
 import GoogleLogin from './GoogleLogin';
 import {FaEyeSlash, FaEye} from 'react-icons/fa';
 import GoogleLoginButton from './GoogleLogin';
+import authService from '../services/auth.service';
+import { uploadProfile } from '../services/imagekit.service';
 
 
 
 import './Style/Signup.css'; // Import the external CSS file
+import { counter } from '@fortawesome/fontawesome-svg-core';
 
 const Signup = () => {
 
@@ -53,25 +56,40 @@ const Signup = () => {
 
 
   const handleButtonClick = () => {
+    counter=0;
     document.getElementById('email').classList.remove('error');
     document.getElementById('pass').classList.remove('error');
     document.getElementById('first').classList.remove('error');
     document.getElementById('last').classList.remove('error');
     document.getElementById('passconf').classList.remove('.error');
 
-    if (email === '') {
+    if (email === ''|| !(email.includes('@'))) {
       document.getElementById('email').classList.add('error');
+      counter++;
     }if (password === '') {
       document.getElementById('pass').classList.add('error');
+      counter++;
     }if (firstName === '') {
       document.getElementById('first').classList.add('error');
+      counter++;
     }if (lastName === '') {
       document.getElementById('last').classList.add('error');
+      counter++;
     }if (passwordConfirm === '') {
       document.getElementById('pasconf').classList.add('error');
+      counter++;
     }if (password != passwordConfirm ){
       document.getElementById('pass').classList.add('error');
       document.getElementById('passconf').classList.add('error');
+      counter++;
+    }
+    if (counter==0){
+      authService.register(firstName,lastName,email).then((response)=>{
+        console.log(response);
+        uploadProfile(response.id,photo);
+      }).catch((err)=>{
+        console.log(err);
+      })
     }
   };
 
@@ -199,15 +217,6 @@ const Signup = () => {
               </Row>
             </Card.Body>
           </Card>
-
-
-
-
-
-
-
-
-
         </Col>
       </Row>
     </Container>

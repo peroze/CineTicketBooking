@@ -12,13 +12,19 @@ import LoadingButton from './LoadingButton';
 import GoogleLogin from './GoogleLogin';
 import {FaEyeSlash, FaEye} from 'react-icons/fa';
 import GoogleLoginButton from './GoogleLogin';
-import MovieService from '../services/movie.service'
+import MovieService from '../services/movie.service';
+//import uploadMovie from '../services/imagekit.service';
+import {uploadMovie} from '../services/imagekit.service';
+import { useNavigate } from 'react-router-dom';
+
+
 
 
 
 import './Style/AddMovie.css'; // Import the external CSS file
 
 const AddMovie = () => {
+  const navigate=useNavigate();
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentGenre, setCurrentGenre] = useState("");
   const [currentDuration, setCurrentDuration] = useState("");
@@ -53,12 +59,17 @@ const AddMovie = () => {
       setCurrentRating(value)
     } else if (name === 'realeaseDate') {
       setCurrentReleaseDate(value)
+    }else if(name==='language'){
+      setCurrentLanguage(value);
+    }
+    else{
+      setPhoto(e.target.files[0]);
     }
     
   }; 
 
   const handleButtonClick = () => {
-
+    var counter=0;
     document.getElementById('title').classList.remove('error');
     document.getElementById('genre').classList.remove('error');
     document.getElementById('date').classList.remove('error');
@@ -71,30 +82,44 @@ const AddMovie = () => {
 
     if (currentTitle === '') {
       document.getElementById('title').classList.add('error');
+      counter++;
     } if (currentGenre === '') {
       document.getElementById('genre').classList.add('error');
+      counter++;
     } if (currentReleaseDate === '') {
       document.getElementById('date').classList.add('error');
+      counter++;
     } if (currentRating === '') {
       document.getElementById('age').classList.add('error');
+      counter++;
     } if (currentDescription === '') {
       document.getElementById('description').classList.add('error');
+      counter++;
     } if (currentActors === '') {
       document.getElementById('actors').classList.add('error');
+      counter++;
     } if (currentDuration === '') {
       document.getElementById('duration').classList.add('error');
+      counter++;
     } if (currentLanguage === '') {
       document.getElementById('language').classList.add('error');
+      counter++;
     } 
-
-    MovieService.addMovie(currentTitle,currentGenre,currentDuration,currentReleaseDate,currentDescription,
+    if(photo ===''){
+      counter++;
+    }
+    if(counter==0){
+      MovieService.addMovie(currentTitle,currentGenre,currentDuration,currentReleaseDate,currentDescription,
       currentDirector,currentActors,currentRating,currentLanguage)
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch(error => {
-    console.log(error);
-  }) 
+      .then((response) => {
+        console.log(response.id);
+        uploadMovie(response.id,photo);
+        navigate('/add-show-time',{state:response});
+      })
+      .catch(error => {
+      console.log(error);
+    }) 
+  }
   };
 
   function formatDate(date) {
@@ -171,6 +196,21 @@ const AddMovie = () => {
                           </InputGroup>
   
                       </Form.Group>
+                      <Form.Group className="mb-3 w-100" controlId="formDuration" >
+                          <Form.Label>Language</Form.Label>
+                          <InputGroup className="mb-3">
+                              <Form.Control
+                              id='language'
+                              type="text"
+                              className="custom-fields" 
+                              placeholder="Language"
+                              name="language"
+                              value={currentLanguage}
+                              onChange={handleInputChange}
+                              />
+                          </InputGroup>
+  
+                      </Form.Group>
                       <Form.Group className="mb-3 w-100" controlId="formDirector" >
                           <Form.Label>Director</Form.Label>
                           <InputGroup className="mb-3">
@@ -190,7 +230,7 @@ const AddMovie = () => {
                           <Form.Label>Actors</Form.Label>
                           <InputGroup className="mb-3">
                               <Form.Control
-                              id='actprs'
+                              id='actors'
                               type="text"
                               className="custom-fields" 
                               placeholder="Actors"
@@ -247,6 +287,16 @@ const AddMovie = () => {
                           </InputGroup>
   
                       </Form.Group>
+
+                      <Form.Group controlId="formImage" className="mb-4">
+                      <Form.Label>Movie Picture</Form.Label>
+                      <Form.Control 
+                        type="file" 
+                        accept=".png, .jpeg, .jpg"
+                        className="custom-fields"
+                        onChange={handleInputChange}
+                        />
+                    </Form.Group>
   
                     
   
