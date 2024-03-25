@@ -4,21 +4,16 @@ import Button from 'react-bootstrap/Button';
 function LoadingButton({ name, loadingText, onClick }) {
   const [isLoading, setLoading] = useState(false);
 
-  useEffect(() => {
-    function simulateNetworkRequest() {
-      return new Promise((resolve) => setTimeout(resolve, 2000));
-    }
-
-    if (isLoading) {
-      simulateNetworkRequest().then(() => {
-        setLoading(false);
-      });
-    }
-  }, [isLoading]);
-
-  const handleClick = () => {
+  const handleClick = async () => {
     setLoading(true);
-    onClick(); // Call the provided onClick function
+    try {
+      await onClick(); // Call the provided onClick function
+      setLoading(false); // Set isLoading back to false after onClick function is executed
+    } catch (error) {
+      // Handle any errors
+      console.error(error);
+      setLoading(false); // Set isLoading back to false in case of error
+    }
   };
 
   return (

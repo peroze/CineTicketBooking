@@ -33,9 +33,11 @@ function Menubar({icon,username}) {
   const [unknownUserIcon,setUnknownUserIcon]=useState("https://ik.imagekit.io/cineticketbooking/Users/unknownuser.png");
   const {user, setUser} = useContext(UserContext);
   const navigate = useNavigate();
-  const [adminStatus, setAdminStatus] = useState(false);
 
-  const isAdmin = (user) => {
+  const {isAdmin,setIsAdmin} = useContext(UserContext);
+  const {isInspector, setIsInspector} = useContext(UserContext);
+
+  const isUserAdmin = (user) => {
     const authority = user.authorities[0]?.authority;
     if(authority === "ADMIN" ){
       return true;
@@ -43,12 +45,18 @@ function Menubar({icon,username}) {
     return false;
   }
 
+  const isUserInspector = (user) => {
+    const authority = user.authorities[0]?.authority;
+    if(authority === "INSPECTOR" ){
+      return true;
+    }
+    return false;
+  }
+
   useEffect(() => {
-    // This code will run whenever isLoggedIn changes its value
     if (isLoggedIn) {
-      // Call isAdmin when user is logged in
-      console.log("Is the user logged in? ",isLoggedIn);
-      setAdminStatus(isAdmin(user));
+      setIsAdmin(isUserAdmin(user));
+      setIsInspector(isUserInspector(user));
     }
   }, [user]);
 
@@ -81,13 +89,12 @@ function Menubar({icon,username}) {
                     <Nav className="ms-auto gap-3 offcanvas-body " id='offcanvasNavbar'>
                       <Nav.Link as={Link} to="/">Home</Nav.Link>
                       <Nav.Link as={Link} to="/movies" >Movies</Nav.Link>
-                      <Nav.Link as={Link} to="/about">About Us</Nav.Link>
-                      <Nav.Link as={Link} to="/addmovie">Contact Us</Nav.Link>
-                      <Nav.Link as={Link} to={{ pathname:'/validate-page',state: {ShowTimeId:1} }}>Validate</Nav.Link>                      
+                      {/* <Nav.Link as={Link} to="/about">About Us</Nav.Link> */}
+                      <Nav.Link as={Link} to="/contactus">Contact Us</Nav.Link>                                       
 
-                      {isLoggedIn && adminStatus && (
+                      {isLoggedIn && isAdmin && (
                         <>             
-                          <NavDropdown title="Admin Panel">
+                          <NavDropdown title="Admin Panel" className='admin-panel-nav'>
                             <NavDropdown.Item>
                               <Nav.Link as={Link} to="/admin-panel/movies">Edit Movies</Nav.Link>
                             </NavDropdown.Item>
@@ -97,12 +104,16 @@ function Menubar({icon,username}) {
                             <NavDropdown.Item>
                               <Nav.Link as={Link} to="/admin-panel/showtimes">Edit Showtimes</Nav.Link>
                             </NavDropdown.Item>
-                            <NavDropdown.Item>
-                              <Nav.Link as={Link} to="/admin-panel/rooms">Edit Rooms</Nav.Link>
-                            </NavDropdown.Item>  
                           </NavDropdown>              
                         </>
                       )}
+
+                      {isLoggedIn && (isInspector || isAdmin) && (
+                        <>             
+                          <Nav.Link as={Link} to="/validate-page">Validate Ticket</Nav.Link>            
+                        </>
+                      )}
+
                     </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>

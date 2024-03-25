@@ -1,5 +1,5 @@
 // components/Signup.js
-import React, { useState } from 'react';
+import React, { useState,useContext  } from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -14,7 +14,8 @@ import {FaEyeSlash, FaEye} from 'react-icons/fa';
 import GoogleLoginButton from './GoogleLogin';
 import authService from '../services/auth.service';
 import { uploadProfile } from '../services/imagekit.service';
-
+import { UserContext } from '../App.js';
+import { useNavigate } from 'react-router-dom';
 
 
 import './Style/Signup.css'; // Import the external CSS file
@@ -28,10 +29,8 @@ const Signup = () => {
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [photo,setPhoto]=useState("")
-
-  const handleSubmit =(e) => {
-
-  };
+  const {user} = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

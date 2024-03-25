@@ -3,22 +3,22 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import React, { useState,useEffect } from 'react';
 import DatePicker from "react-datepicker";
-import MovieService from "../../services/movie.service.js";
+import ShowtimeService from "../../services/showtime.service.js";
 import { toast } from 'react-toastify';
 
 import "react-datepicker/dist/react-datepicker.css";
 
 
-const DeleteMovieModal = ({ movie, showModal, closeModal,handleReload}) => {
+const DeleteShowtimeModal = ({ showtime, showModal, closeModal,handleReload}) => {
 
     const applyChanges = () =>{
-        MovieService.deleteMovie(movie.id)
+        ShowtimeService.deleteShowtime(showtime.id)
         .then((response) => {
-            toast.success("Successfully deleted the movie");
+            toast.success("Successfully deleted the showtime");
             console.log(response.data);
         })
         .catch(error => {
-            toast.success("An error occurred. Please try later");
+            toast.error("An error occurred. Please try later");
             console.log(error);
         })
         .finally( () => {
@@ -38,13 +38,14 @@ const DeleteMovieModal = ({ movie, showModal, closeModal,handleReload}) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Delete Movie
+                    Delete Showtime
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h4>Movie id: {movie.id}</h4>
+                <h4>Showtime id: {showtime.id}</h4>
                 <div>
-                    Are you sure you want to delete this movie?
+                    Are you sure you want to delete this showtime? <br/>
+                    (All customers will be notified about the change)
                 </div>
                 
             </Modal.Body>
@@ -56,4 +57,4 @@ const DeleteMovieModal = ({ movie, showModal, closeModal,handleReload}) => {
     );
 };
 
-export default DeleteMovieModal;
+export default DeleteShowtimeModal;

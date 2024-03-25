@@ -1,6 +1,7 @@
 import api from "./api";
 
 class UserService {
+    
     getUserByEmail(email){
         return api
         .get("/users/email/"+email)
@@ -13,6 +14,19 @@ class UserService {
             throw error; // Rethrow the error to handle it in the caller
         });
     }
+
+    getUserById(id){
+        return api
+        .get("/users/id/"+id)
+        .then(response => {
+          return response.data;
+        })
+        .catch(error => {
+            console.error("Error getting user:", error);
+            throw error; // Rethrow the error to handle it in the caller
+        });
+    }
+
 
     getAllUsers(){
         return api
