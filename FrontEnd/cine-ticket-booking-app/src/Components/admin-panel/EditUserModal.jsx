@@ -3,11 +3,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import React, { useState,useEffect } from 'react';
 import UserService from "../../services/user.service.js";
+import { toast } from 'react-toastify';
 
 
 const EditUserModal = ({ user, showModal, closeModal,handleReload, roles}) => {
 
     const [currentRole, setCurrentRole] = useState(user.authorities[0]?.authority.replace("ROLE_",""));
+    const [localCurrentRole, setLocalCurrentRole] = useState(currentRole);
 
     const applyChanges = () =>{
         UserService.editUserRole(user.id,currentRole)
@@ -15,6 +17,7 @@ const EditUserModal = ({ user, showModal, closeModal,handleReload, roles}) => {
                 console.log(response.data);
             })
             .catch(error => {
+                
                 console.log(error);
             })
             .finally( () => {
@@ -77,8 +80,8 @@ const EditUserModal = ({ user, showModal, closeModal,handleReload, roles}) => {
                         
                             <Form.Label>Role</Form.Label>
                             <Form.Select onChange={(e) => setCurrentRole(e.target.value)}>
-                            <option>Current Role: {currentRole}</option>
-                                {roles.map((role, index) => (
+                            <option hidden >Current Role: {localCurrentRole}</option>
+                                {roles.filter(role => role !== localCurrentRole).map((role, index) => (
                                     <option 
                                         key={index} 
                                         value={role}

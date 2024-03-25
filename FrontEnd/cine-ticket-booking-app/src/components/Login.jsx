@@ -13,12 +13,13 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import GoogleLoginButton from './GoogleLogin';
-import axios from 'axios';
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service.js";
+import { useNavigate } from 'react-router-dom';
 
 import { useEffect } from 'react';
 import { UserContext } from '../App.js';
+import { toast } from 'react-toastify';
 
 import './Style/Login.css'; // Import the external CSS file
 
@@ -30,19 +31,31 @@ const Login = () => {
 
     const {isLoggedIn,setIsLoggedIn} = useContext(UserContext);
     const {user, setUser} = useContext(UserContext);
+    const {setUserIcon,setFirstName} = useContext(UserContext);
 
-    const handleButtonClick =() => {
-        
-        AuthService.login(email,password)
-        .then(function (response) {
+    const navigate = useNavigate();
+
+    const handleButtonClick = async () => {
+        try { 
+            const response = await AuthService.login(email, password); // Wait for login to complete
             console.log(response);
             handleLogin();
             setIsLoggedIn(true);
-            console.log("Is the user logged in? " ,isLoggedIn);
-        })
-        .catch(function (error) {
+            toast.success("Successful Login");
+            console.log("Is the user logged in? ", isLoggedIn);
+        } catch (error) {
+            setIsLoggedIn(false);
+            if (!error.response) {
+                toast.error("No response from the server. Please try again later.");
+                return;
+            }
+            if (error.response.status === 401) {
+                toast.error("Invalid Credentials");
+            } else {
+                toast.error("An error occurred. Please try again later.");
+            }
             console.log(error);
-        });
+        }
     };
 
     const handleInputChange = (e) => {
@@ -54,17 +67,17 @@ const Login = () => {
         }
     };
 
-    const handleLogin = () => {
-        UserService.getUserByEmail(email)
-        .then(function (response) {
-            console.log(response);
-            //We set the current user in the global scope
-            setUser(response);
-        })
-        .catch(function (error) {
+    const handleLogin = async () => {
+        try {
+            const response = await UserService.getUserByEmail(email);
+            await setUser(response);
+            await setFirstName(response.firstName);
+            const imageUrl = "https://ik.imagekit.io/cineticketbooking/Users/" + response.id + ".jpeg";
+            await setUserIcon(imageUrl);
+            navigate("/");
+        } catch (error) {
             console.log(error);
-        });
-        
+        }
     }
 
 
@@ -135,16 +148,11 @@ const Login = () => {
                                                 </Form.Group>
 
 
-                                                <Button
-                                                    onClick={handleButtonClick}
-                                                >
-                                                    Log in
-                                                </Button>
-                                                {/* <LoadingButton
+                                                <LoadingButton
                                                     name="Log in"    
                                                     loadingText="Logging in..."
                                                     onClick={handleButtonClick}                                                  
-                                                /> */}
+                                                />
                     
                                             </Form>
                                

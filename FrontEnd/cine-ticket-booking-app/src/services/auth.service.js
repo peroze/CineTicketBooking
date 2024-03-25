@@ -14,6 +14,8 @@ class AuthService {
         }
 
         return response.data;
+      }).catch(error => {
+        throw error;
       });
   }
 
@@ -29,19 +31,13 @@ class AuthService {
       email,
       password,
       role
-    }).then(response => {
-      console.log(response.data);
-      return response.data;
-  })
-  .catch(error => {
-      console.error("Error in Register:", error);
-      throw error; // Rethrow the error to handle it in the caller
-  });;
+    });
   }
 
   getCurrentUser() {
     return TokenService.getUser();
   }
+
 }
 
 export default new AuthService()

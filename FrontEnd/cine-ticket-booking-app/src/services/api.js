@@ -34,9 +34,13 @@ instance.interceptors.response.use(
         originalConfig._retry = true;
 
         try {
-          const rs = await instance.post("/auth/refresh-token", {
-            refresh_token: TokenService.getLocalRefreshToken(),
+          const rs = await instance.post("/auth/refresh-token",{}, {
+            headers: {
+              'Authorization': 'Bearer '+TokenService.getLocalRefreshToken()
+            }
           });
+
+          console.log(rs.data);
 
           const { access_token } = rs.data;
           TokenService.updateLocalAccessToken(access_token);
@@ -53,4 +57,3 @@ instance.interceptors.response.use(
 );
 
 export default instance;
-

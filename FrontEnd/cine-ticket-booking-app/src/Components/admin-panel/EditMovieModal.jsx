@@ -2,10 +2,8 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import React, { useState,useEffect } from 'react';
-import DatePicker from "react-datepicker";
-
-import "react-datepicker/dist/react-datepicker.css";
 import MovieService from "../../services/movie.service.js";
+import { toast } from 'react-toastify';
 
 
 const EditMovieModal = ({ movie, showModal, closeModal,handleReload}) => {
@@ -24,9 +22,11 @@ const EditMovieModal = ({ movie, showModal, closeModal,handleReload}) => {
         MovieService.editMovie(movie.id,currentGenre,currentDuration,currentReleaseDate,currentDescription
             ,currentDirector,currentActors,currentRating,currentLanguage)
             .then((response) => {
+                toast.success("Successfully edited the movie");
                 console.log(response.data);
             })
             .catch(error => {
+                toast.success("An error occurred. Please try later");
                 console.log(error);
             })
             .finally( () => {

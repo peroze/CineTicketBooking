@@ -20,6 +20,17 @@
   }
 }
 
+.nav-link-admin-panel{
+  color: #031926 !important;
+}
+
+.admin-panel-nav .dropdown-menu {
+  background-color: #77ACA2;
+  border: 1px solid black;
+}
+.admin-panel-nav .dropdown-menu .dropdown-item:hover {
+  background-color: #77ACA2; 
+}
 
 .nav-link{
     font-family: 'Roboto', sans-serif;
@@ -151,6 +162,10 @@
     .navmenu{
       gap: 0;
 
+    }
+
+    .admin-panel-nav .dropdown-menu {
+      border: none;
     }
    
   }
