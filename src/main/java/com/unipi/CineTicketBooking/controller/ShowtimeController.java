@@ -29,6 +29,12 @@ public class ShowtimeController {
         return new ResponseEntity<> (showtimeService.getShowtimeById(id), HttpStatus.OK);
     }
 
+    @GetMapping(path ="/all")
+    public ResponseEntity<List<Showtime>> getAllShowtimes()
+    {
+        return new ResponseEntity<>(showtimeService.getAllShowtimes() , HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Void> addNewShowtime(@RequestBody AddShowtimeRequest addShowtimeRequest) {
         showtimeService.addNewShowtime(addShowtimeRequest);
@@ -59,7 +65,6 @@ public class ShowtimeController {
     @GetMapping(path="/all/{localDate}")
     public ResponseEntity<List<Showtime>> getShowtimeByDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate localDate)
     {
-        System.out.println("Inside getShowtimeByDate in Controller");
         return new ResponseEntity<>(showtimeService.getShowtimeByDate(localDate) , HttpStatus.OK);
     }
 

@@ -175,4 +175,7 @@ public class ShowtimeService {
         }
     }
 
+    public List<Showtime> getAllShowtimes() {
+        return showtimeRepository.findAll();
+    }
 }

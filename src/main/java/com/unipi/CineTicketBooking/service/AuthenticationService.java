@@ -102,6 +102,7 @@ public class AuthenticationService {
         }
         refreshToken = authHeader.substring(7);
         userEmail = jwtService.extractUsername(refreshToken);
+        System.out.println("userEmail: "+userEmail);
         if (userEmail != null) {
             var user = this.userRepository.findUsersByEmail(userEmail)
                     .orElseThrow();
