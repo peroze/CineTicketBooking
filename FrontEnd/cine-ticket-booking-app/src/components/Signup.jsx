@@ -45,10 +45,9 @@ const Signup = () => {
       setlastName(value);
     } else if (name === 'passwordConfirm') {
       setPasswordConfirm(value);
+    }else{
+      setPhoto(e.target.files[0])
     }
-    
-
-
   };
 
   const [showPassword, setShowPassword] = useState(false);
