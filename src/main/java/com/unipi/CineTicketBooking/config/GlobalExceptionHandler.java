@@ -2,6 +2,7 @@ package com.unipi.CineTicketBooking.config;
 import com.unipi.CineTicketBooking.exception.IllegalBookingStatusException;
 import com.unipi.CineTicketBooking.exception.ShowtimeAvailabilityException;
 import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
+import org.springframework.security.authentication.BadCredentialsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,11 @@ public class GlobalExceptionHandler extends RuntimeException {
     public ResponseEntity handleException(NoEntryWithIdException e) {
         // log exception
         return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<String> handleBadCredentialsException(BadCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: " + ex.getMessage());
     }
 
 }

@@ -53,10 +53,10 @@ public class ShowtimeController {
         }
     }
     @GetMapping(path="/all")
-    public  ResponseEntity<List<Showtime>> getAllShowTime(){
+    public  ResponseEntity<List<Showtime>> getAllShowTimes(){
         try{
             //Gson gson = new Gson();
-            List<Showtime> showtimes=showtimeService.getAllShowTime();
+            List<Showtime> showtimes=showtimeService.getAllShowTimes();
             //String movieList = gson.toJson(showtimes);
             return new ResponseEntity<>(showtimes,HttpStatus.OK);
         }
