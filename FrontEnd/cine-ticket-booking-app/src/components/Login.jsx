@@ -36,30 +36,27 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    const handleButtonClick =() => {
-        
-        AuthService.login(email,password)
-        .then(function (response) {
+    const handleButtonClick = async () => {
+        try { 
+            const response = await AuthService.login(email, password); // Wait for login to complete
             console.log(response);
             handleLogin();
             setIsLoggedIn(true);
             toast.success("Successful Login");
-            console.log("Is the user logged in? " ,isLoggedIn);
-        })
-        .catch(function (error) {
+            console.log("Is the user logged in? ", isLoggedIn);
+        } catch (error) {
             setIsLoggedIn(false);
             if (!error.response) {
                 toast.error("No response from the server. Please try again later.");
                 return;
             }
-            if(error.response.status == 401){
-                toast.error("Invalid Credentials")
-            }
-            else{
+            if (error.response.status === 401) {
+                toast.error("Invalid Credentials");
+            } else {
                 toast.error("An error occurred. Please try again later.");
             }
             console.log(error);
-        });
+        }
     };
 
     const handleInputChange = (e) => {
