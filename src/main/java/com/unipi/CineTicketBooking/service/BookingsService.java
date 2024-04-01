@@ -5,8 +5,10 @@ import com.unipi.CineTicketBooking.exception.IllegalBookingStatusException;
 import com.unipi.CineTicketBooking.controller.secondaryClasses.AddBookingRequest;
 import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
 import com.unipi.CineTicketBooking.model.Bookings;
+import com.unipi.CineTicketBooking.model.Showtime;
 import com.unipi.CineTicketBooking.model.secondary.BookingStatus;
 import com.unipi.CineTicketBooking.repository.BookingsRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,14 @@ public class BookingsService {
         return bookingsList;
     }
 
+    public List<Bookings> getBookingByShowtimeId(Long id) {
+        List<Bookings> booking = bookingsRepository.findAllByshowtimeId(id);
+        if(booking.isEmpty()){
+            throw new EntityNotFoundException("The booking you requested was not found in the database");
+        }
+        return booking;
+    }
+
     public Bookings getBookingById(Long id) {
         Optional<Bookings> optionalBooking = bookingsRepository.findById(id);
         return optionalBooking.orElse(null);
@@ -52,6 +62,7 @@ public class BookingsService {
             throw new IllegalBookingStatusException(HttpStatus.BAD_REQUEST,"The given booking is already expired");
        }
        optionalBooking.setStatus(BookingStatus.CHECKED_IN);
+       bookingsRepository.save(optionalBooking);
        return optionalBooking;
     }
 
@@ -67,6 +78,7 @@ public class BookingsService {
            return optionalBooking;
         }
         optionalBooking.setStatus(BookingStatus.EXPIRED);
+        bookingsRepository.save(optionalBooking);
         return optionalBooking;
     }
 

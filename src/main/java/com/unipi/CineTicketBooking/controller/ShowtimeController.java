@@ -5,8 +5,11 @@ import com.unipi.CineTicketBooking.controller.secondaryClasses.AddShowtimeReques
 import com.unipi.CineTicketBooking.controller.secondaryClasses.UpdateShowtimeRequest;
 import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
 import com.unipi.CineTicketBooking.exception.ShowtimeAvailabilityException;
+import com.unipi.CineTicketBooking.model.Bookings;
 import com.unipi.CineTicketBooking.model.Showtime;
 import com.unipi.CineTicketBooking.model.secondary.SeatStatus;
+import com.unipi.CineTicketBooking.service.BookingsService;
+import com.unipi.CineTicketBooking.service.EmailService;
 import com.unipi.CineTicketBooking.service.MovieService;
 import com.unipi.CineTicketBooking.service.ShowtimeService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +32,9 @@ public class ShowtimeController {
 
     private final ShowtimeService showtimeService;
     private final MovieService movieService;
+    private final EmailService emailService;
+    private final BookingsService bookingsService;
+
 
 
     @GetMapping(path = "/{id}")
@@ -57,6 +64,21 @@ public class ShowtimeController {
         try{
             //Gson gson = new Gson();
             List<Showtime> showtimes=showtimeService.getAllShowTimes();
+            //String movieList = gson.toJson(showtimes);
+            return new ResponseEntity<>(showtimes,HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(path="/today")
+    public  ResponseEntity<List<Showtime>> findAllWithStartTimeBefore(){
+        try{
+            //Gson gson = new Gson();
+            LocalDateTime date=LocalDateTime.now();
+            List<Showtime> showtimes=showtimeService.findAllWithStartTimeBefore(date);
             //String movieList = gson.toJson(showtimes);
             return new ResponseEntity<>(showtimes,HttpStatus.OK);
         }
@@ -107,6 +129,10 @@ public class ShowtimeController {
     @DeleteMapping(path = "{showtimeId}")
     public ResponseEntity<String> deleteShowtime(@PathVariable("showtimeId") Long id) {
         try {
+            List<Bookings> bookings=bookingsService.getBookingByShowtimeId(id);
+            for (int i=0; i< bookings.size(); i++ ){
+                emailService.ShowTimeCancelation(showtimeService.getShowtimeById(id).orElseThrow(),bookings.get(i));
+            }
             showtimeService.deleteShowtime(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }catch(NoEntryWithIdException e){
@@ -121,7 +147,12 @@ public class ShowtimeController {
     @PutMapping(path = "{showtimeId}")
     public ResponseEntity<Void> updateShowtime(@PathVariable("showtimeId") Long id, @RequestBody UpdateShowtimeRequest updateShowtimeRequest) {
         try {
+            LocalDateTime oldtime = showtimeService.getShowtimeById(id).orElseThrow().getStartTime();
             showtimeService.updateShowtime(id, updateShowtimeRequest);
+            List<Bookings> bookings=bookingsService.getBookingByShowtimeId(id);
+            for (int i=0; i< bookings.size(); i++ ){
+                emailService.ShowTimeEdit(showtimeService.getShowtimeById(id).orElseThrow(),bookings.get(i),oldtime);
+            }
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (NoEntryWithIdException e){
             return new ResponseEntity<>(e.getHttpStatus());

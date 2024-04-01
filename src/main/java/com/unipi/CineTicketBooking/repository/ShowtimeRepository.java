@@ -25,6 +25,9 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
 
     List<Showtime> findAllBymovieId(Long movie);
 
+
+
+
     @Transactional
     @Modifying
     @Query("DELETE FROM Showtime s WHERE s.id = :id")

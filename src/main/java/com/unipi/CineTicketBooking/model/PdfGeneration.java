@@ -71,7 +71,7 @@ public class PdfGeneration {
             document.add(showtimeTime);
             document.add(seatPdf);
             QRCodeGenerator qr=new QRCodeGenerator();
-            byte[] qrcode=qr.getQRCodeImage("http://localhost:8080/checkin/"+booking.getId());
+            byte[] qrcode=qr.getQRCodeImage(booking.getId().toString());
             Image qrcodePrint=Image.getInstance(qrcode);
             qrcodePrint.scaleAbsoluteHeight(200F);
             qrcodePrint.scaleAbsoluteWidth(200F);

@@ -48,13 +48,13 @@ public class MovieController {
 
     @PostMapping
     public ResponseEntity<Movie> addNewMovie(@RequestBody Movie movie) {
-       try {
-           Movie addedmovie=movieService.addNewMovie(movie);
-           return new ResponseEntity<>(addedmovie,HttpStatus.CREATED);
-       }catch (Exception e){
-           e.printStackTrace();
-           return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-       }
+        try {
+            Movie addedmovie=movieService.addNewMovie(movie);
+            return new ResponseEntity<>(addedmovie,HttpStatus.CREATED);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping(path = "{movieName}")

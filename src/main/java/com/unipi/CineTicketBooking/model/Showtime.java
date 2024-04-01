@@ -33,7 +33,9 @@ public class Showtime {
     private int availableSeats;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
+    @Column(name = "startTime")
     private LocalDateTime startTime;
+
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime endTime;
     private double ticketPrice;

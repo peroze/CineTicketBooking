@@ -4,6 +4,7 @@ import com.unipi.CineTicketBooking.exception.IllegalBookingStatusException;
 import com.unipi.CineTicketBooking.controller.secondaryClasses.AddBookingRequest;
 import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
 import com.unipi.CineTicketBooking.model.PdfGeneration;
+import com.unipi.CineTicketBooking.model.Showtime;
 import com.unipi.CineTicketBooking.service.EmailService;
 import org.springframework.web.bind.annotation.*;
 import com.unipi.CineTicketBooking.model.Bookings;
@@ -38,6 +39,20 @@ public class BookingsController {
         try{
         List<Bookings> bookings = bookingsService.getAllBookings();
         return new ResponseEntity<>(bookings, HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(path="/showtime/{id}")
+    public  ResponseEntity<List<Bookings>> getBookingByMovieId(@PathVariable("id") Long id){
+        try{
+            //Gson gson = new Gson();
+            List<Bookings> bookings=bookingsService.getBookingByShowtimeId(id);
+            //String movieList = gson.toJson(showtimes);
+            return new ResponseEntity<>(bookings,HttpStatus.OK);
         }
         catch (Exception e){
             e.printStackTrace();

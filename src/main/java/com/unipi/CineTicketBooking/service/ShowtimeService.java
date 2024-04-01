@@ -54,6 +54,28 @@ public class ShowtimeService {
         return showtime;
     }
 
+    public List<Showtime> findAllWithStartTimeBefore(LocalDateTime st) {
+        List<Showtime> showtime = showtimeRepository.findAll();
+        if(showtime.isEmpty()){
+            throw new EntityNotFoundException("The showtime you requested was not found in the database");
+        }
+        int i=0;
+        while(i<showtime.size()) {
+            if (!(showtime.get(i).getStartTime().isAfter(st) && showtime.get(i).getStartTime().isBefore(LocalDate.now().atTime(23, 59)))) {
+                System.out.println(showtime.get(i).getStartTime());
+                showtime.remove(i);
+                if(i==0){
+                    throw new EntityNotFoundException("No More Showtimes today");
+                }
+                i = i - 1;
+            }
+            else{
+                i++;
+            }
+        }
+        return showtime;
+    }
+
 
 
     public List<Showtime> getShowtimeByDate(LocalDate localDate) {
@@ -123,6 +145,7 @@ public class ShowtimeService {
         if(showtimeRequest.getTicketPrice() > 0.0){
             showtime.setTicketPrice(showtimeRequest.getTicketPrice());
         }
+        showtimeRepository.save(showtime);
 
     }
 
@@ -143,7 +166,7 @@ public class ShowtimeService {
     @Transactional
     public void changeSeatStatus(Long showtimeId, int seatNumber, SeatStatus seatStatus) {
         if(seatStatus == null){
-            throw new IllegalStateException("SeatStatus can't be null");
+            throw new IllegalStateException("Seat Status can't be null");
         }
         // Retrieve the Showtime entity from the database
         Showtime showtime = showtimeRepository.findById(showtimeId)
@@ -162,6 +185,7 @@ public class ShowtimeService {
         else{
             showtime.setAvailableSeats(showtime.getAvailableSeats() - 1);
         }
+        //showtimeRepository.save(showtime);
 
     }
 
