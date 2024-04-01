@@ -26,21 +26,16 @@ const Home = () => {
         gsap.from("h4",{fontSize:"40px",delay:2.5,duration:0.7})
     }else{
         gsap.from("h4",{fontSize:"100px",delay:2.5,duration:0.7})
-
     }
     gsap.from(".HomeImage",{width: 0,duration:1.2,delay:3});
     gsap.from("h1",{opacity:0,delay:2.5})
     gsap.from(".TextContainerHome",{transform: "translateX(20%)",duration:1.2,delay:3});
     gsap.from(".HomeA",{y:1500,duration:1,delay:4.2});
     gsap.from(".socials",{y:1500,duration:1,delay:4.5});
-
-
-
-
-
   })
 
   function hoverAnimation(){
+
     gsap.to(".face",{x:"100%",delay:0.5})
     gsap.to(".insta",{x:"-100%",delay:0.5})
     gsap.to(".youtu",{y:"100%",delay:0.5})
@@ -51,6 +46,7 @@ const Home = () => {
   }
 
   function hoverExit(){
+
     gsap.to(".face",{x:"0%",delay:0.7})
     gsap.to(".insta",{x:"0%",delay:0.7})
     gsap.to(".youtu",{y:"0%",delay:0.7})
@@ -58,12 +54,13 @@ const Home = () => {
     gsap.to(".social",{opacity:1,delay:0.7})
 
   }
+
   return (
     <div className='HomeContainer'>
       
       <div className='TextContainerHome'>
         <div className='welcome'><h4 >Welcome</h4><div className='top'></div><div className='bottom'></div></div>
-        <div ><h1>BOOK YOUR <br/> TICKET <br/> <i className='NowText' onClick={()=>{
+        <div><h1>BOOK YOUR <br/> TICKET <br/> <i className='NowText' onClick={()=>{
                 navigate('/movies')}}  >NOW!</i></h1></div>
         <div className='HomeA'>
           <a><span className='Captivating'> Captivating Stories Begin with a Click.</span>

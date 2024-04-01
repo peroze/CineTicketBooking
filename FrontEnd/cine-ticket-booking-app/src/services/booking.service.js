@@ -4,6 +4,7 @@ import axios from 'axios';
 class BookingService {
 
     validatebookingbyId(id){
+        console.log(id);
         return api
         .put("/bookings/checkin/"+id,
             

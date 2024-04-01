@@ -76,6 +76,7 @@ const Movies = () => {
           </div>
          <div className='d-flex flex-row flex-wrap align-items-center justify-content-center gap-2' >
          {movies.map((movie) => (
+
             <div className="cards" onClick={()=>{
             navigate('/movie',{state:movie.id})
             }}>
