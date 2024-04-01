@@ -7,6 +7,7 @@ import com.unipi.CineTicketBooking.controller.secondaryClasses.AuthenticationRes
 import com.unipi.CineTicketBooking.controller.secondaryClasses.RegisterRequest;
 import com.unipi.CineTicketBooking.model.Token;
 import com.unipi.CineTicketBooking.model.Users;
+import com.unipi.CineTicketBooking.model.secondary.Provider;
 import com.unipi.CineTicketBooking.model.secondary.TokenType;
 import com.unipi.CineTicketBooking.repository.TokenRepository;
 import com.unipi.CineTicketBooking.repository.UsersRepository;
@@ -38,6 +39,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
+                .provider(Provider.LOCAL)
                 .build();
         var savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
@@ -68,7 +70,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    private void saveUserToken(Users user, String jwtToken) {
+    public void saveUserToken(Users user, String jwtToken) {
         var token = Token.builder()
                 .user(user)
                 .token(jwtToken)
@@ -79,7 +81,7 @@ public class AuthenticationService {
         tokenRepository.save(token);
     }
 
-    private void revokeAllUserTokens(Users user) {
+    public void revokeAllUserTokens(Users user) {
         var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
         if (validUserTokens.isEmpty())
             return;

@@ -1,5 +1,6 @@
 package com.unipi.CineTicketBooking.model;
 
+import com.unipi.CineTicketBooking.model.secondary.Provider;
 import com.unipi.CineTicketBooking.repository.UsersRepository;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
@@ -33,16 +34,19 @@ public class Users implements UserDetails {
     private Role role;
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
 
     public Users() {
 
     }
-    public Users(String firstName, String lastName, String password, String email,Role role) {
+    public Users(String firstName, String lastName, String password, String email,Role role,Provider provider) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.role=role;
+        this.provider = provider;
     }
     public Long getId() {
         return id;
