@@ -1,5 +1,6 @@
 .movieCard{
     width:100%;
+    transform: scale(0);
     position: relative;
     border-radius: 25px;
     margin:2%;

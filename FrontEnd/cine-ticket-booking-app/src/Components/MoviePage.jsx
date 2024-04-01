@@ -47,7 +47,7 @@ const MoviePage = () => {
                 <img src={movie.photo}/>
                 <div className="chars gap-1 d-flex flex-column  align-items-start justify-content-center">
                     <div className='director fields'><i className="field">Director</i> : {movie.director}</div>
-                    <div className='duration fields'><i className="field">Duration</i> :{movie.duration}</div>
+                    <div className='duration fields'><i className="field">Duration</i> :{movie.duration} minutes</div>
                     <div className='genre fields'><i className="field">Genre</i> : {movie.genre}</div>
                     <div className='realeasedate fields'><i className="field">Release Date</i> : {movie.releaseDate}</div>
                     <div className='rating fields'><i className="field">Rating</i> : {movie.rating}</div>
@@ -58,7 +58,6 @@ const MoviePage = () => {
 
             <div className='d-flex  align-items-start justify-content-center' >  
                 <button onClick={()=>{
-            // navigate('/booking',{state:new ShowTime("25/02/2024, 15:25", "25/02/2024, 18:05", movie.moviename, [9, 41, 35, 11, 65, 26])})
             navigate('/calendar', {state:movie}) }} className="bookButton " role="button"><span className="text">Book Your Ticket </span></button>
             </div>
 

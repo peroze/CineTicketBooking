@@ -13,6 +13,18 @@ class ShowtimeService {
         });
     }
 
+    getAllShowtimesAfterToday(){
+        return api
+        .get("/showtime/today")
+        .then(response => {
+            console.log(response.data);
+          return response.data;
+        })
+        .catch(error => {
+            throw error; // Rethrow the error to handle it in the caller
+        });
+    }
+
     addShowtime(roomId,movieId,startTime,endTime,ticketPrice){
         return api
         .post("/showtime",{

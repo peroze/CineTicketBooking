@@ -1,5 +1,5 @@
 // components/addshowtime.js
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -19,13 +19,17 @@ import showtimeService from '../services/showtime.service';
 
 
 import './Style/AddShowTime.css'; // Import the external CSS file
+import roomService from '../services/room.service';
 
 const AddShowTime = () => {
 const location=useLocation();
 const movie = location.state;
 const [startDate,setstartdate]=useState("")
 const [endDate,setenddate]=useState("")
-const [room,setroom]=useState("room1")
+const [room,setroom]=useState(1)
+const [rooms, setRooms] = useState([])
+const [isLoading, setisLoading] = useState(true);
+
 
 
   const handleSubmit =(e) => {
@@ -35,6 +39,23 @@ const [room,setroom]=useState("room1")
    const change = (e) => {
     setroom (e.target.value);
    }
+
+   useEffect(() => {
+    if(isLoading==(true)) {
+      roomService.getAllRooms()
+      .then( (response) => {
+        var data=response
+        setRooms(data)
+        setisLoading(false)
+        console.log(data);
+      })
+      .catch(function (error) {
+        console.log("Error getting all Rooms: ",error);
+      })
+    }
+},[isLoading])
+
+   
   
 
    const handleInputChange = (e) => {
@@ -81,10 +102,8 @@ const [room,setroom]=useState("room1")
                         <Form.Label>Room</Form.Label>
                         <InputGroup className="mb-3">
                         <select id="rooms" name="roomlist" form="add-movie-form" onChange={change} value={room}>
-                        <option value="1">Room1
-                        </option>
-                        <option value="2">Room2
-                        </option>
+                        {rooms.map((object, i) =>
+                              <option value={object.id}> {object.name} </option>)}
                         </select>
                         </InputGroup>
 

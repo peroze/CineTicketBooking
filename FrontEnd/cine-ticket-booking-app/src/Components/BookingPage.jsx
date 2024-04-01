@@ -17,6 +17,9 @@ import clsx from 'clsx'
 import { useLocation } from 'react-router-dom';
  import bookingService from '../services/booking.service';
  import { useNavigate } from 'react-router-dom';
+ import QrScanner from "qr-scanner";
+ import QrFrame from "../Components/Images/qr-frame.svg";
+
 
  
  
@@ -187,7 +190,8 @@ const BookingPage = () => {
           selectedSeats.filter(selectedSeat => selectedSeat !== seat),
         )
       } else {
-        onSelectedSeatsChange([...selectedSeats, seat])
+        //onSelectedSeatsChange([...selectedSeats, seat])
+        onSelectedSeatsChange([seat])
       }
     }
   

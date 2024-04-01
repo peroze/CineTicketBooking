@@ -89,9 +89,12 @@ function Menubar({icon,username}) {
                     <Nav className="ms-auto gap-3 offcanvas-body " id='offcanvasNavbar'>
                       <Nav.Link as={Link} to="/">Home</Nav.Link>
                       <Nav.Link as={Link} to="/movies" >Movies</Nav.Link>
-                      {/* <Nav.Link as={Link} to="/about">About Us</Nav.Link> */}
-                      <Nav.Link as={Link} to="/contactus">Contact Us</Nav.Link>                                       
-
+                      
+                      {isLoggedIn && (isInspector || isAdmin) && (
+                        <>             
+                          <Nav.Link as={Link} to="/validate-page">Validate Ticket</Nav.Link>            
+                        </>
+                      )}
                       {isLoggedIn && isAdmin && (
                         <>             
                           <NavDropdown title="Admin Panel" className='admin-panel-nav'>
@@ -108,12 +111,7 @@ function Menubar({icon,username}) {
                         </>
                       )}
 
-                      {isLoggedIn && (isInspector || isAdmin) && (
-                        <>             
-                          <Nav.Link as={Link} to="/validate-page">Validate Ticket</Nav.Link>            
-                        </>
-                      )}
-
+                     <Nav.Link as={Link} to="/contactus">Contact Us</Nav.Link>
                     </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
