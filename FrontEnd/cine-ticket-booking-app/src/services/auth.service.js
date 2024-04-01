@@ -38,6 +38,12 @@ class AuthService {
     return TokenService.getUser();
   }
 
+  oauth2login(tokens){
+    if(tokens.data.access_token){
+      TokenService.setUser(tokens.data)
+    }
+  }
+
 }
 
 export default new AuthService()
