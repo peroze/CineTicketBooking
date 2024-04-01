@@ -3,6 +3,7 @@ package com.unipi.CineTicketBooking;
 import com.unipi.CineTicketBooking.controller.secondaryClasses.RegisterRequest;
 import com.unipi.CineTicketBooking.model.*;
 import com.unipi.CineTicketBooking.model.secondary.BookingStatus;
+import com.unipi.CineTicketBooking.model.secondary.Provider;
 import com.unipi.CineTicketBooking.repository.*;
 import com.unipi.CineTicketBooking.service.AuthenticationService;
 import com.unipi.CineTicketBooking.service.EmailService;
@@ -62,8 +63,8 @@ public class CineTicketBookingApplication {
 					.build();
 
 			System.out.println("Admin token: " + authenticationService.register(admin).getAccessToken());
-			usersRepository.save(new Users("Giwrgos","Gewrgiou","$2a$10$1b2k0DuAPefZPXkPdeKRFuOBuXV5VQkWmLXZYaFLfiWPh615fBfuO","g.gewrgiou@gmails.com", Role.ADMIN));
-			usersRepository.save(new Users("Nikolaos","Partsanakis","$2a$10$1b2k0DuAPefZPXkPdeKRFuOBuXV5VQkWmLXZYaFLfiWPh615fBfuO","cineticketbooking@gmails.com",Role.USER));
+			usersRepository.save(new Users("Giwrgos","Gewrgiou","$2a$10$1b2k0DuAPefZPXkPdeKRFuOBuXV5VQkWmLXZYaFLfiWPh615fBfuO","g.gewrgiou@gmails.com", Role.ADMIN, Provider.LOCAL));
+			usersRepository.save(new Users("Nikolaos","Partsanakis","$2a$10$1b2k0DuAPefZPXkPdeKRFuOBuXV5VQkWmLXZYaFLfiWPh615fBfuO","cineticketbooking@gmails.com",Role.USER,Provider.LOCAL));
 			LocalDateTime.now().plusHours(2);
 			roomsRepository.save(new Rooms("Theater 1", 200));
 			showtimeRepository.save(new Showtime(movieRepository.findById(Long.valueOf("1")).get(),roomsRepository.findById(Long.valueOf("1")).get(),roomsRepository.findById(Long.valueOf("1")).get().getCapacity(),LocalDateTime.now(),LocalDateTime.now().plusMinutes(Long.valueOf(movieRepository.findById(Long.valueOf("1")).get().getDuration())),25));
@@ -78,7 +79,12 @@ public class CineTicketBookingApplication {
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);
-		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+		corsConfiguration.setAllowedOrigins(Arrays.asList(
+				"http://localhost:3000",
+				"https://accounts.google.com",
+				"https://www.googleapis.com"
+				)
+		);
 		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
 				"Accept", "Authorization", "Origin, Accept", "X-Requested-With",
 				"Access-Control-Request-Method", "Access-Control-Request-Headers"));
