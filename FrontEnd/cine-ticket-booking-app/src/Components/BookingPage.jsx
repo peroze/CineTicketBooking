@@ -1,5 +1,5 @@
 // components/booking.js
-import React, { useState } from 'react';
+import React, { useState ,useContext,Context} from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -19,6 +19,8 @@ import { useLocation } from 'react-router-dom';
  import { useNavigate } from 'react-router-dom';
  import QrScanner from "qr-scanner";
  import QrFrame from "../Components/Images/qr-frame.svg";
+ import { UserContext } from '../App.js';
+
 
 
  
@@ -46,6 +48,8 @@ const BookingPage = () => {
   const [telephone, settelephone] = useState("");
   const [seat,setseat]=useState("");
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const {user, setUser} = useContext(UserContext);
+
  
   const handleSubmit =(e) => {
  
@@ -68,12 +72,12 @@ const BookingPage = () => {
   };
  
   const handleButtonClick = () => {
-    bookingService.addBookings(email, firstName, lastName,telephone,selectedSeats[0],showtime).then(function (response) {
+      bookingService.addBookings(user.email, firstName, lastName,telephone,selectedSeats[0],showtime).then(function (response) {
       //console.log(response);
       navigate('/booking-confirmation', {state:response})
     })
   };
-  
+
   return (
     <div className="outsidecontainter">
         <h1>
@@ -128,20 +132,6 @@ const BookingPage = () => {
                     </InputGroup>
  
                   </Form.Group>
- 
- 
-                    <Form.Group className="mb-3" controlId="formEmail">
-                    <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            type="email"
-                            className="custom-fields"
-                            placeholder="Enter email"
-                            name="email"
-                            value={email}
-                            onChange={handleInputChange}                                                    
-                        />
-                    </Form.Group>
- 
                     <Form.Group className="mb-3" controlId="formEmail">
                     <Form.Label>Telephone</Form.Label>
                         <Form.Control
