@@ -16,6 +16,7 @@ import GoogleLoginButton from './GoogleLogin';
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service.js";
 import { useNavigate } from 'react-router-dom';
+import { uploadProfile } from '../services/imagekit.service';
 
 import { useEffect } from 'react';
 import { UserContext } from '../App.js';
@@ -28,6 +29,9 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [googleLogin, setGoogleLogin] = useState(false);
+    const [isGoogleSignUp,setIsGoogleSignUp] = useState(false);
+    const [googleProfileImage,setGoogleProfileImage] = useState("");
 
     const {isLoggedIn,setIsLoggedIn} = useContext(UserContext);
     const {user, setUser} = useContext(UserContext);
@@ -37,8 +41,10 @@ const Login = () => {
 
     const handleButtonClick = async () => {
         try { 
-            const response = await AuthService.login(email, password); // Wait for login to complete
-            console.log(response);
+            if(googleLogin === 'false'){
+                const response = await AuthService.login(email, password); // Wait for login to complete
+                console.log(response);
+            }
             handleLogin();
             setIsLoggedIn(true);
             toast.success("Successful Login");
@@ -56,6 +62,7 @@ const Login = () => {
             }
             console.log(error);
         }
+
     };
 
     const handleInputChange = (e) => {
@@ -72,6 +79,11 @@ const Login = () => {
             const response = await UserService.getUserByEmail(email);
             await setUser(response);
             await setFirstName(response.firstName);
+
+            if(isGoogleSignUp === true){
+                uploadProfile(response.id,googleProfileImage);
+            }
+
             const imageUrl = "https://ik.imagekit.io/cineticketbooking/Users/" + response.id + ".jpeg";
             await setUserIcon(imageUrl);
             navigate("/");
@@ -80,8 +92,23 @@ const Login = () => {
         }
     }
 
+    const handleGoogleLoginComplete = (user_email,image_url,is_google_signup,) => {
+       setEmail(user_email);
+       setIsGoogleSignUp(is_google_signup);
+       setGoogleProfileImage(image_url);
+       console.log("user_email: ",user_email);
+       console.log("google profile image url: ",image_url);
+       console.log("is google signup? ",is_google_signup);
+        
+       setGoogleLogin(true)
+       
+    }
 
-    
+    useEffect(() => {
+        if (googleLogin) {
+            handleButtonClick();
+        }
+    },[googleLogin])
 
 
     return(
@@ -169,7 +196,7 @@ const Login = () => {
                                     </Col>
                             </Row>
                             <div className="text-center" id="oauth2-btn">  
-                                <GoogleLoginButton />     
+                                <GoogleLoginButton onLoginComplete={handleGoogleLoginComplete}/>     
                             </div>                       
                         </Card.Body>
         
