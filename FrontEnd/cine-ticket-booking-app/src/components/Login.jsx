@@ -41,10 +41,11 @@ const Login = () => {
 
     const handleButtonClick = async () => {
         try { 
-            if(googleLogin === 'false'){
+            if(googleLogin === false){
                 const response = await AuthService.login(email, password); // Wait for login to complete
                 console.log(response);
             }
+            setGoogleLogin(false);
             handleLogin();
             setIsLoggedIn(true);
             toast.success("Successful Login");
