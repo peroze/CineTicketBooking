@@ -1,11 +1,17 @@
 //GoogleLogin.js
-import React from 'react';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import React,{useState,useEffect} from 'react';
+import { GoogleOAuthProvider, GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import {jwtDecode} from 'jwt-decode';
-import Container from 'react-bootstrap/Container';
+import axios from 'axios';
+import AuthService from "../services/auth.service";
 
-const GoogleLoginButton = ({ clientId }) => {
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+
+const GoogleLoginButton = ({ onLoginComplete }) => {
+
   const handleLoginSuccess = (credentialResponse) => {
+    console.log("credentialResponse",credentialResponse);
     const decoded = jwtDecode(credentialResponse.credential);
     console.log(decoded);
     // Handle further logic if needed
@@ -16,9 +22,29 @@ const GoogleLoginButton = ({ clientId }) => {
     // Handle error if needed
   };
 
+  const googleLogin = useGoogleLogin({
+    flow: 'auth-code',
+    scope: "openid profile email",
+    onSuccess: async (codeResponse) => {
+      try{
+        console.log(codeResponse);
+        const response = await axios.get(`http://localhost:8080/api/oauth2/code/google?code=${codeResponse.code}`);
+        console.log(response);
+        AuthService.oauth2login(response);
+        //call the function that handles the login and pass the user email that authenticated
+        onLoginComplete(response.data.user_email,response.data.image_url,response.data.isSignUp);
+      }
+      catch (error){
+        console.log(error);
+      }
+        
+    },
+    onError: errorResponse => console.log(errorResponse),
+  });
+
   return (
     <Container className='custom-google-btn d-flex flex-column justify-content-md-center align-items-center'>
-        <GoogleOAuthProvider clientId="72971430335-bpegei5og5285e6dhuiqcegp8661ffof.apps.googleusercontent.com">
+        
         <GoogleLogin
             onSuccess={handleLoginSuccess}
             onError={handleLoginError}
@@ -27,7 +53,11 @@ const GoogleLoginButton = ({ clientId }) => {
             shape="rectangular"
             theme="dark"
         />
-        </GoogleOAuthProvider>
+
+        <Button onClick={googleLogin}>googleLogin</Button>
+
+        
+        
     </Container>
     
   );

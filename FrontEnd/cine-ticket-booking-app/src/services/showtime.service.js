@@ -41,6 +41,17 @@ class ShowtimeService {
             throw error; // Rethrow the error to handle it in the caller
         });
     }
+
+    getShowtimesbyMovieId(movieId){
+        return api
+        .get("/showtime/movie/"+movieId)
+        .then(response =>{
+            return response.data;
+        })
+        .catch(error => {
+            throw error; // Rethrow the error to handle it in the caller
+        });
+    }
     
     getShowtimesbyMovieId(movieId){
         return api
