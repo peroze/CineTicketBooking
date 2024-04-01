@@ -15,11 +15,12 @@ import GoogleLoginButton from './GoogleLogin';
 import styles from"./Style/BookingPage.css";
 import clsx from 'clsx'
 import { useLocation } from 'react-router-dom';
- import bookingService from '../services/booking.service';
- import { useNavigate } from 'react-router-dom';
- import QrScanner from "qr-scanner";
- import QrFrame from "../Components/Images/qr-frame.svg";
- import { UserContext } from '../App.js';
+import bookingService from '../services/booking.service';
+import { useNavigate } from 'react-router-dom';
+import QrScanner from "qr-scanner";
+import QrFrame from "../Components/Images/qr-frame.svg";
+import { UserContext } from '../App.js';
+import { toast } from 'react-toastify';
 
 
 
@@ -72,6 +73,7 @@ const BookingPage = () => {
   };
  
   const handleButtonClick = () => {
+      toast.info("Your booking is being processed. Please Wait...😃");
       bookingService.addBookings(user.email, firstName, lastName,telephone,selectedSeats[0],showtime).then(function (response) {
       //console.log(response);
       navigate('/booking-confirmation', {state:response})

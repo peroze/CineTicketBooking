@@ -18,6 +18,8 @@ import { ShowTime } from './Models/ShowTime';
 import QrScanner from "qr-scanner";
 import QrFrame from "../Components/Images/qr-frame.svg";
 import { useRef } from 'react';
+import { toast } from 'react-toastify';
+
 
 
 
@@ -39,6 +41,7 @@ const ValidatePage = () => {
     setScannedResult(result?.data);
     bookingService.validatebookingbyId(scannedResult).
         then(()=>{
+            toast.success("Check-In is completed😃");
             setChecker(true);
         });
   };
@@ -108,6 +111,7 @@ const ValidatePage = () => {
       const handleButtonClick = () => {
         bookingService.validatebookingbyId(bookingid).
         then(()=>{
+            toast.success("Check-In is completed😃");
             setChecker(true);
         });
         
