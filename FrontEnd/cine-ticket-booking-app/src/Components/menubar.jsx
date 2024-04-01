@@ -123,9 +123,6 @@ function Menubar({icon,username}) {
                 </div>
                 
                 <ul className='userlist'>             
-                              <li className='useritem'>
-                                Edit Users Information
-                              </li>
                               <li className = 'useritem'>
                                 My Bookings
                               </li>
