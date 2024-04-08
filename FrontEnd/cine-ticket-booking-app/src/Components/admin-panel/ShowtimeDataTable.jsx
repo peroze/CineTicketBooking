@@ -27,7 +27,11 @@ const ShowtimeDataTable = ({ showtimesData, isPending ,handleReload}) => {
         setSelectedShowtime(showtime);
         setShowDeleteModal(true);
     }
-    const handleDeleteClose = () => setShowDeleteModal(false);
+    const handleDeleteClose = () => {
+        console.log("HIIIIIIIIIIIII"); 
+        getAllMovies();
+        setShowDeleteModal(false)
+    };
 
     useEffect(() => {
         getAllMovies();
