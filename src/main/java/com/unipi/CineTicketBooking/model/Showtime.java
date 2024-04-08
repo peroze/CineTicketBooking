@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.unipi.CineTicketBooking.model.secondary.SeatStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class Showtime {
     private Long id;
 
     @ManyToOne(targetEntity = Movie.class) //
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "movie_id",referencedColumnName = "movie_id",nullable = false)
     private Movie movie;
 
