@@ -83,6 +83,7 @@ const CalendarPage = () => {
     <Appointments.Appointment {...props} onClick={()=>{
         
       var ind=ShowtimeList.findIndex((sh) => sh.id==props.data.id)
+      //console.log(ind);
         var occupied=[];
         for(let i=0;i<ShowtimeList[0].seats.length;i++){
           if(ShowtimeList[ind].seats[i]!="AVAILABLE"){

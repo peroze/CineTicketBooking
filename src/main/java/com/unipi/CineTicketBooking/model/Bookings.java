@@ -12,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
@@ -22,10 +24,12 @@ public class Bookings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = Users.class) //
+    @ManyToOne(targetEntity = Users.class)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "users_id",referencedColumnName = "users_id",nullable = false)
     private Users users;
     @ManyToOne(targetEntity = Showtime.class)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name="showtime_id",referencedColumnName = "showtime_id",nullable = false)
     private Showtime showtime;
 

@@ -48,9 +48,9 @@ public class ShowtimeService {
 
     public List<Showtime> getAllShowTimes() {
         List<Showtime> showtime = showtimeRepository.findAll();
-        if(showtime.isEmpty()){
+       /* if(showtime.isEmpty()){
             throw new EntityNotFoundException("The showtime you requested was not found in the database");
-        }
+        }*/
         return showtime;
     }
 
