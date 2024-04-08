@@ -23,26 +23,53 @@ const AddShowtimeModal = ({ showModal, closeModal,handleReload, movieList, roomL
 
 
     const handleSubmit = (event) =>{
-        
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-            return;
+        var counter=0;
+        document.getElementById('movie').classList.remove('error');
+        document.getElementById('room').classList.remove('error');
+        document.getElementById('starttime').classList.remove('error');
+        document.getElementById('endtime').classList.remove('error');
+        document.getElementById('ticketprice').classList.remove('error');
+
+        if (movieId === '') {
+            document.getElementById('movie').classList.add('error');
+            counter++;
+          } if (roomId === '') {
+            document.getElementById('room').classList.add('error');
+            counter++;
+          } if (currentStartTime === '') {
+            document.getElementById('starttime').classList.add('error');
+            counter++;
+          } if (currentEndTime === '') {
+            document.getElementById('endtime').classList.add('error');
+            counter++;
+          } if (currentTicketPrice === '') {
+            document.getElementById('ticketprice').classList.add('error');
+            counter++;
+          }
+
+          if(counter==0){
+            const form = event.currentTarget;
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                return;
         }
-        setValidated(true);
+            setValidated(true);
         
-        ShowtimeService.addShowtime(roomId,movieId,currentStartTime,currentEndTime,currentTicketPrice)
-        .then((response) => {
+            ShowtimeService.addShowtime(roomId,movieId,currentStartTime,currentEndTime,currentTicketPrice)
+            .then((response) => {
             console.log(response.data);
         })
-        .catch(error => {
+            .catch(error => {
             console.log(error);
         })
-        .finally( () => {
+            .finally( () => {
             closeModal();
             handleReload();
         })
+          }
+
+        
         
     }
 
@@ -75,7 +102,9 @@ const AddShowtimeModal = ({ showModal, closeModal,handleReload, movieList, roomL
                         <Form.Group className="w-100">
                             
                             <Form.Label>Movie</Form.Label>
-                            <Form.Select onChange={(e) => setMovieId(e.target.value)}>
+                            <Form.Select onChange={(e) => setMovieId(e.target.value)}
+                            id="movie"
+                            >
                             <option hidden>Select a movie</option>
                                 {movieList.map((movie, index) => (
                                     <option 
@@ -86,7 +115,9 @@ const AddShowtimeModal = ({ showModal, closeModal,handleReload, movieList, roomL
                             </Form.Select>
 
                             <Form.Label>Room</Form.Label>
-                            <Form.Select onChange={(e) => setRoomId(e.target.value)}>
+                            <Form.Select onChange={(e) => setRoomId(e.target.value)}
+                            id="room"
+                            >
                             <option hidden>Select a room</option>
                                 {roomList.map((room, index) => (
                                     <option 
@@ -98,12 +129,14 @@ const AddShowtimeModal = ({ showModal, closeModal,handleReload, movieList, roomL
                                     
                             <Form.Label>Start Time</Form.Label>
                             <Form.Control 
+                                id="starttime"
                                 type="datetime-local"  
                                 onChange={(e) => setCurrentStartTime(e.target.value)}
                             />
                                                  
                             <Form.Label>End Time</Form.Label>
                             <Form.Control 
+                                id="endtime"
                                 type="datetime-local"  
                                 onChange={(e) => setCurrentEndTime(e.target.value)}
                             />
@@ -111,6 +144,7 @@ const AddShowtimeModal = ({ showModal, closeModal,handleReload, movieList, roomL
 
                             <Form.Label>Ticket Price</Form.Label>
                             <Form.Control 
+                                id="ticketprice"
                                 type="number"  
                                 onChange={(e) => handleTicketPriceChange(e)}
                                 step="0.1"
