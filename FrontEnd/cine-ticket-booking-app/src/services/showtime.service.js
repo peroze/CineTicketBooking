@@ -43,6 +43,24 @@ class ShowtimeService {
         });
     }
 
+    addShowtimes(roomId,movieId,startTime,endTime,ticketPrice){
+        return api
+        .post("/showtime/addauto",{
+            roomId,
+            movieId,
+            startTime,
+            endTime,
+            ticketPrice
+        })
+        .then(response => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(error => {
+            throw error; // Rethrow the error to handle it in the caller
+        });
+    }
+
     deleteShowtime(id){
         return api
         .delete("/showtime/"+id)

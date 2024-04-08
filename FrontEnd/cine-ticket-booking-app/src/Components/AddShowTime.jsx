@@ -14,6 +14,8 @@ import {FaEyeSlash, FaEye} from 'react-icons/fa';
 import GoogleLoginButton from './GoogleLogin';
 import { useLocation } from 'react-router-dom';
 import showtimeService from '../services/showtime.service';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -22,6 +24,7 @@ import './Style/AddShowTime.css'; // Import the external CSS file
 import roomService from '../services/room.service';
 
 const AddShowTime = () => {
+const navigate=useNavigate();
 const location=useLocation();
 const movie = location.state;
 const [startDate,setstartdate]=useState("")
@@ -73,11 +76,14 @@ const [isLoading, setisLoading] = useState(true);
 
   const handleButtonClick = () => {
     console.log(movie.id,startDate,endDate);
-    showtimeService.addShowtimes(movie.id,startDate,endDate,room)
+    showtimeService.addShowtimes(room,movie.id,startDate,endDate,15)
     .then((response) => {
       console.log(response.data);
+      toast.success("The showtimes have been succesfully Created");
+      navigate("/movies");
   })
   .catch(error => {
+      toast.error("The Room is not Available in the given time window");
       console.log(error);
   })
   };
