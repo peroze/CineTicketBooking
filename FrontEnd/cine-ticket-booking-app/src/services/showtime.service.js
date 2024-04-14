@@ -45,7 +45,7 @@ class ShowtimeService {
 
     addShowtimes(roomId,movieId,startTime,endTime,ticketPrice){
         return api
-        .post("/addauto",{
+        .post("/showtime/addauto",{
             roomId,
             movieId,
             startTime,

@@ -17,6 +17,7 @@ import showtimeService from '../services/showtime.service';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
+
 import './Style/AddShowTime.css'; // Import the external CSS file
 import roomService from '../services/room.service';
 
@@ -74,15 +75,14 @@ const [isLoading, setisLoading] = useState(true);
 
   const handleButtonClick = () => {
     console.log(movie.id,startDate,endDate);
-    showtimeService.addShowtimes(movie.id,startDate,endDate,room)
+    showtimeService.addShowtimes(room,movie.id,startDate,endDate,15)
     .then((response) => {
       console.log(response.data);
-      toast.info("The showtimes have been created succesfully");
-      navigate('/movies');
-
-
+      toast.success("The showtimes have been succesfully Created");
+      navigate("/movies");
   })
   .catch(error => {
+      toast.error("The Room is not Available in the given time window");
       console.log(error);
   })
   };
