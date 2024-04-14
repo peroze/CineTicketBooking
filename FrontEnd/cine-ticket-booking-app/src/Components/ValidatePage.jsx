@@ -220,8 +220,8 @@ return (
     <div className='Validate-form'>
     <Container fluid className="validate-page w-500 align-items-center justify-content-center">
       <Row className="validate-row text-center d-flex w-500 align-items-center justify-content-center">
-        <Col sm={12} lg={12} md={12} className="validate-card-col d-flex align-items-center justify-content-center">
-        <div className="qr-reader">
+        <Col sm={12} lg={12} md={12} className="validate-card-col d-flex flex-wrap align-items-center justify-content-center">
+        <div className="qr-reader" >
              
              <video ref={videoEl}></video>
                <div ref={qrBoxEl} className="qr-box">
