@@ -13,18 +13,6 @@ import './Style/GoogleLogin.css'; // Import the external CSS file
 
 const GoogleLoginButton = ({ onLoginComplete, className }) => {
 
-  const handleLoginSuccess = (credentialResponse) => {
-    console.log("credentialResponse",credentialResponse);
-    const decoded = jwtDecode(credentialResponse.credential);
-    console.log(decoded);
-    // Handle further logic if needed
-  };
-
-  const handleLoginError = () => {
-    console.log('Login Failed');
-    // Handle error if needed
-  };
-
   const googleLogin = useGoogleLogin({
     flow: 'auth-code',
     scope: "openid profile email",

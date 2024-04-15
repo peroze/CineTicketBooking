@@ -99,8 +99,9 @@ background-color: #F4E9CD;
 }
 
 .cinemaoutside{
-  height: 100%;
-  width: 100%;
+  height: fit-content;
+  width: fit-content;
+  padding: 10px;
   background-color: rgba(0,0,0,0.3);
   display: flex;
   justify-content: center;
@@ -191,7 +192,7 @@ perspective: 400px;
 
 display: grid;
 place-items: center;
-grid-gap: 24px;
+grid-gap: 15px;
 }
 
 .Cinema .screen {
@@ -290,3 +291,49 @@ color: #7bc47f;
 .outsidecontainter h1{
   font-weight: bold;
 }
+
+@media(max-width: 991px){
+  
+  .Cinema .seats {
+    grid-gap: 9px;
+  }
+    
+  .Cinema .seats .seat:nth-of-type(8n + 2) {
+    margin-right: 16px;
+    }
+    
+  .Cinema .seats .seat:nth-of-type(8n + 8) {
+    margin-right: 16px;
+  }
+  .formoutside {
+    width: 80%;
+    height: 80%;
+  }
+
+}
+
+@media(max-width: 500px){
+  .Cinema .screen {
+    width: 80%;
+  }
+
+  .Cinema .seats {
+    grid-gap: 4px;
+  }
+    
+  .Cinema .seats .seat:nth-of-type(8n + 2) {
+    margin-right: 8px;
+    }
+    
+  .Cinema .seats .seat:nth-of-type(8n + 8) {
+    margin-right: 8px;
+  }
+
+  .formoutside {
+    width: 100%;
+    height: 100%;
+  }
+
+}
+
+

@@ -81,30 +81,37 @@ const BookingPage = () => {
   };
 
   return (
-    <div className="outsidecontainter">
-        <h1>
-            Booking Details for {showtime.title}
-        </h1>
- 
- 
-    <div className='outside-booking-container'>
-      <div className='cinema-outside-outside'>
-      <h1>
-        Select Your Seat
-      </h1>
-      <div className="cinemaoutside">
-        <Cinema showtime = {showtime} selectedSeats={selectedSeats}
-        onSelectedSeatsChange={selectedSeats => setSelectedSeats(selectedSeats)}>
-    
-        </Cinema>
-    </div>
+
+    <div>
+      <div className="outsidecontainter">
+          <h1>
+              Booking Details for {showtime.title}
+          </h1>
       </div>
-    
-   <div className="formoutside">
  
-   <Container fluid className="booking-page align-items-center justify-content-center">
+    <Container fluid className="booking-page align-items-center justify-content-center">
       <Row className="booking-row text-center d-flex w-100 align-items-center justify-content-center">
-        <Col sm={12} lg={12} md={12} className="booking-card-col d-flex align-items-center justify-content-center">
+        <Col sm={12} md={12} lg={6}>
+        
+          <div className='outside-booking-container'>
+            <div className='cinema-outside-outside'>
+            <h1>
+              Select Your Seat
+            </h1>
+            <div className="cinemaoutside mb-4">
+              <Cinema showtime = {showtime} selectedSeats={selectedSeats}
+              onSelectedSeatsChange={selectedSeats => setSelectedSeats(selectedSeats)}>
+          
+              </Cinema>
+            </div>
+            </div>
+          </div>
+        </Col>
+   
+        <div className="formoutside">
+
+   
+        <Col sm={12} lg={6} md={12} className="booking-card-col d-flex align-items-center justify-content-center">
           <Card className= "booking-card my-sm-3 my-md-4 flex-wrap">
             <Card.Body className="p-sm-3 p-md-4">
               <Row>
@@ -168,13 +175,16 @@ const BookingPage = () => {
  
  
         </Col>
+        </div>
       </Row>
+      
     </Container>
- 
+
    </div>
-    </div>
-    </div>
+   
+
   );
+
   function Cinema({ showtime, selectedSeats, onSelectedSeatsChange }) {
     function handleSelectedState(seat) {
       const isSelected = selectedSeats.includes(seat)
