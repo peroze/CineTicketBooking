@@ -219,4 +219,14 @@ public class ShowtimeService {
         }
     }
 
+    public boolean checkSeatAvailability(Showtime showtime, int seatNumber){
+        List<SeatStatus> seats = showtime.getSeats();
+        if (seatNumber >= 0 && seatNumber < seats.size()) {
+            return seats.get(seatNumber).equals(SeatStatus.AVAILABLE);
+        } else {
+            throw new IllegalArgumentException("Invalid seat index: " + seatNumber);
+        }
+
+    }
+
 }
