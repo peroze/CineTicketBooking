@@ -6,6 +6,7 @@ import BookingService from "../../services/booking.service.js";
 import MyBookingsDataTable from './MyBookingsDataTable.jsx';
 import React, { useState, useContext,useEffect } from 'react';
 import { UserContext } from '../../App.js';
+import "../Style/DataTables.css";
 
 const MyBookings = () => {
 
@@ -43,7 +44,7 @@ const MyBookings = () => {
         <div>
             <Container> 
                  
-                <div >
+                <div className="datatable-container">
                     <MyBookingsDataTable bookingsData={bookingList} isPending={pending} handleReload={handleReload}/>
                 </div>                  
                 

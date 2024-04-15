@@ -39,7 +39,7 @@ const AdminPanelMovies = () => {
     }
 
     return(
-        <div>
+        <div className="datatable-container">
             <Container className="admin-edit-container"> 
                  
                 <div >

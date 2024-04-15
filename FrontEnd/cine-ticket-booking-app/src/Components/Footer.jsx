@@ -39,8 +39,7 @@ function Footer({icon,user}) {
                         <ul className='footerMenu d-flex flex-column align-items-center justify-content-flex-end gap-2'>
                             <li><i className="footerLink"><Link to="/">Home Page</Link></i></li>
                             <li><i className="footerLink"><Link to="/movies">Movies</Link></i></li>
-                            <li><i className="footerLink"><Link to="/about_us">About Us</Link></i></li>
-                            <li><i className="footerLink"><Link to="/">Contact Us</Link></i></li>
+                            <li><i className="footerLink"><Link to="/contactus">Contact Us</Link></i></li>
                         </ul>
                     </Col>
                     <Col className='footerMenuContainer'>
