@@ -5,6 +5,7 @@ import com.unipi.CineTicketBooking.controller.secondaryClasses.AddBookingRequest
 import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
 import com.unipi.CineTicketBooking.model.PdfGeneration;
 import com.unipi.CineTicketBooking.model.Showtime;
+import com.unipi.CineTicketBooking.model.secondary.BookingInfo;
 import com.unipi.CineTicketBooking.service.EmailService;
 import org.springframework.web.bind.annotation.*;
 import com.unipi.CineTicketBooking.model.Bookings;
@@ -123,14 +124,34 @@ public class BookingsController {
     }
 
 
+
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteBooking(@PathVariable Long id) {
         try {
             bookingsService.deleteBooking(id);
+
             return new ResponseEntity<>("Successfully Deleted",HttpStatus.OK);
+
+
+
         }catch (NoEntryWithIdException e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(),e.getHttpStatus());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<BookingInfo>> getBookingsByUserId(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(bookingsService.getBookingByUserId(id), HttpStatus.OK);
+        }
+        catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch (Exception e){
             e.printStackTrace();

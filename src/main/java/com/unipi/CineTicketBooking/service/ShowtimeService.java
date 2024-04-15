@@ -149,18 +149,6 @@ public class ShowtimeService {
 
     }
 
-    @Transactional
-    public void updateShowtimeSeats(Long showtimeId, int seat) {
-        //We don't allow Movie or Room changes because that would mess up the seats that are already booked.
-        //If the admin wants to change the room and the movie, he can delete it and add it manually
-        Showtime showtime = showtimeRepository.findById(showtimeId).orElseThrow(() -> new NoEntryWithIdException(
-                "The showtime you requested was not found in the database"
-        ));
-        if(seat<showtime.getRoom().getCapacity()) {
-            showtime.getSeats().set(seat,SeatStatus.BOOKED);
-        }
-
-    }
 
 
     @Transactional
