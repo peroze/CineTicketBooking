@@ -78,6 +78,8 @@
 
 .descform{
     width: 100%;
+    background-color: transparent;
+    border: 1px solid #468189;
 }
 
 
