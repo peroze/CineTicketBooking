@@ -30,6 +30,10 @@ public class BookingsService {
 
     public Bookings createBooking(AddBookingRequest bookingRequest) {
         Bookings booking=new Bookings(usersService.getUserByEmail(bookingRequest.getUserEmail()).get(),showtimeService.getShowtimeById(bookingRequest.getShowtimeid()).get(), LocalDateTime.now(),bookingRequest.getSeat(), BookingStatus.PENDING, bookingRequest.getFirstName(), bookingRequest.getLastName(), bookingRequest.getTelephone());
+        boolean isSeatAvailable = showtimeService.checkSeatAvailability(booking.getShowtime(),booking.getSeat());
+        if(!isSeatAvailable){
+            throw new IllegalStateException("The seat is already booked/reserved");
+        }
         showtimeService.changeSeatStatus(booking.getShowtime().getId(),booking.getSeat(), SeatStatus.BOOKED);
         return bookingsRepository.save(booking);
     }
