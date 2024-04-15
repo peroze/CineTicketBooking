@@ -22,6 +22,7 @@ import ContactUs from './Components/ContactUs.jsx';
 import CalendarPage from './Components/CalendarPage.jsx';
 import BookingPage from './Components/BookingPage.jsx';
 import AddMovie from './Components/AddMovie.jsx';
+import MyBookings from './Components/my-bookings/MyBookings.jsx';
 import AdminPanelMovies from './Components/admin-panel/AdminPanelMovies.jsx';
 import AdminPanelShowtimes from './Components/admin-panel/AdminPanelShowtimes.jsx';
 import AdminPanelUsers from './Components/admin-panel/AdminPanelUsers.jsx';
@@ -35,6 +36,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import refreshPageService from './services/refresh.page.service.js';
 
+import ProtectedRoute from './Components/ProtectedRoute.jsx';
 export const UserContext = createContext();
 
 function App() {
@@ -47,10 +49,13 @@ function App() {
   const [isAdmin,setIsAdmin] = useState(false);
   const [isInspector,setIsInspector] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const hasRun = useRef(false);
 
 
   useEffect(() => {
+    setIsLoading(true);
     if(!hasRun.current){
       if(refreshPageService.getReload() === 'true'){
         hasRun.current = true;
@@ -67,6 +72,10 @@ function App() {
         }).catch((error) => {
           // Handle any errors during fetching
           console.error("Error fetching localUser:", error);
+        })
+        .finally(() => {
+          console.log("user: ",user);
+          setIsLoading(false);
         });
         
       }
@@ -96,10 +105,11 @@ function App() {
           <Menubar  icon={userIcon} username={firstName}/>
         </header>
           <Routes> 
+              {/* Public Routes */}
+              
               <Route path="/login" element={<Login />} />
               <Route exact path="/" element={<Home />} />
               <Route path="/movies" element={<Movies />} />
-              {/* <Route path="/about" element={<About />} /> */}
               <Route path="/signup" element={<Signup />} />
               <Route path="/contactus" element={<ContactUs />} />
               <Route path="/movie" element={<MoviePage/>}></Route>
@@ -109,59 +119,65 @@ function App() {
 
               <Route path="*" element={<PageNotFound />} />
 
+              {/* Protected Routes */}
+
               <Route path="/add-show-time" 
-                element={<PrivateRoute 
-                  path="/add-show-time" 
-                  component={AddShowTime} 
-                  isAuthenticated={isLoggedIn} 
-                  hasPermission={isAdmin} 
-                  />
-              }></Route>
+                element={
+                  <ProtectedRoute isLoading={isLoading} isAuthenticated={isLoggedIn} hasPermission={isAdmin}>
+                    <AddShowTime/>
+                  </ProtectedRoute>
+              }/>
 
               <Route path="/addmovie" 
-                element={<PrivateRoute 
-                  path="/add-movie" 
-                  component={AddMovie} 
-                  isAuthenticated={isLoggedIn} 
-                  hasPermission={isAdmin} 
-                  />
-              }></Route>
+                element={
+                  <ProtectedRoute isLoading={isLoading} isAuthenticated={isLoggedIn} hasPermission={isAdmin}>
+                    <AddMovie/>
+                  </ProtectedRoute>
+              }/>
 
               <Route path="/admin-panel/movies" 
-                element={<PrivateRoute 
-                  path="/admin-panel/movies" 
-                  component={AdminPanelMovies} 
-                  isAuthenticated={isLoggedIn} 
-                  hasPermission={isAdmin} 
-                  />
-              }></Route>
+                element={
+                  <ProtectedRoute isLoading={isLoading} isAuthenticated={isLoggedIn} hasPermission={isAdmin}>
+                    <AdminPanelMovies/>
+                  </ProtectedRoute>
+              }/>
+          
+              <Route path="/admin-panel/movies" 
+                element={
+                  <ProtectedRoute isLoading={isLoading} isAuthenticated={isLoggedIn} hasPermission={isAdmin}>
+                    <AdminPanelMovies/>
+                  </ProtectedRoute>
+              }/>
 
               <Route path="/admin-panel/users" 
-                element={<PrivateRoute 
-                  path="/admin-panel/users" 
-                  component={AdminPanelUsers} 
-                  isAuthenticated={isLoggedIn} 
-                  hasPermission={isAdmin} 
-                  />
-              }></Route>
+                element={
+                  <ProtectedRoute isLoading={isLoading} isAuthenticated={isLoggedIn} hasPermission={isAdmin}>
+                    <AdminPanelUsers/>
+                  </ProtectedRoute>
+              }/>
 
               <Route path="/admin-panel/showtimes" 
-                element={<PrivateRoute 
-                  path="/admin-panel/showtimes" 
-                  component={AdminPanelShowtimes} 
-                  isAuthenticated={isLoggedIn} 
-                  hasPermission={isAdmin} 
-                  />
-              }></Route>
+                element={
+                  <ProtectedRoute isLoading={isLoading} isAuthenticated={isLoggedIn} hasPermission={isAdmin}>
+                    <AdminPanelShowtimes/>
+                  </ProtectedRoute>
+              }/>
 
               <Route path="/validate-page" 
-                element={<PrivateRoute 
-                  path="/validate-page" 
-                  component={ValidatePage} 
-                  isAuthenticated={isLoggedIn} 
-                  hasPermission={isInspector || isAdmin} 
-                  />
-              }></Route>
+                element={
+                  <ProtectedRoute isLoading={isLoading} isAuthenticated={isLoggedIn} hasPermission={isInspector || isAdmin}>
+                    <ValidatePage/>
+                  </ProtectedRoute>
+              }/>
+
+              <Route path="/my-bookings" 
+                element={
+                  <ProtectedRoute isLoading= {isLoading} isLoggedIn={isLoggedIn} hasPermission={true}>
+                    <MyBookings/>
+                  </ProtectedRoute>
+                }
+              />
+
               
           </Routes>
           <Footer></Footer>

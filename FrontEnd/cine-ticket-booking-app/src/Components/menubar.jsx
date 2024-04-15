@@ -72,6 +72,10 @@ function Menubar({icon,username}) {
             console.log(error);
         });
   }
+
+  const handleMyBookingsClick = () => {
+    navigate('/my-bookings');
+  }
     
     return (
         <Navbar expand="lg" fixed="top" variant="light" className="rounded-pill m-2 p-0 navbar" >
@@ -123,7 +127,10 @@ function Menubar({icon,username}) {
                 </div>
                 
                 <ul className='userlist'>             
-                              <li className = 'useritem'>
+                              <li 
+                                className = 'useritem'
+                                onClick = {handleMyBookingsClick}                         
+                              >
                                 My Bookings
                               </li>
                               <li 

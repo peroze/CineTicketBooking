@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import "./Style/LoadingButton.css";
 
-function LoadingButton({ name, loadingText, onClick }) {
+function LoadingButton({ name, loadingText, onClick,className }) {
   const [isLoading, setLoading] = useState(false);
 
   const handleClick = async () => {
@@ -22,7 +23,7 @@ function LoadingButton({ name, loadingText, onClick }) {
       onClick={!isLoading ? handleClick : null}
       size="md"
       bsPrefix ='btn'
-      className="custom-Btn w-100"
+      className={`custom-Btn ${className}`}
     >
       {isLoading ? loadingText : name}
     </Button>

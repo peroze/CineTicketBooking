@@ -122,18 +122,18 @@ const Login = () => {
                 <Col sm={12} lg={5} md={12} className="login-card-col d-flex align-items-center justify-content-center">
                    
                     
-                    <Card className= "login-card my-sm-3 my-md-5 flex-wrap">
+                    <Card fluid className= "login-card my-sm-3 my-md-5 flex-wrap">
                         <Card.Body className="p-sm-3 p-md-4">
 
                             <Row>
                                 <Col className="text-center mb-4">
-                                    <h1>Login to your account</h1>
-                                    <p>Don't have an account? &nbsp;
+                                    <h1 className="login_title">Login to your account</h1>
+                                    <p className="login_subtitle">Don't have an account? &nbsp;
                                         <Link to="/signup">Sign up</Link>
                                     </p>
                                 </Col>
                             </Row>
-                            <Row>
+                            <Row className="justify-content-center">
 
                                             <Form className="p-4 p-sm-3" id="login-form">
                                             
@@ -141,13 +141,13 @@ const Login = () => {
                                                 <Form.Label>Email</Form.Label>
                                                     <Form.Control 
                                                         type="email"
-                                                        className="custom-fields" 
+                                                        className="custom-fields-2" 
                                                         placeholder="Enter email" 
                                                         name="email"
-                                                        value={email}
+                                                        value={email}                                              
                                                         onChange={handleInputChange}                                                    
                                                     />
-                                                    <Form.Text className="text-muted">
+                                                    <Form.Text className="text-muted info-text">
                                                         We'll never share your email with anyone else.
                                                     </Form.Text>
                                                 </Form.Group>
@@ -158,8 +158,8 @@ const Login = () => {
                                                         <Form.Control
                                                         type={showPassword ? "text" : "password"}
                                                         placeholder="Password"
-                                                        className="custom-fields"
-                                                        name="password"
+                                                        className="custom-fields-2"
+                                                        name="password"                                         
                                                         value={password}
                                                         onChange={handleInputChange}
                                                         />
@@ -174,12 +174,14 @@ const Login = () => {
 
                                                 </Form.Group>
 
-
                                                 <LoadingButton
                                                     name="Log in"    
                                                     loadingText="Logging in..."
-                                                    onClick={handleButtonClick}                                                  
+                                                    onClick={handleButtonClick} 
+                                                    className="custom-btn-2"                                      
                                                 />
+                                               
+                                                
                     
                                             </Form>
                                
@@ -195,9 +197,12 @@ const Login = () => {
                                         <hr className="my-3" />
                                     </Col>
                             </Row>
-                            <div className="text-center" id="oauth2-btn">  
-                                <GoogleLoginButton onLoginComplete={handleGoogleLoginComplete}/>     
-                            </div>                       
+                           
+                            <GoogleLoginButton 
+                                onLoginComplete={handleGoogleLoginComplete}
+                                className="google-login-btn"
+                            />     
+                                                  
                         </Card.Body>
         
                     </Card>

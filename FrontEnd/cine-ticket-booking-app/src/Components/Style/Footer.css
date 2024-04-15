@@ -10,9 +10,7 @@
 }
 
 
-
-
-.Footer h2{
+.footer_titles{
     margin-top: 5%;
     color: white;
     font-size: 1.5em;
@@ -20,10 +18,10 @@
     width: 50%;
 }
 
-p {
+.footer_paragraph {
     color:white;
     text-align: left;
-} 
+}
 
 .footerMenu{
     margin-top: 5%;

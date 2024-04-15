@@ -4,11 +4,14 @@ import { GoogleOAuthProvider, GoogleLogin, useGoogleLogin } from '@react-oauth/g
 import {jwtDecode} from 'jwt-decode';
 import axios from 'axios';
 import AuthService from "../services/auth.service";
+import { FcGoogle } from "react-icons/fc";
 
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
-const GoogleLoginButton = ({ onLoginComplete }) => {
+import './Style/GoogleLogin.css'; // Import the external CSS file
+
+const GoogleLoginButton = ({ onLoginComplete, className }) => {
 
   const handleLoginSuccess = (credentialResponse) => {
     console.log("credentialResponse",credentialResponse);
@@ -45,16 +48,10 @@ const GoogleLoginButton = ({ onLoginComplete }) => {
   return (
     <Container className='custom-google-btn d-flex flex-column justify-content-md-center align-items-center'>
         
-        <GoogleLogin
-            onSuccess={handleLoginSuccess}
-            onError={handleLoginError}
-            cancel_on_tap_outside={true}
-            size="large"
-            shape="rectangular"
-            theme="dark"
-        />
-
-        <Button onClick={googleLogin}>googleLogin</Button>
+        <Button onClick={googleLogin} className={`custom-Google-btn ${className}`}>
+        <FcGoogle className="custom-google-icon"/>
+          Continue with Google
+        </Button>
 
         
         
