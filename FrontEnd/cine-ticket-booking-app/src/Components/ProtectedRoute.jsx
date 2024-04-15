@@ -26,7 +26,6 @@ const Protected = ({ isLoggedIn,hasPermission,isLoading, children }) => {
 
  
     if(isLoading){
-        console.log("isLoading if:  ",isLoading);
         return <div style={{color: "#F4E9CD", fontSize: "50px"}}>Loading...</div>
     }
 

@@ -29,7 +29,6 @@ import AdminPanelUsers from './Components/admin-panel/AdminPanelUsers.jsx';
 import ValidatePage from './Components/ValidatePage.jsx';
 import AddShowTime from './Components/AddShowTime.jsx';
 import BookingConfirmationPage from './Components/BookingConfirmationPage.jsx'
-import PrivateRoute from './Components/PrivateRoute.jsx';
 import PageNotFound from './Components/PageNotFound.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -111,14 +110,27 @@ function App() {
               <Route path="/movies" element={<Movies />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/contactus" element={<ContactUs />} />
-              <Route path="/movie" element={<MoviePage/>}></Route>
-              <Route path="/calendar" element={<CalendarPage/>}></Route>
-              <Route path="/booking" element={<BookingPage/>}></Route>        
+              <Route path="/movie" element={<MoviePage/>}></Route>       
               <Route path="/booking-confirmation" element={<BookingConfirmationPage/>}></Route>
 
               <Route path="*" element={<PageNotFound />} />
 
               {/* Protected Routes */}
+              
+
+              <Route path="/booking" 
+                element={
+                  <ProtectedRoute isLoading={isLoading} isAuthenticated={isLoggedIn} hasPermission={true}>
+                    <BookingPage/>
+                  </ProtectedRoute>
+              }/>
+
+              <Route path="/calendar" 
+                element={
+                  <ProtectedRoute isLoading={isLoading} isAuthenticated={isLoggedIn} hasPermission={true}>
+                    <CalendarPage/>
+                  </ProtectedRoute>
+              }/>
 
               <Route path="/add-show-time" 
                 element={
