@@ -42,14 +42,12 @@
                 form.append('expire', expire);
                 form.append('folder', '/Users');
                 form.append('useUniqueFileName','false');
-                console.log(id+'.jpeg');
                 axios
                 .post("https://upload.imagekit.io/api/v1/files/upload",form,{
                 headers: { 
                   "Content-Type": "multipart/form-data"
                 }
               }).then(function(response) {
-                  console.log(response);
               });
             })
             

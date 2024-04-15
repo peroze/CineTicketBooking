@@ -21,7 +21,6 @@ const AdminPanelUsers = () => {
     
         UserService.getAllUsers()
         .then(function (response) {
-             console.log(response);
             setUserList(response);
         })
         .catch(function (error) {

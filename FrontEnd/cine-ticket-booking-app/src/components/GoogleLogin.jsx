@@ -10,26 +10,12 @@ import Button from 'react-bootstrap/Button';
 
 const GoogleLoginButton = ({ onLoginComplete }) => {
 
-  const handleLoginSuccess = (credentialResponse) => {
-    console.log("credentialResponse",credentialResponse);
-    const decoded = jwtDecode(credentialResponse.credential);
-    console.log(decoded);
-    // Handle further logic if needed
-  };
-
-  const handleLoginError = () => {
-    console.log('Login Failed');
-    // Handle error if needed
-  };
-
   const googleLogin = useGoogleLogin({
     flow: 'auth-code',
     scope: "openid profile email",
     onSuccess: async (codeResponse) => {
       try{
-        console.log(codeResponse);
         const response = await axios.get(`http://localhost:8080/api/oauth2/code/google?code=${codeResponse.code}`);
-        console.log(response);
         AuthService.oauth2login(response);
         //call the function that handles the login and pass the user email that authenticated
         onLoginComplete(response.data.user_email,response.data.image_url,response.data.isSignUp);

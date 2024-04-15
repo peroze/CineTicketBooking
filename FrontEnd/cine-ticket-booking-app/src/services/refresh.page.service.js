@@ -17,18 +17,13 @@ class RefreshPageService {
     }
 
     onPageLoad(){
-        console.log("on page load");
-        console.log("isLoggedIn: ", this.getIsLoggedIn());
-        console.log("id: ", this.getId());
     
         const id = this.getId();
         const isLoggedIn = this.getIsLoggedIn();
     
         if (isLoggedIn === 'true' && id !== -1) {
-            console.log("inside if of onPageLoad");
             return UserService.getUserById(id)
                 .then(response => {
-                    console.log("response: ", response);
                     this.setLocalUser(response);
                     return response; // Return the response to the calling code
                 })

@@ -49,7 +49,6 @@ const [isLoading, setisLoading] = useState(true);
         var data=response
         setRooms(data)
         setisLoading(false)
-        console.log(data);
       })
       .catch(function (error) {
         console.log("Error getting all Rooms: ",error);
@@ -74,10 +73,8 @@ const [isLoading, setisLoading] = useState(true);
   }; 
 
   const handleButtonClick = () => {
-    console.log(movie.id,startDate,endDate);
     showtimeService.addShowtimes(room,movie.id,startDate,endDate,15)
     .then((response) => {
-      console.log(response.data);
       toast.success("The showtimes have been succesfully Created");
       navigate("/movies");
   })

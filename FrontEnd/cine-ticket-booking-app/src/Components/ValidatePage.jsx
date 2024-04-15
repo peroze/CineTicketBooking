@@ -118,7 +118,6 @@ const ValidatePage = () => {
       };
 
       const change = (e) => {
-        console.log(e.target.value)
         setShowTimeId (e.target.value);
         setChecker(true)
        }
@@ -130,7 +129,6 @@ const ValidatePage = () => {
       .then(function (response) {
       var data=response
       setShowTimes(data)
-      console.log(data);
   },[])
   .catch(function (error) {
       console.log("Error getting all ShowTimes: ",error);

@@ -67,13 +67,6 @@ const CalendarPage = () => {
   };
 
   useEffect(() => {
-    /*showtimeService.getShowtimesbyMovieId(movie.id)
-    .then(function (response) {
-      console.log(response);
-  })
-  .catch(function (error) {
-      console.log("Error getting all movies: ",error);
-  })*/
     loadShowtimes();
   },[isLoading]);
 
@@ -83,11 +76,10 @@ const CalendarPage = () => {
     <Appointments.Appointment {...props} onClick={()=>{
         
       var ind=ShowtimeList.findIndex((sh) => sh.id==props.data.id)
-      //console.log(ind);
         var occupied=[];
         for(let i=0;i<ShowtimeList[0].seats.length;i++){
           if(ShowtimeList[ind].seats[i]!="AVAILABLE"){
-            console.log("OCUPPIED  " +i)
+  
             occupied.push(i)
           }
         }
@@ -98,7 +90,7 @@ const CalendarPage = () => {
   const DayScaleCell = props => (
     <WeekView.DayScaleCell
       {...props}
-      onClick={() => console.log("Hi")}
+      onClick={() => console.log("DayScaleCellClick")}
     />
   );
 const [date, setDate] = useState(new Date());

@@ -50,6 +50,7 @@ const AddShowtimeModal = ({ showModal, closeModal,handleReload, movieList, roomL
           if(counter==0){
             const form = event.currentTarget;
                 if (form.checkValidity() === false) {
+                    
                     event.preventDefault();
                     event.stopPropagation();
                 return;
@@ -57,9 +58,7 @@ const AddShowtimeModal = ({ showModal, closeModal,handleReload, movieList, roomL
             setValidated(true);
         
             ShowtimeService.addShowtime(roomId,movieId,currentStartTime,currentEndTime,currentTicketPrice)
-            .then((response) => {
-            console.log(response.data);
-        })
+        
             .catch(error => {
             console.log(error);
         })

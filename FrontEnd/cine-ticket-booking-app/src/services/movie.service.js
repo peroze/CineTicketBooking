@@ -5,7 +5,6 @@ class MovieService {
         return api
         .get("/movies/getAllMovies")
         .then(response => {
-            console.log(response.data);
           return response.data;
         });
     }
@@ -28,7 +27,6 @@ class MovieService {
             language
         })
         .then(response => {
-            console.log(response.data);
             return response.data;
         })
         .catch(error => {

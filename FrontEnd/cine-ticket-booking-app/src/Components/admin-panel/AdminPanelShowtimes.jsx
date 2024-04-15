@@ -21,7 +21,6 @@ const AdminPanelShowtimes = () => {
 
         ShowtimeService.getAllShowtimes()
         .then(function (response) {
-            console.log(response);
             setShowtimeList(response);
         })
         .catch(function (error) {

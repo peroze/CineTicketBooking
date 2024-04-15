@@ -14,7 +14,6 @@ const EditUserModal = ({ user, showModal, closeModal,handleReload, roles}) => {
     const applyChanges = () =>{
         UserService.editUserRole(user.id,currentRole)
             .then((response) => {
-                console.log(response.data);
             })
             .catch(error => {
                 

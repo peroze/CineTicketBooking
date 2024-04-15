@@ -6,7 +6,6 @@ class UserService {
         return api
         .get("/users/email/"+email)
         .then(response => {
-            console.log(response.data);
           return response.data;
         })
         .catch(error => {
@@ -46,7 +45,6 @@ class UserService {
             role
         })
         .then(response => {
-            console.log(response);
             return response.data;
         })
         .catch(error => {

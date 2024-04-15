@@ -28,7 +28,6 @@ const ShowtimeDataTable = ({ showtimesData, isPending ,handleReload}) => {
         setShowDeleteModal(true);
     }
     const handleDeleteClose = () => {
-        console.log("HIIIIIIIIIIIII"); 
         getAllMovies();
         setShowDeleteModal(false)
     };
@@ -41,7 +40,6 @@ const ShowtimeDataTable = ({ showtimesData, isPending ,handleReload}) => {
     const getAllMovies = () =>{
         MovieService.getAllMovies()
         .then((response) => {
-            console.log(response);
             setMovies(response);
         })
         .catch(error => {
@@ -52,7 +50,6 @@ const ShowtimeDataTable = ({ showtimesData, isPending ,handleReload}) => {
     const getAllRooms = () => {
         RoomService.getAllRooms()
         .then((response) => {
-            console.log(response);
             setRooms(response);
         })
         .catch(error => {

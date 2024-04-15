@@ -39,14 +39,12 @@ const Movies = () => {
     // This code will run whenever isLoggedIn changes its value
     if (isLoggedIn) {
       // Call isAdmin when user is logged in
-      console.log("Is the user logged in? ",isLoggedIn);
       setAdminStatus(isAdmin(user));
     }
     if(isLoading){
       //setMovies([]);
       movieService.getAllMovies().then((response)=>{
         const list=response;
-        console.log(response.length);
         for (let i = 0; i < list.length; i++){
           if((movies.length<list.length)){
             movies.push({id:list[i].id,name:list[i].name})

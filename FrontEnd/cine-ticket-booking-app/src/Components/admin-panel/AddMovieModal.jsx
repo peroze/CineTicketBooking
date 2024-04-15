@@ -71,7 +71,6 @@ const AddMovieModal = ({ showModal, closeModal,handleReload}) => {
             MovieService.addMovie(currentTitle,currentGenre,currentDuration,currentReleaseDate,currentDescription,
                 currentDirector,currentActors,currentRating,currentLanguage)
                 .then((response) => {
-                  console.log(response.id);
                   uploadMovie(response.id,photo);
                   navigate('/add-show-time',{state:response});
                 })

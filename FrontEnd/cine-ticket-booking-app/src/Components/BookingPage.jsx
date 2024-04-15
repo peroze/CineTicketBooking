@@ -75,7 +75,6 @@ const BookingPage = () => {
   const handleButtonClick = () => {
       toast.info("Your booking is being processed. Please Wait...😃", {autoClose: 15000});
       bookingService.addBookings(user.email, firstName, lastName,telephone,selectedSeats[0],showtime).then(function (response) {
-      //console.log(response);
       navigate('/booking-confirmation', {state:response})
     })
   };

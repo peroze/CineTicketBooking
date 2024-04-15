@@ -33,7 +33,6 @@ const MovieDataTable = ({ usersData, isPending ,handleReload}) => {
     const getAllRoles = () =>{
         UserService.getAllRoles()
         .then((response) => {
-            console.log(response);
             setRoles(response);
         })
         .catch(error => {

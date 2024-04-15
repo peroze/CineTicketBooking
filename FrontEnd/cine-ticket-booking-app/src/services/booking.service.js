@@ -4,7 +4,6 @@ import axios from 'axios';
 class BookingService {
 
     validatebookingbyId(id){
-        console.log(id);
         return api
         .put("/bookings/checkin/"+id,
             
@@ -14,7 +13,6 @@ class BookingService {
         return api
         .get("/bookings/showtime/"+id)
         .then(response => {
-            console.log(response)
           return response.data;
         });
     }
@@ -66,7 +64,7 @@ class BookingService {
             seat
         })
         .then(response => {
-          console.log(response.data);
+
           return response.data;
         })
         .catch(error => {

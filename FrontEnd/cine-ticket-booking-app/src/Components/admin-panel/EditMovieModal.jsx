@@ -23,7 +23,6 @@ const EditMovieModal = ({ movie, showModal, closeModal,handleReload}) => {
             ,currentDirector,currentActors,currentRating,currentLanguage)
             .then((response) => {
                 toast.success("Successfully edited the movie");
-                console.log(response.data);
             })
             .catch(error => {
                 toast.success("An error occurred. Please try later");

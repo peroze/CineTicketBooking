@@ -15,7 +15,6 @@ const DeleteMovieModal = ({ movie, showModal, closeModal,handleReload}) => {
         MovieService.deleteMovie(movie.id)
         .then((response) => {
             toast.success("Successfully deleted the movie");
-            console.log(response.data);
         })
         .catch(error => {
             toast.success("An error occurred. Please try later");

@@ -5,7 +5,6 @@ class ShowtimeService {
         return api
         .get("/showtime/all")
         .then(response => {
-            console.log(response.data);
           return response.data;
         })
         .catch(error => {
@@ -17,7 +16,6 @@ class ShowtimeService {
         return api
         .get("/showtime/today")
         .then(response => {
-            console.log(response.data);
           return response.data;
         })
         .catch(error => {
@@ -35,7 +33,6 @@ class ShowtimeService {
             ticketPrice
         })
         .then(response => {
-            console.log(response.data);
             return response.data;
         })
         .catch(error => {
@@ -53,7 +50,6 @@ class ShowtimeService {
             ticketPrice
         })
         .then(response => {
-            console.log(response.data);
             return response.data;
         })
         .catch(error => {

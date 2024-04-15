@@ -15,7 +15,6 @@ const DeleteShowtimeModal = ({ showtime, showModal, closeModal,handleReload}) =>
         ShowtimeService.deleteShowtime(showtime.id)
         .then((response) => {
             toast.success("Successfully deleted the showtime");
-            console.log(response.data);
         })
         .catch(error => {
             toast.error("An error occurred. Please try later");

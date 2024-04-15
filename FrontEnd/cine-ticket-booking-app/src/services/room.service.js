@@ -6,7 +6,6 @@ class RoomService {
         return api
         .get("/rooms/"+id)
         .then(response => {
-            console.log(response.data);
           return response.data;
         })
         .catch(error => {

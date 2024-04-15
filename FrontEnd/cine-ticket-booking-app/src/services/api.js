@@ -40,7 +40,6 @@ instance.interceptors.response.use(
             }
           });
 
-          console.log(rs.data);
 
           const { access_token } = rs.data;
           TokenService.updateLocalAccessToken(access_token);

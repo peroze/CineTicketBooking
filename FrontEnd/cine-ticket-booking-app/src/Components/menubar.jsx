@@ -64,7 +64,6 @@ function Menubar({icon,username}) {
   const handleLogout = () => {
     AuthService.logout()
         .then(function (response) {
-            console.log(response);
             setIsLoggedIn(false);
             navigate('/');
         })

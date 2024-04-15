@@ -83,7 +83,6 @@ const Signup = () => {
     }
     if (counter==0){
       authService.register(firstName,lastName,email).then((response)=>{
-        console.log(response);
         uploadProfile(response.id,photo);
       }).catch((err)=>{
         console.log(err);

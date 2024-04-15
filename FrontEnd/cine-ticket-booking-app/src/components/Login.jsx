@@ -43,13 +43,11 @@ const Login = () => {
         try { 
             if(googleLogin === false){
                 const response = await AuthService.login(email, password); // Wait for login to complete
-                console.log(response);
             }
             setGoogleLogin(false);
             handleLogin();
             setIsLoggedIn(true);
             toast.success("Successful Login");
-            console.log("Is the user logged in? ", isLoggedIn);
         } catch (error) {
             setIsLoggedIn(false);
             if (!error.response) {
@@ -97,9 +95,6 @@ const Login = () => {
        setEmail(user_email);
        setIsGoogleSignUp(is_google_signup);
        setGoogleProfileImage(image_url);
-       console.log("user_email: ",user_email);
-       console.log("google profile image url: ",image_url);
-       console.log("is google signup? ",is_google_signup);
         
        setGoogleLogin(true)
        

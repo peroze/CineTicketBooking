@@ -22,7 +22,6 @@ class TokenService {
 
   setUser(user) {
     const { access_token, ...userData } = user;
-    console.log(JSON.stringify(user));
     localStorage.setItem("user", JSON.stringify(userData));
     this.updateLocalAccessToken(access_token);
   }

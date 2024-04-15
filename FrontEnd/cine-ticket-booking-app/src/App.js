@@ -57,7 +57,6 @@ function App() {
 
        refreshPageService.onPageLoad()
         .then((localUser) => {
-          console.log(localUser);
           if (localUser != null) {
             setUser(localUser);
             setIsLoggedIn(refreshPageService.getIsLoggedIn());

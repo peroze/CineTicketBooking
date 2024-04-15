@@ -21,7 +21,6 @@ const AdminPanelMovies = () => {
 
         MovieService.getAllMovies()
         .then(function (response) {
-            console.log(response);
             setMovieList(response);
         })
         .catch(function (error) {
