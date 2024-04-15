@@ -243,7 +243,7 @@ return (
               <Row>
                 <Form className="p-4 p-sm-0" id="validate-form">
                 <Form.Group className="mb-3 w-100" controlId="formDuration" >
-                        <Form.Label>Room</Form.Label>
+                        <Form.Label>Showtime</Form.Label>
                         <InputGroup className="mb-3">
                         <select id="rooms" name="roomlist" form="add-movie-form" onChange={change} value={ShowTimeId}>
                         {ShowTimes.map((object, i) =>

@@ -1,12 +1,8 @@
 import Container from 'react-bootstrap/Container';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import BookingService from "../../services/booking.service.js";
 import MyBookingsDataTable from './MyBookingsDataTable.jsx';
 import React, { useState, useContext,useEffect } from 'react';
 import { UserContext } from '../../App.js';
-import "../Style/DataTables.css";
 
 const MyBookings = () => {
 

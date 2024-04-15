@@ -5,6 +5,7 @@
   background-color: #031926;
   height: 100vh;
   width: 100vw;
+  min-height: 100vh;
 }
 header{
   height: fit-content;
@@ -29,6 +30,7 @@ html, body {
   margin: 0;
   height: 100%;
   overflow-y: auto;
+
 }
 
 * {

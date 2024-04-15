@@ -13,9 +13,7 @@
 }
 
 .datatable-container{
-    margin-top: 20px;
-    height: 50vh;
-
+    min-height:50vh;
 }
 
 .error{
