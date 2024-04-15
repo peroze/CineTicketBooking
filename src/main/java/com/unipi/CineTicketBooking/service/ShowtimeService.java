@@ -149,18 +149,6 @@ public class ShowtimeService {
 
     }
 
-    @Transactional
-    public void updateShowtimeSeats(Long showtimeId, int seat) {
-        //We don't allow Movie or Room changes because that would mess up the seats that are already booked.
-        //If the admin wants to change the room and the movie, he can delete it and add it manually
-        Showtime showtime = showtimeRepository.findById(showtimeId).orElseThrow(() -> new NoEntryWithIdException(
-                "The showtime you requested was not found in the database"
-        ));
-        if(seat<showtime.getRoom().getCapacity()) {
-            showtime.getSeats().set(seat,SeatStatus.BOOKED);
-        }
-
-    }
 
 
     @Transactional
@@ -229,6 +217,16 @@ public class ShowtimeService {
             throw new ShowtimeAvailabilityException("Room with id " +showtime.getRoom().getId() +
                     " is not available for the requested time window: "+startTime + " - " + endTime);
         }
+    }
+
+    public boolean checkSeatAvailability(Showtime showtime, int seatNumber){
+        List<SeatStatus> seats = showtime.getSeats();
+        if (seatNumber >= 0 && seatNumber < seats.size()) {
+            return seats.get(seatNumber).equals(SeatStatus.AVAILABLE);
+        } else {
+            throw new IllegalArgumentException("Invalid seat index: " + seatNumber);
+        }
+
     }
 
 }

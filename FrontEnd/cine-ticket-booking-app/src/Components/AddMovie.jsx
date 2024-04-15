@@ -244,7 +244,8 @@ const AddMovie = () => {
                       <Form.Group className="mb-3 w-100" controlId="formDescription" >
                           <Form.Label>Description</Form.Label>
                           <InputGroup className="mb-3">
-                              <textarea
+                              <Form.Control 
+                              as="textarea"
                               id='description'
                               className="descform" 
                               placeholder="Description"

@@ -12,7 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const AddMovieModal = ({ showModal, closeModal,handleReload}) => {
 
-    
+
     const navigate=useNavigate();
     const [currentTitle, setCurrentTitle] = useState();
     const [currentGenre, setCurrentGenre] = useState();
@@ -63,7 +63,7 @@ const AddMovieModal = ({ showModal, closeModal,handleReload}) => {
           } if (currentLanguage === '') {
             document.getElementById('language').classList.add('error');
             counter++;
-          } 
+          }
           if(photo ===''){
             counter++;
           }
@@ -76,7 +76,7 @@ const AddMovieModal = ({ showModal, closeModal,handleReload}) => {
                 })
                 .catch(error => {
                 console.log(error);
-              }) 
+              })
               .finally( () => {
                 closeModal();
                 handleReload();
@@ -116,7 +116,7 @@ const AddMovieModal = ({ showModal, closeModal,handleReload}) => {
                             <Form.Label>Title</Form.Label>
                             <Form.Control 
                                 id = "title"
-                                type="text" 
+                                type="text"
                                 onChange={(e) => setCurrentTitle(e.target.value)} 
                             />
                             
@@ -145,7 +145,8 @@ const AddMovieModal = ({ showModal, closeModal,handleReload}) => {
                             <Form.Label>Description</Form.Label>
                             <Form.Control 
                                 id = "description"
-                                type="textarea"  
+                                as="textarea"
+                                type="textarea"
                                 onChange={(e) => setCurrentDescription(e.target.value)}
                             />
 
@@ -181,14 +182,14 @@ const AddMovieModal = ({ showModal, closeModal,handleReload}) => {
 
                         <Form.Group controlId="formImage" className="mb-4">
                       <Form.Label>Movie Picture</Form.Label>
-                      <Form.Control 
-                        type="file" 
+                      <Form.Control
+                        type="file"
                         accept=".png, .jpeg, .jpg"
                         className="custom-fields"
                         onChange={handleInputChange}
                         />
                     </Form.Group>
-                    
+
                     </Form>
                     
                 </div>
@@ -200,8 +201,8 @@ const AddMovieModal = ({ showModal, closeModal,handleReload}) => {
             </Modal.Footer>
         </Modal>
 
-        
-        
+
+
     );
 };
 

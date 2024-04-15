@@ -38,10 +38,10 @@ const AdminPanelUsers = () => {
     }
     
     return(
-        <div>
+        <div className="datatable-container">
             <Container className="admin-edit-container"> 
                      
-                <div >
+                <div>
                     <UserDataTable usersData={userList} isPending={pending} handleReload={handleReload}/>
                 </div>                  
                     

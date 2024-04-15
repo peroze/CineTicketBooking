@@ -99,8 +99,8 @@ const Signup = () => {
             <Card.Body className="p-sm-3 p-md-4">
               <Row>
                 <Col className="text-center mb-1">
-                  <h1>Sign up</h1>
-                  <p>Already have an account? &nbsp;
+                  <h1 className='signup_title'>Sign up</h1>
+                  <p className='signup_subtitle'>Already have an account? &nbsp;
                   <Link to="/login">Login</Link>
                   </p>
                 </Col>
@@ -206,7 +206,8 @@ const Signup = () => {
                     <LoadingButton
                         name="Submit"    
                         loadingText="Submitting..."
-                        onClick={handleButtonClick}                                                  
+                        onClick={handleButtonClick}
+                        className="custom-btn-2"                                                  
                     />
 
                 </Form>

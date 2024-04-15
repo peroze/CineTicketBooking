@@ -6,7 +6,9 @@ import com.unipi.CineTicketBooking.controller.secondaryClasses.AddBookingRequest
 import com.unipi.CineTicketBooking.exception.NoEntryWithIdException;
 import com.unipi.CineTicketBooking.model.Bookings;
 import com.unipi.CineTicketBooking.model.Showtime;
+import com.unipi.CineTicketBooking.model.secondary.BookingInfo;
 import com.unipi.CineTicketBooking.model.secondary.BookingStatus;
+import com.unipi.CineTicketBooking.model.secondary.SeatStatus;
 import com.unipi.CineTicketBooking.repository.BookingsRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +30,11 @@ public class BookingsService {
 
     public Bookings createBooking(AddBookingRequest bookingRequest) {
         Bookings booking=new Bookings(usersService.getUserByEmail(bookingRequest.getUserEmail()).get(),showtimeService.getShowtimeById(bookingRequest.getShowtimeid()).get(), LocalDateTime.now(),bookingRequest.getSeat(), BookingStatus.PENDING, bookingRequest.getFirstName(), bookingRequest.getLastName(), bookingRequest.getTelephone());
-        showtimeService.updateShowtimeSeats(booking.getShowtime().getId(),booking.getSeat());
+        boolean isSeatAvailable = showtimeService.checkSeatAvailability(booking.getShowtime(),booking.getSeat());
+        if(!isSeatAvailable){
+            throw new IllegalStateException("The seat is already booked/reserved");
+        }
+        showtimeService.changeSeatStatus(booking.getShowtime().getId(),booking.getSeat(), SeatStatus.BOOKED);
         return bookingsRepository.save(booking);
     }
 
@@ -87,6 +93,7 @@ public class BookingsService {
 
         if (optionalBooking.isPresent()) {
             bookingsRepository.deleteById(id);
+            showtimeService.changeSeatStatus(optionalBooking.get().getId(), optionalBooking.get().getSeat(),SeatStatus.AVAILABLE);
             return true;
         } else {
             throw new NoEntryWithIdException("There is no booking with the given id");
@@ -94,5 +101,9 @@ public class BookingsService {
     }
 
 
+    public List<BookingInfo> getBookingByUserId(Long id) {
 
+        return bookingsRepository.findAllByUserId(id);
+
+    }
 }

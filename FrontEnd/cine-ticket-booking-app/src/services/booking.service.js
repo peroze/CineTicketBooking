@@ -47,7 +47,7 @@ class BookingService {
             return response.data;
         })
         .catch(error => {
-            console.error("Error getting rooms:", error);
+            console.error("Error getting bookings:", error);
             throw error; // Rethrow the error to handle it in the caller
         });
     }
@@ -68,7 +68,31 @@ class BookingService {
           return response.data;
         })
         .catch(error => {
-            console.error("Error adding room:", error);
+            console.error("Error adding booking:", error);
+            throw error; // Rethrow the error to handle it in the caller
+        });
+    }
+
+    getBookingByUserId(user_id){
+        return api.get("/bookings/user/"+user_id)
+        .then(response => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(error => {
+            console.error("Error getting bookings:", error);
+            throw error; // Rethrow the error to handle it in the caller
+        });
+    }
+
+    deleteBooking(booking_id){
+        return api.delete("/bookings/delete/"+booking_id)
+        .then(response => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(error => {
+            console.error("Error deleting booking:", error);
             throw error; // Rethrow the error to handle it in the caller
         });
     }

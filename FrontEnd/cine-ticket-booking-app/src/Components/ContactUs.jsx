@@ -59,21 +59,21 @@ const ContactUs = () => {
         <label className='contactlabel'>
           <a>Name</a>
           </label>
-          <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+          <input className="contactus_input" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
         </div>
         <br />
         <div className='contactelement'>
         <label className='contactlabel'>
           <a>Email</a>
           </label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input className="contactus_input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <br />
         <div className='contactelement'>
           <label className='contactlabel'>
             <a>How can we help?</a>
             </label>
-            <textarea value={message} onChange={(e) => setMessage(e.target.value)} />
+            <textarea className="contactus_textarea" value={message} onChange={(e) => setMessage(e.target.value)} />
         </div>
         <br/>
         <button className ='submitbutton' type="submit">Submit</button>

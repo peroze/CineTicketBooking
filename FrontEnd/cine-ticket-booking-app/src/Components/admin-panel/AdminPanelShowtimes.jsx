@@ -38,7 +38,7 @@ const AdminPanelShowtimes = () => {
     }
 
     return(
-        <div>
+        <div className="datatable-container">
             <Container className="admin-edit-container"> 
                  
                 <div >

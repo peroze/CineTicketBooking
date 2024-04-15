@@ -32,19 +32,18 @@ function Footer({icon,user}) {
                 <Row>
                     <Col className='footerLogo'>
                         <Navbar.Brand className='brandFooter' href="#home"><img width="150"  className="Navbarlogo" src={logo}></img></Navbar.Brand>
-                        <p>Captivating Stories Begin with a Click <br/> Reserve Your Cinematic Escape Now!</p>
+                        <p className="footer_paragraph">Captivating Stories Begin with a Click <br/> Reserve Your Cinematic Escape Now!</p>
                     </Col>
                     <Col className='footerMenuContainer' id="roadmap">
-                        <h2>Site Roadmap</h2>
+                        <h2 className="footer_titles">Site Roadmap</h2>
                         <ul className='footerMenu d-flex flex-column align-items-center justify-content-flex-end gap-2'>
                             <li><i className="footerLink"><Link to="/">Home Page</Link></i></li>
                             <li><i className="footerLink"><Link to="/movies">Movies</Link></i></li>
-                            <li><i className="footerLink"><Link to="/about_us">About Us</Link></i></li>
-                            <li><i className="footerLink"><Link to="/">Contact Us</Link></i></li>
+                            <li><i className="footerLink"><Link to="/contactus">Contact Us</Link></i></li>
                         </ul>
                     </Col>
                     <Col className='footerMenuContainer'>
-                        <h2>Contact Us</h2>
+                        <h2 className="footer_titles">Contact Us</h2>
                         <ul className='footerMenu contactFooter d-flex flex-column align-items-center justify-content-center gap-2'>
                             <li>
                                 <a><FontAwesomeIcon className='fafooter' icon={faPaperPlane}/><i className="footerLink">CineTicketBooking@gmail.com</i></a>

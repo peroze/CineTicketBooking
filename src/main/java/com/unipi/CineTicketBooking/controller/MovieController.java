@@ -75,7 +75,7 @@ public class MovieController {
     public ResponseEntity<String> deleteMovieById(@PathVariable("id") Long id){
         try {
             movieService.deleteMovieById(id);
-            return new ResponseEntity<>("Successfylly Deleted Movie ",HttpStatus.OK);
+            return new ResponseEntity<>("Successfully Deleted Movie ",HttpStatus.OK);
         }catch (NoEntryWithIdException e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(),e.getHttpStatus());

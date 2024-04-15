@@ -78,6 +78,20 @@
 
 .descform{
     width: 100%;
+    background-color: transparent;
+    border: 1px solid #468189;
+}
+
+@media  (max-width: 991px) {
+    .addmovie-card{
+        width: 70%;
+    }
+}
+
+@media (max-width: 400px){
+    .addmovie-card{
+        width: 100%;
+    }
 }
 
 

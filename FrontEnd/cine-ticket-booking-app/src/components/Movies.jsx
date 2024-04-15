@@ -61,7 +61,7 @@ const Movies = () => {
     return <div className="App">Loading...</div>;
   }
   return (
-    <div>
+    <div className="movie-outer-container">
           <div className="movie-header">
           <h1>Movies</h1>
           {isLoggedIn && adminStatus && (
