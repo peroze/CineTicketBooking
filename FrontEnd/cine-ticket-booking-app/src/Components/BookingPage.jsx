@@ -147,7 +147,8 @@ const BookingPage = () => {
                     </Form.Group>
  
                     <LoadingButton
-                        name="Submit"    
+                        name="Submit"
+                        className="submit-btn-booking"  
                         loadingText="Submitting..."
                         onClick={handleButtonClick}                                                  
                     />
