@@ -25,8 +25,8 @@ public class PdfGeneration {
 
     public void generate(Bookings booking) {
         try {
-            String name = booking.getUsers().getFirstName();
-            String surname = booking.getUsers().getLastName();
+            String name = booking.getFirstName();
+            String surname = booking.getLastName();
             String movie= booking.getShowtime().getMovie().getName();
             String showtime=booking.getShowtime().getStartTime().toString();
             String seat=String.valueOf(booking.getSeat());
